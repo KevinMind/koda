@@ -10,7 +10,9 @@ import { Menu as MenuIcon } from '@material-ui/icons';
 import { adminRoutes } from '../../src/routes';
 
 const Wrapper = styled(AppBar)({
-  height: '100%',
+  height: '10vh',
+  position: 'fixed',
+  top: 0,
 });
 
 const Header = styled(Toolbar)({
@@ -90,7 +92,7 @@ export default () => {
   };
 
   return (
-    <Wrapper position="static">
+    <Wrapper>
       <Header>
         <IconButton onClick={() => handleNavigate('/')}>
           Home

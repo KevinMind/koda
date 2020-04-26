@@ -15,11 +15,14 @@ const TopContent = styled(Container)({
 
 const MainContent = styled(Container)({
   height: '80vh',
+  padding: '2rem',
 });
 
 const BottomContent = styled(Container)({
   height: '10vh',
   borderTop: '1px solid',
+  position: 'fixed',
+  bottom: 0,
 });
 
 const Layout = ({ children }) => (
