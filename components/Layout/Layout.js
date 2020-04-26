@@ -1,10 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Container, CssBaseline, styled } from '@material-ui/core';
+import Header from './Header';
+import Nagivation from './Nagivation';
+
+const Wrapper = styled(Container)({
+  height: '100vh',
+});
+
+const TopContent = styled(Container)({
+  height: '10vh',
+});
+
+const MainContent = styled(Container)({
+  height: '80vh',
+});
+
+const BottomContent = styled(Container)({
+  height: '10vh',
+  borderTop: '1px solid',
+});
+
 const Layout = ({ children }) => (
-  <div>
-    {children}
-  </div>
+  <>
+    <CssBaseline />
+    <Wrapper disableGutters>
+      <TopContent disableGutters>
+        <Header />
+      </TopContent>
+      <MainContent disableGutters>
+        {children}
+      </MainContent>
+      <BottomContent disableGutters>
+        <Nagivation />
+      </BottomContent>
+    </Wrapper>
+  </>
 );
 
 Layout.propTypes = {

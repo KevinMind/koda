@@ -2,10 +2,10 @@ import React from 'react';
 
 import Layout from '../components/Layout';
 
-export default function Home() {
+export default function Add() {
   return (
     <Layout>
-      Koda UI
+      profile
     </Layout>
   );
 }
