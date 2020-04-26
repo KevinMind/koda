@@ -9,8 +9,13 @@ import { Menu as MenuIcon } from '@material-ui/icons';
 
 import { adminRoutes } from '../../src/routes';
 
+const Wrapper = styled(AppBar)({
+  height: '100%',
+});
+
 const Header = styled(Toolbar)({
   justifyContent: 'space-between',
+  height: '100%',
 });
 
 const HeaderMenu = ({ onClick, pathname }) => {
@@ -85,7 +90,7 @@ export default () => {
   };
 
   return (
-    <AppBar>
+    <Wrapper position="static">
       <Header>
         <IconButton onClick={() => handleNavigate('/')}>
           Home
@@ -94,6 +99,6 @@ export default () => {
           ? <Button color="inherit">Login</Button>
           : <HeaderMenu onClick={handleNavigate} pathname={router.pathname} />}
       </Header>
-    </AppBar>
+    </Wrapper>
   );
 };
