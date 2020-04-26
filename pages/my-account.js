@@ -2,10 +2,12 @@ import React from 'react';
 
 import Layout from '../components/Layout';
 
-export default function Add() {
+function MyAccount() {
   return (
     <Layout>
       my account
     </Layout>
   );
 }
+
+export default MyAccount;
