@@ -1,5 +1,5 @@
 node_modules/
 **/*.test.js
-.next/
-.now/
-out/
+src/
+
+gatsby*.js
