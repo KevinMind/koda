@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { BottomNavigation, BottomNavigationAction, styled } from '@material-ui/core';
-import { useRouter } from 'next/router';
+import { useLocation, navigate } from '@reach/router';
 
 import { mainRoutes } from '../../config/routes';
 
@@ -14,13 +14,13 @@ const Nav = styled(BottomNavigation)({
 });
 
 export default () => {
-  const router = useRouter();
-  const handleNavigate = (path) => () => router.push(path);
+  const location = useLocation();
+  const handleNavigate = (path) => () => navigate(path);
 
   return (
     <Nav
       showLabels
-      value={router.pathname}
+      value={location.pathname}
     >
       {mainRoutes.map(({ name, pathname, icon: Icon }) => (
         <Item

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
+import { useLocation, navigate } from '@reach/router';
 import {
   AppBar, Toolbar, IconButton, Button,
   Menu, MenuItem, styled, ListItemIcon, Typography,
@@ -85,10 +85,9 @@ HeaderMenu.propTypes = {
 };
 
 export default () => {
-  const router = useRouter();
-
+  const location = useLocation();
   const handleNavigate = (path) => {
-    router.push(path);
+    navigate(path);
   };
 
   return (
@@ -99,7 +98,7 @@ export default () => {
         </IconButton>
         {false
           ? <Button color="inherit">Login</Button>
-          : <HeaderMenu onClick={handleNavigate} pathname={router.pathname} />}
+          : <HeaderMenu onClick={handleNavigate} pathname={location.pathname} />}
       </Header>
     </Wrapper>
   );
