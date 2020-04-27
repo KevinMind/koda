@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
 
-import { adminRoutes } from '../../src/routes';
+import { adminRoutes } from '../../config/routes';
 
 const Wrapper = styled(AppBar)({
   height: '10vh',

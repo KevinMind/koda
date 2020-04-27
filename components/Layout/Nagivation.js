@@ -3,7 +3,7 @@ import React from 'react';
 import { BottomNavigation, BottomNavigationAction, styled } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
-import { mainRoutes } from '../../src/routes';
+import { mainRoutes } from '../../config/routes';
 
 const Item = styled(BottomNavigationAction)({
   maxWidth: '50%',
