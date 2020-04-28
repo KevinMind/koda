@@ -1,48 +1,55 @@
-import React from 'react'
-import { navigate } from '@reach/router'
-import { Link } from 'gatsby'
-import { Auth } from 'aws-amplify'
-import { Input, InputLabel, FormGroup, Typography, Button, CircularProgress, Grid } from '@material-ui/core';
-
-import { AuthForm, Email, Password, ConfirmationCode } from '../Forms'
-
-const initialState = {
-  username: ``,
-  password: ``,
-  email: '',
-  phone_number: '',
-  auth_code: '',
-  stage: 0,
-  error: '',
-  loading: false,
-};
+import React from 'react';
+import { Auth } from 'aws-amplify';
+import { navigate } from '@reach/router';
+import {
+  Button, CircularProgress, FormGroup, Grid, Input, InputLabel, Typography, TextField,
+} from '@material-ui/core';
+import { Link } from 'gatsby';
+import {
+  AuthForm, ConfirmationCode, Email, Password,
+} from '../components/Forms';
+import withPublicRoute from '../components/Routes/PublicRoute';
 
 class SignUp extends React.Component {
-  state = initialState;
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      email: '',
+      phone_number: '',
+      auth_code: '',
+      stage: 0,
+      error: '',
+      loading: false,
+    };
+  }
 
-  handleUpdate = event => {
+  handleUpdate = (event) => {
     if (event.target.name === 'email') {
       this.setState({
         [event.target.name]: event.target.value,
         username: event.target.value,
         error: '',
-      })
+      });
     }
     if (event.target.name === 'phone_number') {
       this.setState({
         [event.target.name]: event.target.value.replace(/\D/g, ''),
         error: '',
-      })
+      });
     }
     this.setState({
       [event.target.name]: event.target.value,
       error: '',
-    })
+    });
   };
 
-  signUp = async e => {
+  signUp = async (e) => {
     e.preventDefault();
-    const { username, password, email, phone_number } = this.state;
+    const {
+      username, password, email, phone_number,
+    } = this.state;
     this.setState({ loading: true });
     try {
       await Auth.signUp({
@@ -50,52 +57,52 @@ class SignUp extends React.Component {
         password,
         attributes: { email, phone_number },
       });
-      this.setState({ stage: 1, loading: false })
+      this.setState({ stage: 1, loading: false });
     } catch (err) {
       this.setState({ error: err, loading: false });
-      console.log('error signing up...', err)
+      console.log('error signing up...', err);
     }
   };
 
-  resendCode = async e => {
+  resendCode = async (e) => {
     e.preventDefault();
-    const { email } = this.state
+    const { email } = this.state;
     this.setState({ loading: true });
     try {
       await Auth.resendSignUp(email);
-      this.setState({ stage: 1, loading: false })
+      this.setState({ stage: 1, loading: false });
     } catch (err) {
       this.setState({ error: err, loading: false });
-      console.log('error resending code...', err)
+      console.log('error resending code...', err);
     }
   };
 
-  verify = async e => {
-    e.preventDefault()
+  verify = async (e) => {
+    e.preventDefault();
     const { email, auth_code } = this.state;
     this.setState({ loading: true });
     try {
       await Auth.verifyCurrentUserAttributeSubmit(email, auth_code);
       this.setState({ loading: false });
-      navigate('/signin')
+      navigate('/signin');
     } catch (err) {
       this.setState({ error: err, loading: false });
-      console.log('error signing up...', err)
+      console.log('error signing up...', err);
     }
   };
 
-  confirmSignUp = async e => {
-    e.preventDefault()
+  confirmSignUp = async (e) => {
+    e.preventDefault();
     this.setState({ loading: true });
     const { email, auth_code } = this.state;
     try {
       this.setState({ loading: true });
       await Auth.confirmSignUp(email, auth_code);
       this.setState({ loading: false });
-      navigate('/signin')
+      navigate('/signin');
     } catch (err) {
       this.setState({ error: err, loading: false });
-      console.log('error confirming signing up...', err)
+      console.log('error confirming signing up...', err);
     }
   };
 
@@ -113,26 +120,25 @@ class SignUp extends React.Component {
             password={this.state.password}
             autoComplete="off"
           />
-          <FormGroup>
-            <InputLabel htmlFor="exampleInputPhoneNum1">Phone Number</InputLabel>
-            <Input
-              placeholder="+1 (###) ###-####"
-              onChange={this.handleUpdate}
-              name="phone_number"
-              value={this.state.phone_number}
-              type="tel"
-              className="form-control"
-              format="+1##########"
-              mask="_"
-            />
-          </FormGroup>
+          <TextField
+            fullWidth
+            label="Phone Number"
+            placeholder="+1 (###) ###-####"
+            onChange={this.handleUpdate}
+            name="phone_number"
+            value={this.state.phone_number}
+            type="tel"
+            className="form-control"
+            format="+1##########"
+            mask="_"
+          />
           <Button
             disableElevation
             size="medium"
             fullWidth
             color="primary"
             variant="contained"
-            onClick={e => this.signUp(e)}
+            onClick={(e) => this.signUp(e)}
             type="submit"
             disabled={this.state.loading}
           >
@@ -142,10 +148,12 @@ class SignUp extends React.Component {
             )}
           </Button>
           <Typography style={{ marginTop: 40 }} align="center">
-            Have an account? <Link to="/signin">Sign in</Link>
+            Have an account?
+            {' '}
+            <Link to="/signin">Sign in</Link>
           </Typography>
         </AuthForm>
-      )
+      );
     }
     return (
       <AuthForm>
@@ -164,7 +172,7 @@ class SignUp extends React.Component {
           size="medium"
           fullWidth
           color="primary"
-          onClick={e => this.confirmSignUp(e)}
+          onClick={(e) => this.confirmSignUp(e)}
           type="submit"
           disabled={this.state.loading}
         >
@@ -174,7 +182,9 @@ class SignUp extends React.Component {
           )}
         </Button>
         <Typography style={{ marginTop: 40 }} align="center">
-          Have an account? <Link to="/signin">Sign in</Link>
+          Have an account?
+          {' '}
+          <Link to="/signin">Sign in</Link>
         </Typography>
         <Grid
           alignItems="center"
@@ -187,15 +197,15 @@ class SignUp extends React.Component {
             Lost your code?
           </Typography>
           <Button
-            onClick={e => this.resendCode(e)}
+            onClick={(e) => this.resendCode(e)}
             disabled={this.state.loading}
           >
             Resend Code
           </Button>
         </Grid>
       </AuthForm>
-    )
+    );
   }
 }
 
-export default SignUp
+export default withPublicRoute(SignUp);

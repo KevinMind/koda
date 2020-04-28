@@ -3,27 +3,20 @@ import { Redirect } from '@reach/router';
 import { AppUser } from '../Auth';
 import { Layout } from '../Layout';
 
-class PublicRoute extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {}
-
-  render() {
-    const { isLoggedIn } = AppUser;
-    if (isLoggedIn()) {
-      return <Redirect to="/home" noThrow />;
+export default (Component) => {
+  class PublicRoute extends React.PureComponent {
+    render() {
+      const { isLoggedIn } = AppUser;
+      if (isLoggedIn()) {
+        return <Redirect to="/home" noThrow />;
+      }
+      return (
+        <Layout>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...this.props} />
+        </Layout>
+      );
     }
-    const { component: Component, location, ...rest } = this.props;
-    return (
-      <Layout>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...rest} />
-      </Layout>
-    );
   }
-}
-
-export default PublicRoute;
+  return PublicRoute;
+};

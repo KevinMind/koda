@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import { Container, Typography } from '@material-ui/core';
-import { getCurrentUser } from '../Auth/AppUser';
-import { AppContent } from '../Layout';
+import { Link } from 'gatsby';
+import withPrivateRoute from '../components/Routes/PrivateRoute';
+import { getCurrentUser } from '../components/Auth/AppUser';
+import { AppContent } from '../components/Layout';
 
 const Profile = () => {
   const user = getCurrentUser();
@@ -24,4 +25,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withPrivateRoute(Profile);

@@ -4,4 +4,15 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-// You can delete this file if you're not using it
+const React = require("react");
+const Amplify = require('aws-amplify').default;
+const config = require('./aws-exports').default;
+
+exports.wrapRootElement = ({ element }) => {
+  Amplify.configure(config);
+  return (
+    <>
+      {element}
+    </>
+  )
+};

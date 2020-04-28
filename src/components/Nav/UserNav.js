@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { navigate } from '@reach/router';
-import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
+import {
+  AppBar, Toolbar, Grid, Button,
+} from '@material-ui/core';
 
 import { Auth } from 'aws-amplify';
 import { AppUser } from '../Auth';
@@ -32,13 +34,11 @@ function UserNav() {
             </Link>
           </Grid>
           <Grid item>
-            <p
+            <Button
               onClick={(e) => logOut(e)}
-              style={{ margin: 0, cursor: 'pointer' }}
-              className="nav-link text-primary"
             >
               Logout
-            </p>
+            </Button>
           </Grid>
         </Grid>
       </Toolbar>

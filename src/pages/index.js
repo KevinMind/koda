@@ -1,8 +1,10 @@
 import React from 'react';
-import { Typography, Grid } from '@material-ui/core';
-import GatsbyIcon from '../../assets/vectors/gatsby.svg';
-import AmplifyIcon from '../../assets/vectors/amplify.svg';
-import CognitoIcon from '../../assets/vectors/cognito.svg';
+import { Grid, Typography } from '@material-ui/core';
+
+import withPrivateRoute from '../components/Routes/PrivateRoute';
+import GatsbyIcon from '../assets/vectors/gatsby.svg';
+import AmplifyIcon from '../assets/vectors/amplify.svg';
+import CognitoIcon from '../assets/vectors/cognito.svg';
 
 const IndexPage = () => (
   <Grid
@@ -23,4 +25,4 @@ const IndexPage = () => (
   </Grid>
 );
 
-export default IndexPage;
+export default withPrivateRoute(IndexPage);

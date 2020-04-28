@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
+import {
+  AppBar, Toolbar, Typography, Grid,
+} from '@material-ui/core';
 
 function Nav() {
-  return  (
+  return (
     <AppBar position="static">
       <Toolbar>
         <Grid

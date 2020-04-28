@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { AppContent } from '../Layout';
 import { Container, Typography } from '@material-ui/core';
+import { Link } from 'gatsby';
+import withPrivateRoute from '../components/Routes/PrivateRoute';
+import { AppContent } from '../components/Layout';
 
 const Home = () => (
   <Container>
@@ -21,4 +22,4 @@ const Home = () => (
   </Container>
 );
 
-export default Home;
+export default withPrivateRoute(Home);

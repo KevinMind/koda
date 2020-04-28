@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { CssBaseline, Container } from '@material-ui/core';
 
 import { Nav, UserNav } from '../Nav';
@@ -13,6 +14,15 @@ export function Layout({ children, isUserNav }) {
   );
 }
 
+Layout.defaultProps = {
+  isUserNav: false,
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  isUserNav: PropTypes.bool,
+};
+
 export function AppContent({ children }) {
   return (
     <Container>
@@ -20,3 +30,7 @@ export function AppContent({ children }) {
     </Container>
   );
 }
+
+AppContent.propTypes = {
+  children: PropTypes.node.isRequired,
+};
