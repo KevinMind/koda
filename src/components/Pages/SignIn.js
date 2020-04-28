@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import { navigate } from '@reach/router'
 import { Auth } from 'aws-amplify'
+import { Typography, Button, CircularProgress } from '@material-ui/core';
 
 import { AppUser } from '../Auth'
 import { AuthForm, Email, Password } from '../Forms'
@@ -13,7 +14,7 @@ class SignIn extends React.Component {
     password: ``,
     error: ``,
     loading: false,
-  }
+  };
 
   handleUpdate = event => {
     if (event.target.name === 'email') {
@@ -27,7 +28,7 @@ class SignIn extends React.Component {
       [event.target.name]: event.target.value,
       error: '',
     })
-  }
+  };
 
   login = async e => {
     const { setUser } = AppUser
@@ -48,7 +49,7 @@ class SignIn extends React.Component {
       this.setState({ error: err, loading: false })
       console.log('error...: ', err)
     }
-  }
+  };
 
   render() {
     return (
@@ -63,27 +64,27 @@ class SignIn extends React.Component {
           password={this.state.password}
           autoComplete="on"
         />
-        <p className="text-center">
+        <Typography align="center">
           Forgot your password? <Link to="/reset">Reset password</Link>
-        </p>
-        <button
+        </Typography>
+        <Button
+          disableElevation
+          size="medium"
+          fullWidth
+          color="primary"
           onClick={e => this.login(e)}
+          variant="contained"
           type="submit"
-          className="btn btn-primary btn-block"
           disabled={this.state.loading}
         >
           {this.state.loading ? null : 'Sign In'}
           {this.state.loading && (
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            />
+            <CircularProgress />
           )}
-        </button>
-        <p style={{ marginTop: 40 }} className="text-center">
+        </Button>
+        <Typography style={{ marginTop: 40 }} align="center">
           No account? <Link to="/signup">Create account</Link>
-        </p>
+        </Typography>
       </AuthForm>
     )
   }

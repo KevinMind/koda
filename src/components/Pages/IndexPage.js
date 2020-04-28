@@ -1,24 +1,26 @@
 import React from 'react';
+import { Typography, Grid } from '@material-ui/core';
 import GatsbyIcon from '../../assets/vectors/gatsby.svg';
 import AmplifyIcon from '../../assets/vectors/amplify.svg';
 import CognitoIcon from '../../assets/vectors/cognito.svg';
 
 const IndexPage = () => (
-  <div
+  <Grid
+    container
+    direction="row"
+    justify="center"
+    alignItems="center"
     style={{
       height: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
       margin: '0 40px',
     }}
   >
     <GatsbyIcon />
-    <p style={{ fontSize: 48, padding: 20 }}>+</p>
+    <Typography variant="h3">+</Typography>
     <AmplifyIcon />
-    <p style={{ fontSize: 48, padding: 20 }}>+</p>
+    <Typography variant="h3">+</Typography>
     <CognitoIcon />
-  </div>
+  </Grid>
 );
 
 export default IndexPage;

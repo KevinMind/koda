@@ -1,26 +1,26 @@
 import React from 'react';
 import { Link } from 'gatsby';
-
+import { Container, Typography } from '@material-ui/core';
 import { getCurrentUser } from '../Auth/AppUser';
 import { AppContent } from '../Layout';
 
 const Profile = () => {
   const user = getCurrentUser();
   return (
-    <div className="container-login100">
+    <Container>
       <AppContent>
-        <h1>Here is the Profile Page</h1>
-        <p>
+        <Typography variant="h1">Here is the Profile Page</Typography>
+        <Typography>
           Email:
           {user.email}
-        </p>
-        <p>
+        </Typography>
+        <Typography>
           Phone:
           {user.phone_number}
-        </p>
+        </Typography>
         <Link to="/home">Home</Link>
       </AppContent>
-    </div>
+    </Container>
   );
 };
 

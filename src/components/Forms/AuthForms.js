@@ -1,28 +1,41 @@
 import React from 'react';
+import {
+  Grid, Card, CardContent,Typography, CardHeader,
+  FormGroup, InputLabel, Input
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 export function AuthForm({ children, title, error }) {
   return (
-    <div className="container-login100">
-      <div className="wrap-login100 card shadow p-3 mb-5 bg-white rounded mr-opacity">
-        <form className="card-body auth-forms100">
-          <h2>{title}</h2>
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      style={{ height: '100%' }}
+    >
+      <Card>
+        <CardHeader>
+          <Typography variant="h2">{title}</Typography>
           {error && (
-            <p className="text-danger">
+            <Alert severity="error">
               {error.message ? error.message : error}
-            </p>
+            </Alert>
           )}
+        </CardHeader>
+        <CardContent>
           {children}
-        </form>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 }
 
 export function Email({ handleUpdate, email, autoComplete }) {
   return (
-    <div className="form-group">
-      <label htmlFor="enterEmailAddress">Email Address</label>
-      <input
+    <FormGroup>
+      <InputLabel htmlFor="enterEmailAddress">Email Address</InputLabel>
+      <Input
         onChange={handleUpdate}
         name="email"
         type="email"
@@ -33,42 +46,40 @@ export function Email({ handleUpdate, email, autoComplete }) {
         aria-describedby="emailHelp"
         placeholder="Enter email"
       />
-    </div>
+    </FormGroup>
   );
 }
 
 export function Password({ handleUpdate, password, autoComplete }) {
   return (
-    <div className="form-group">
-      <label htmlFor="enterPassword">Password</label>
-      <input
+    <FormGroup>
+      <InputLabel htmlFor="enterPassword">Password</InputLabel>
+      <Input
         onChange={handleUpdate}
         autoComplete={autoComplete}
         name="password"
         value={password}
         type="password"
-        className="form-control"
         placeholder="Password"
         id="enterPassword"
       />
-    </div>
+    </FormGroup>
   );
 }
 
 export function ConfirmationCode({ handleUpdate, auth_code: authCode, autoComplete }) {
   return (
-    <div className="form-group">
-      <label htmlFor="enterCode">Confirmation Code</label>
-      <input
+    <FormGroup>
+      <InputLabel htmlFor="enterCode">Confirmation Code</InputLabel>
+      <Input
         onChange={handleUpdate}
         autoComplete={autoComplete}
         name="auth_code"
         value={authCode}
         type="text"
-        className="form-control"
         placeholder="######"
         id="enterCode"
       />
-    </div>
+    </FormGroup>
   );
 }

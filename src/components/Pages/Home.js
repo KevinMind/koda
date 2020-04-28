@@ -1,23 +1,24 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { AppContent } from '../Layout';
+import { Container, Typography } from '@material-ui/core';
 
 const Home = () => (
-  <div className="container-login100">
+  <Container>
     <AppContent>
-      <h1>Here is the App Home Page</h1>
-      <p>
+      <Typography variant="h1">Here is the App Home Page</Typography>
+      <Typography>
         Since you are now logged in, view your profile:
         {' '}
         <Link to="/profile">View profile</Link>
-      </p>
-      <p>
+      </Typography>
+      <Typography>
         This starter was built using AWS Amplify. Try it out:
         {' '}
         <a href="https://console.amplify.aws">AWS Amplify</a>
-      </p>
+      </Typography>
     </AppContent>
-  </div>
+  </Container>
 );
 
 export default Home;

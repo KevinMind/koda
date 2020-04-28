@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'gatsby'
 import { navigate } from '@reach/router'
 import { Auth } from 'aws-amplify'
+import { Typography, Button, CircularProgress, Grid } from '@material-ui/core';
+
 
 import { AuthForm, Email, Password, ConfirmationCode } from '../Forms'
 
@@ -15,14 +17,14 @@ const initialState = {
 };
 
 class Reset extends React.Component {
-  state = initialState
+  state = initialState;
 
   handleUpdate = event => {
     this.setState({
       [event.target.name]: event.target.value,
       error: '',
     })
-  }
+  };
 
   reset = async e => {
     e.preventDefault()
@@ -36,7 +38,7 @@ class Reset extends React.Component {
       this.setState({ error: err, loading: false })
       console.log('error...: ', err)
     }
-  }
+  };
 
   confirmReset = async e => {
     e.preventDefault()
@@ -52,7 +54,7 @@ class Reset extends React.Component {
         console.log(err)
         this.setState({ error: err, loading: false })
       })
-  }
+  };
 
   render() {
     if (this.state.stage === 0) {
@@ -63,7 +65,12 @@ class Reset extends React.Component {
             email={this.state.email}
             autoComplete="on"
           />
-          <button
+          <Button
+            disableElevation
+            size="medium"
+            fullWidth
+            color="primary"
+            variant="contained"
             onClick={e => this.reset(e)}
             type="submit"
             className="btn btn-primary btn-block"
@@ -71,16 +78,12 @@ class Reset extends React.Component {
           >
             {this.state.loading ? null : 'Send Code'}
             {this.state.loading && (
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              />
+              <CircularProgress />
             )}
-          </button>
-          <p style={{ marginTop: 40 }} className="text-center">
+          </Button>
+          <Typography style={{ marginTop: 40 }} align="center">
             <Link to="/signin">Back to Sign In</Link>
-          </p>
+          </Typography>
         </AuthForm>
       )
     }
@@ -103,10 +106,15 @@ class Reset extends React.Component {
             password={this.state.password}
             autoComplete="on"
           />
-          <p style={{ marginTop: 40 }} className="text-center">
+          <Typography style={{ marginTop: 40 }} align="center">
             <Link to="/signin">Back to Sign In</Link>
-          </p>
-          <button
+          </Typography>
+          <Button
+            disableElevation
+            size="medium"
+            fullWidth
+            color="primary"
+            variant="contained"
             onClick={e => this.confirmReset(e)}
             type="submit"
             className="btn btn-primary btn-block"
@@ -114,172 +122,29 @@ class Reset extends React.Component {
           >
             {this.state.loading ? null : 'Confirm Reset'}
             {this.state.loading && (
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              />
+              <CircularProgress />
             )}
-          </button>
+          </Button>
         </AuthForm>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+        <Grid
+          justify="center"
+          alignItems="center"
         >
-          <p
+          <Typography
             style={{ marginTop: 20, marginBottom: 20 }}
-            className="text-center"
+            align="center"
           >
             Lost your code?
-          </p>
-          <button
-            className="btn btn-link"
+          </Typography>
+          <Button
             onClick={e => this.reset(e)}
             disabled={this.state.loading}
           >
             Resend Code
-          </button>
-        </div>
+          </Button>
+        </Grid>
       </React.Fragment>
     )
-
-    // return (
-    //   <div className="container-login100">
-    //     <div className="wrap-login100 card">
-    //       {this.state.stage === 0 && (
-    //         <form className="card-body">
-    //           <h2>Reset your password</h2>
-    //           {this.state.error && (
-    //             <p className="text-danger">
-    //               {this.state.error.message
-    //                 ? this.state.error.message
-    //                 : this.state.error}
-    //             </p>
-    //           )}
-    //           <div className="form-group">
-    //             <label htmlFor="exampleInputEmail1">Email Address</label>
-    //             <input
-    //               onChange={this.handleUpdate}
-    //               type="email"
-    //               name="email"
-    //               value={this.state.email}
-    //               className="form-control"
-    //               aria-describedby="emailHelp"
-    //               placeholder="Enter email"
-    //             />
-    //           </div>
-    //           <button
-    //             onClick={e => this.reset(e)}
-    //             type="submit"
-    //             className="btn btn-primary btn-block"
-    //             disabled={this.state.loading}
-    //           >
-    //             {this.state.loading ? null : 'Send Code'}
-    //             {this.state.loading && (
-    //               <span
-    //                 className="spinner-border spinner-border-sm"
-    //                 role="status"
-    //                 aria-hidden="true"
-    //               />
-    //             )}
-    //           </button>
-    //           <p style={{ marginTop: 40 }} className="text-center">
-    //             <Link to="/signin">Back to Sign In</Link>
-    //           </p>
-    //         </form>
-    //       )}
-    //       {this.state.stage === 1 && (
-    //         <div>
-    //           <form className="card-body auth-forms100">
-    //             <h2>Confirm Password Update</h2>
-    //             {this.state.error && (
-    //               <p className="text-danger">
-    //                 {this.state.error.message
-    //                   ? this.state.error.message
-    //                   : this.state.error}
-    //               </p>
-    //             )}
-    //             <div className="form-group">
-    //               <label htmlFor="exampleInputEmail1">Email Address</label>
-    //               <input
-    //                 disabled
-    //                 name="email"
-    //                 value={this.state.email}
-    //                 type="email"
-    //                 className="form-control"
-    //                 // id="exampleInputEmail1"
-    //                 aria-describedby="emailHelp"
-    //                 placeholder="Enter email"
-    //               />
-    //             </div>
-    //             <div className="form-group">
-    //               <label>Confirmation Code</label>
-    //               <input
-    //                 onChange={this.handleUpdate}
-    //                 name="auth_code"
-    //                 value={this.state.auth_code}
-    //                 type="text"
-    //                 className="form-control"
-    //                 placeholder="######"
-    //               />
-    //             </div>
-    //             <div className="form-group">
-    //               <label htmlFor="exampleInputPassword1">Password</label>
-    //               <input
-    //                 onChange={this.handleUpdate}
-    //                 name="password"
-    //                 value={this.state.password}
-    //                 type="password"
-    //                 className="form-control"
-    //                 id="exampleInputPassword1"
-    //                 placeholder="Password"
-    //               />
-    //             </div>
-    //             <button
-    //               onClick={e => this.confirmReset(e)}
-    //               type="submit"
-    //               className="btn btn-primary btn-block"
-    //               disabled={this.state.loading}
-    //             >
-    //               {this.state.loading ? null : 'Confirm Reset'}
-    //               {this.state.loading && (
-    //                 <span
-    //                   className="spinner-border spinner-border-sm"
-    //                   role="status"
-    //                   aria-hidden="true"
-    //                 />
-    //               )}
-    //             </button>
-    //           </form>
-    //           <div
-    //             style={{
-    //               display: 'flex',
-    //               justifyContent: 'center',
-    //               alignItems: 'center',
-    //             }}
-    //           >
-    //             <p
-    //               style={{ marginTop: 20, marginBottom: 20 }}
-    //               className="text-center"
-    //             >
-    //               Lost your code?
-    //             </p>
-    //             <button
-    //               className="btn btn-link"
-    //               onClick={e => this.reset(e)}
-    //               disabled={this.state.loading}
-    //             >
-    //               Resend Code
-    //             </button>
-    //           </div>
-    //         </div>
-    //       )}
-    //     </div>
-    //   </div>
-    // )
   }
 }
 
