@@ -1,74 +1,133 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Grid, Card, CardContent, CardHeader, TextField,
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 export function AuthForm({ children, title, error }) {
+  console.log({ error, type: typeof error });
   return (
-    <div className="container-login100">
-      <div className="wrap-login100 card shadow p-3 mb-5 bg-white rounded mr-opacity">
-        <form className="card-body auth-forms100">
-          <h2>{title}</h2>
-          {error && (
-            <p className="text-danger">
-              {error.message ? error.message : error}
-            </p>
-          )}
-          {children}
-        </form>
-      </div>
-    </div>
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      alignContent="stretch"
+      style={{ height: '100%' }}
+    >
+      <Grid item xs={10} sm={6} md={4} lg={4}>
+        <Card>
+          <CardHeader
+            title={title}
+          />
+          <CardContent>
+            <div>
+              {error && (
+                <Alert severity="error">
+                  {error.message ? error.message : error}
+                </Alert>
+              )}
+            </div>
+            <Grid container direction="column" justify="space-between" spacing={3}>
+              {React.Children.map(children, (child) => (
+                <Grid item>
+                  {child}
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
+
+AuthForm.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  error: PropTypes.oneOf([
+    PropTypes.object,
+    PropTypes.string,
+  ]).isRequired,
+};
 
 export function Email({ handleUpdate, email, autoComplete }) {
   return (
-    <div className="form-group">
-      <label htmlFor="enterEmailAddress">Email Address</label>
-      <input
-        onChange={handleUpdate}
-        name="email"
-        type="email"
-        value={email}
-        className="form-control"
-        autoComplete={autoComplete}
-        id="enterEmailAddress"
-        aria-describedby="emailHelp"
-        placeholder="Enter email"
-      />
-    </div>
+    <TextField
+      fullWidth
+      onChange={handleUpdate}
+      name="email"
+      label="Email Address"
+      type="email"
+      value={email}
+      className="form-control"
+      autoComplete={autoComplete}
+      id="enterEmailAddress"
+      aria-describedby="emailHelp"
+      placeholder="Enter email"
+    />
   );
 }
+
+Email.defaultProps = {
+  autoComplete: 'off',
+};
+
+Email.propTypes = {
+  handleUpdate: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
+};
 
 export function Password({ handleUpdate, password, autoComplete }) {
   return (
-    <div className="form-group">
-      <label htmlFor="enterPassword">Password</label>
-      <input
-        onChange={handleUpdate}
-        autoComplete={autoComplete}
-        name="password"
-        value={password}
-        type="password"
-        className="form-control"
-        placeholder="Password"
-        id="enterPassword"
-      />
-    </div>
+    <TextField
+      fullWidth
+      label="Password"
+      onChange={handleUpdate}
+      autoComplete={autoComplete}
+      name="password"
+      value={password}
+      type="password"
+      placeholder="Password"
+      id="enterPassword"
+    />
   );
 }
 
+Password.defaultProps = {
+  autoComplete: 'off',
+};
+
+Password.propTypes = {
+  handleUpdate: PropTypes.func.isRequired,
+  password: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
+};
+
 export function ConfirmationCode({ handleUpdate, auth_code: authCode, autoComplete }) {
   return (
-    <div className="form-group">
-      <label htmlFor="enterCode">Confirmation Code</label>
-      <input
-        onChange={handleUpdate}
-        autoComplete={autoComplete}
-        name="auth_code"
-        value={authCode}
-        type="text"
-        className="form-control"
-        placeholder="######"
-        id="enterCode"
-      />
-    </div>
+    <TextField
+      fullWidth
+      label="Confirmation Code"
+      onChange={handleUpdate}
+      autoComplete={autoComplete}
+      name="auth_code"
+      value={authCode}
+      type="text"
+      placeholder="######"
+      id="enterCode"
+    />
   );
 }
+
+ConfirmationCode.defaultProps = {
+  autoComplete: 'off',
+};
+
+ConfirmationCode.propTypes = {
+  handleUpdate: PropTypes.func.isRequired,
+  auth_code: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
+};

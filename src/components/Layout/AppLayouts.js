@@ -1,21 +1,36 @@
 import React from 'react';
-import 'modern-normalize/modern-normalize.css';
+import PropTypes from 'prop-types';
+import { CssBaseline, Container } from '@material-ui/core';
+
 import { Nav, UserNav } from '../Nav';
-import '../../scss/styles.scss';
 
 export function Layout({ children, isUserNav }) {
   return (
-    <div>
+    <>
+      <CssBaseline />
       {isUserNav ? <UserNav /> : <Nav />}
       <div style={{ height: 'calc(100vh - 56px)' }}>{children}</div>
-    </div>
+    </>
   );
 }
 
+Layout.defaultProps = {
+  isUserNav: false,
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  isUserNav: PropTypes.bool,
+};
+
 export function AppContent({ children }) {
   return (
-    <div className="app-content-100">
-      <div className="container" style={{ marginTop: 40 }}>{children}</div>
-    </div>
+    <Container>
+      <Container style={{ marginTop: 40 }}>{children}</Container>
+    </Container>
   );
 }
+
+AppContent.propTypes = {
+  children: PropTypes.node.isRequired,
+};
