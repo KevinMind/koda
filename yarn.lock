@@ -2,6 +2,36 @@
 # yarn lockfile v1
 
 
+"@aws-amplify/api-graphql@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@aws-amplify/api-graphql/-/api-graphql-1.0.10.tgz#0879aeccdad0ddd39f9140a978b962fa84440941"
+  integrity sha512-VrEvnRu71gBMJbfofx2VXDE9VxiUZOQVbcVTaVS0nh/iLA2Eb/+oaaUJJ4pF5fq6KbcLktrnP5yHf4v6T1DbQA==
+  dependencies:
+    "@aws-amplify/api-rest" "^1.0.10"
+    "@aws-amplify/auth" "^3.2.5"
+    "@aws-amplify/cache" "^3.1.8"
+    "@aws-amplify/core" "^3.2.5"
+    "@aws-amplify/pubsub" "^3.0.9"
+    graphql "14.0.0"
+    uuid "^3.2.1"
+    zen-observable-ts "0.8.19"
+
+"@aws-amplify/api-rest@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@aws-amplify/api-rest/-/api-rest-1.0.10.tgz#7be9654f4867d4ef26d7f3c31b3582b12d45bd16"
+  integrity sha512-ker8tST+3x6SU/eXMQVio2zxlYIiikdjZ8Q7/oC8GVv1nmmOEYOO0OIvEfTM33BzdwLsDQDzpJtTqowC3z8U3w==
+  dependencies:
+    "@aws-amplify/core" "^3.2.5"
+    axios "0.19.0"
+
+"@aws-amplify/api@^3.1.8":
+  version "3.1.8"
+  resolved "https://registry.npmjs.org/@aws-amplify/api/-/api-3.1.8.tgz#d9cb02271d1116e1518174d5e50edd8b949a5d67"
+  integrity sha512-qmADWNV0c+kWM8I1byprDojbv8NH3kdWFr+3PVUbkNABTDUNHe8CeHBA4Ad7S01gb1gZ1yPHyX49m82E8UOdig==
+  dependencies:
+    "@aws-amplify/api-graphql" "^1.0.10"
+    "@aws-amplify/api-rest" "^1.0.10"
+
 "@aws-amplify/auth@^3.2.5":
   version "3.2.5"
   resolved "https://registry.npmjs.org/@aws-amplify/auth/-/auth-3.2.5.tgz#f3ac264e4ffa693179e4295625e77a2e48d385c1"
@@ -32,6 +62,19 @@
     "@aws-sdk/util-hex-encoding" "1.0.0-beta.2"
     "@aws-sdk/util-user-agent-browser" "1.0.0-beta.2"
     url "^0.11.0"
+    zen-observable-ts "0.8.19"
+
+"@aws-amplify/pubsub@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.npmjs.org/@aws-amplify/pubsub/-/pubsub-3.0.9.tgz#5b9313aabbc353ffa33cfbeb810f15868524cc3e"
+  integrity sha512-0N5cOuO8xQBSmLASXj5qzFUQYaK4g8eXQ/X1T0WrEXwipFKNBxHitvltj8TzhlbGbuTnmHta+6snbirQdCDCbQ==
+  dependencies:
+    "@aws-amplify/auth" "^3.2.5"
+    "@aws-amplify/cache" "^3.1.8"
+    "@aws-amplify/core" "^3.2.5"
+    graphql "14.0.0"
+    paho-mqtt "^1.1.0"
+    uuid "^3.2.1"
     zen-observable-ts "0.8.19"
 
 "@aws-crypto/ie11-detection@^1.0.0-alpha.0":
@@ -3520,6 +3563,14 @@ aws4@^1.8.0:
   version "1.9.1"
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
+
+axios@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  integrity sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
 
 axios@^0.19.2:
   version "0.19.2"
@@ -8384,6 +8435,13 @@ graphql-type-json@^0.3.1:
   resolved "https://registry.npmjs.org/graphql-type-json/-/graphql-type-json-0.3.1.tgz#47fca2b1fa7adc0758d165b33580d7be7a6cf548"
   integrity sha512-1lPkUXQ2L8o+ERLzVAuc3rzc/E6pGF+6HnjihCVTK0VzR0jCuUd92FqNxoHdfILXqOn2L6b4y47TBxiPyieUVA==
 
+graphql@14.0.0:
+  version "14.0.0"
+  resolved "https://registry.npmjs.org/graphql/-/graphql-14.0.0.tgz#4ee771c5266d08cb75df2d3ac41e8dd51ce3d599"
+  integrity sha512-HGVcnO6B25YZcSt6ZsH6/N+XkYuPA7yMqJmlJ4JWxWlS4Tr8SHI56R1Ocs8Eor7V7joEZPRXPDH8RRdll1w44Q==
+  dependencies:
+    iterall "^1.2.2"
+
 graphql@^14.6.0:
   version "14.6.0"
   resolved "https://registry.npmjs.org/graphql/-/graphql-14.6.0.tgz#57822297111e874ea12f5cd4419616930cd83e49"
@@ -9347,7 +9405,7 @@ is-buffer@^1.1.5, is-buffer@~1.1.1:
   resolved "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
   integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
-is-buffer@^2.0.0, is-buffer@~2.0.3:
+is-buffer@^2.0.0, is-buffer@^2.0.2, is-buffer@~2.0.3:
   version "2.0.4"
   resolved "https://registry.npmjs.org/is-buffer/-/is-buffer-2.0.4.tgz#3e572f23c8411a5cfd9557c849e3665e0b290623"
   integrity sha512-Kq1rokWXOPXWuaMAqZiJW4XxsmD9zGx9q4aePabbn3qCRGedtH7Cm+zV8WETitMfu1wdh+Rvd6w5egwSngUX2A==
@@ -12335,6 +12393,11 @@ pad-right@^0.2.2:
   integrity sha1-b7ySQEXSRPKiokRQMGDTv8YAl3Q=
   dependencies:
     repeat-string "^1.5.2"
+
+paho-mqtt@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/paho-mqtt/-/paho-mqtt-1.1.0.tgz#8c10e29eb162e966fb15188d965c3dce505de9d9"
+  integrity sha512-KPbL9KAB0ASvhSDbOrZBaccXS+/s7/LIofbPyERww8hM5Ko71GUJQ6Nmg0BWqj8phAIT8zdf/Sd/RftHU9i2HA==
 
 pako@^1.0.5, pako@~1.0.5:
   version "1.0.11"
@@ -16254,7 +16317,7 @@ utils-merge@1.0.1:
   resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@3.4.0, uuid@^3.0.0, uuid@^3.0.1, uuid@^3.3.2, uuid@^3.4.0:
+uuid@3.4.0, uuid@^3.0.0, uuid@^3.0.1, uuid@^3.2.1, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
