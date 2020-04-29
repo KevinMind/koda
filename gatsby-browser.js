@@ -5,7 +5,7 @@
  */
 
 const React = require("react");
-const Amplify = require('aws-amplify').default;
+const Amplify = require('@aws-amplify/core').default;
 const config = require('./aws-exports').default;
 
 exports.wrapRootElement = ({ element }) => {

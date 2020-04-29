@@ -1,0 +1,15 @@
+{
+    "master": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-koda-master-92617-authRole",
+            "UnauthRoleArn": "arn:aws:iam::948101820061:role/amplify-koda-master-92617-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::948101820061:role/amplify-koda-master-92617-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-koda-master-92617-deployment",
+            "UnauthRoleName": "amplify-koda-master-92617-unauthRole",
+            "StackName": "amplify-koda-master-92617",
+            "StackId": "arn:aws:cloudformation:us-east-1:948101820061:stack/amplify-koda-master-92617/bafeba30-89ea-11ea-bc3a-0a36a8f29061",
+            "AmplifyAppId": "d1pk16cfivgrzs"
+        }
+    }
+}

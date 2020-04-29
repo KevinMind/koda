@@ -5,7 +5,7 @@ import {
   AppBar, Toolbar, Grid, Button,
 } from '@material-ui/core';
 
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { AppUser } from '../Auth';
 
 function UserNav() {
