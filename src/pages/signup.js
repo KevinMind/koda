@@ -169,6 +169,7 @@ class SignUp extends React.Component {
         />
         <Button
           disableElevation
+          variant="contained"
           size="medium"
           fullWidth
           color="primary"
@@ -187,21 +188,28 @@ class SignUp extends React.Component {
           <Link to="/signin">Sign in</Link>
         </Typography>
         <Grid
+          direction="row"
           alignItems="center"
-          justify="center"
+          justify="flex-start"
         >
-          <Typography
-            style={{ marginTop: 20, marginBottom: 20 }}
-            align="center"
-          >
-            Lost your code?
-          </Typography>
-          <Button
-            onClick={(e) => this.resendCode(e)}
-            disabled={this.state.loading}
-          >
-            Resend Code
-          </Button>
+          <Grid item>
+            <Typography
+              style={{ marginTop: 20, marginBottom: 20 }}
+              align="center"
+            >
+              Lost your code?
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="outlined"
+              fullWidth
+              onClick={(e) => this.resendCode(e)}
+              disabled={this.state.loading}
+            >
+              Resend Code
+            </Button>
+          </Grid>
         </Grid>
       </AuthForm>
     );
