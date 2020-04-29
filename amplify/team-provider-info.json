@@ -10,6 +10,11 @@
             "StackName": "amplify-koda-master-92617",
             "StackId": "arn:aws:cloudformation:us-east-1:948101820061:stack/amplify-koda-master-92617/bafeba30-89ea-11ea-bc3a-0a36a8f29061",
             "AmplifyAppId": "d1pk16cfivgrzs"
+        },
+        "categories": {
+            "auth": {
+                "kodac19efeda": {}
+            }
         }
     }
 }

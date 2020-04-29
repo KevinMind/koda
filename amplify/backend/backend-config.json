@@ -1,1 +1,10 @@
-{}
+{
+	"auth": {
+		"kodac19efeda": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}
