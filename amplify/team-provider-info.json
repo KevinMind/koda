@@ -1,26 +1,15 @@
 {
-    "koda": {
+    "master": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-koda-koda-192523-authRole",
-            "UnauthRoleArn": "arn:aws:iam::948101820061:role/amplify-koda-koda-192523-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::948101820061:role/amplify-koda-koda-192523-authRole",
+            "AuthRoleName": "amplify-koda-master-163831-authRole",
+            "UnauthRoleArn": "arn:aws:iam::948101820061:role/amplify-koda-master-163831-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::948101820061:role/amplify-koda-master-163831-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-koda-koda-192523-deployment",
-            "UnauthRoleName": "amplify-koda-koda-192523-unauthRole",
-            "StackName": "amplify-koda-koda-192523",
-            "StackId": "arn:aws:cloudformation:us-east-1:948101820061:stack/amplify-koda-koda-192523/eb638cf0-87e2-11ea-930f-0a7396047ff3",
-            "AmplifyAppId": "d3t08pro2b1d4b"
-        },
-        "categories": {
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d3t08pro2b1d4b",
-                    "type": "cicd"
-                }
-            },
-            "auth": {
-                "koda24d20e58": {}
-            }
+            "DeploymentBucketName": "amplify-koda-master-163831-deployment",
+            "UnauthRoleName": "amplify-koda-master-163831-unauthRole",
+            "StackName": "amplify-koda-master-163831",
+            "StackId": "arn:aws:cloudformation:us-east-1:948101820061:stack/amplify-koda-master-163831/f0b77460-895d-11ea-ac98-0a3238f55eb3",
+            "AmplifyAppId": "d36tn8wxeqa7ky"
         }
     }
 }
