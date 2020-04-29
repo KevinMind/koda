@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, CssBaseline, styled } from '@material-ui/core';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import Header from './Header';
 import Nagivation from './Nagivation';
@@ -48,4 +47,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withAuthenticator(Layout);
+export default Layout;
