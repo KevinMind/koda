@@ -12,7 +12,7 @@
     "lint:fix": "yarn lint --fix",
     "dev": "npm run clean && gatsby develop",
     "build": "gatsby build",
-    "clean": "rimraf .cache public",
+    "clean": "rimraf .cache public out build",
     "start": "gatsby develop",
     "start:prod": "gatsby serve"
   },
@@ -60,7 +60,7 @@
     "modern-normalize": "^0.5.0",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.2"
   },
   "config": {
     "commitizen": {
