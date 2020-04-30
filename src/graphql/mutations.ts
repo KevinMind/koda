@@ -41,3 +41,144 @@ export const deleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const createEvent = /* GraphQL */ `
+  mutation CreateEvent(
+    $input: CreateEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    createEvent(input: $input, condition: $condition) {
+      id
+      outside
+      success
+      startTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const updateEvent = /* GraphQL */ `
+  mutation UpdateEvent(
+    $input: UpdateEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    updateEvent(input: $input, condition: $condition) {
+      id
+      outside
+      success
+      startTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const deleteEvent = /* GraphQL */ `
+  mutation DeleteEvent(
+    $input: DeleteEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    deleteEvent(input: $input, condition: $condition) {
+      id
+      outside
+      success
+      startTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const createActivity = /* GraphQL */ `
+  mutation CreateActivity(
+    $input: CreateActivityInput!
+    $condition: ModelActivityConditionInput
+  ) {
+    createActivity(input: $input, condition: $condition) {
+      id
+      outside
+      success
+      startTime
+      endTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const updateActivity = /* GraphQL */ `
+  mutation UpdateActivity(
+    $input: UpdateActivityInput!
+    $condition: ModelActivityConditionInput
+  ) {
+    updateActivity(input: $input, condition: $condition) {
+      id
+      outside
+      success
+      startTime
+      endTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const deleteActivity = /* GraphQL */ `
+  mutation DeleteActivity(
+    $input: DeleteActivityInput!
+    $condition: ModelActivityConditionInput
+  ) {
+    deleteActivity(input: $input, condition: $condition) {
+      id
+      outside
+      success
+      startTime
+      endTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const createMood = /* GraphQL */ `
+  mutation CreateMood(
+    $input: CreateMoodInput!
+    $condition: ModelMoodConditionInput
+  ) {
+    createMood(input: $input, condition: $condition) {
+      id
+      outside
+      label
+      category
+      owner
+    }
+  }
+`;
+export const updateMood = /* GraphQL */ `
+  mutation UpdateMood(
+    $input: UpdateMoodInput!
+    $condition: ModelMoodConditionInput
+  ) {
+    updateMood(input: $input, condition: $condition) {
+      id
+      outside
+      label
+      category
+      owner
+    }
+  }
+`;
+export const deleteMood = /* GraphQL */ `
+  mutation DeleteMood(
+    $input: DeleteMoodInput!
+    $condition: ModelMoodConditionInput
+  ) {
+    deleteMood(input: $input, condition: $condition) {
+      id
+      outside
+      label
+      category
+      owner
+    }
+  }
+`;
