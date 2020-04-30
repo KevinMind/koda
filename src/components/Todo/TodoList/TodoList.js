@@ -14,7 +14,7 @@ const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
   const handleUpdate = async () => setTodos(await listTodos());
-  const handleEditTodo = id => navigate(`/edit?id=${id}`);
+  const handleEditTodo = id => navigate(`/todos/edit?id=${id}`);
 
   useEffect(() => {
     let sub;

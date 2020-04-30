@@ -32,6 +32,11 @@ function UserNav() {
                 Profile
               </p>
             </Link>
+            <Link className="text-center" to="/todos">
+              <p style={{ margin: 0 }} className="nav-link">
+                Todos
+              </p>
+            </Link>
           </Grid>
           <Grid item>
             <Button

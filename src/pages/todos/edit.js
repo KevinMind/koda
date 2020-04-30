@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, navigate } from '@reach/router';
 import { Button, Container, Typography } from '@material-ui/core';
 
-import withPrivateRoute from '../components/Routes/PrivateRoute';
-import { AppContent } from '../components/Layout';
-import { updateTodo, getTodo } from '../services/todo';
-import AddTodo from '../components/Todo/AddTodo';
+import withPrivateRoute from '../../components/Routes/PrivateRoute';
+import { AppContent } from '../../components/Layout';
+import { updateTodo, getTodo } from '../../services/todo';
+import AddTodo from '../../components/Todo/AddTodo';
 
 const Edit = () => {
   const [isLoaded, setLoaded] = useState(false);
