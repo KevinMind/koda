@@ -48,7 +48,7 @@ const Edit = () => {
   return (
     <Container>
       <AppContent>
-        <Typography variant="h1">Edit todo</Typography>
+        <Typography variant="h3" coomponent="h1">Edit todo</Typography>
         <Typography>ID: {initial.id}</Typography>
         <Button onClick={handleBack}>Back</Button>
         <AddTodo
