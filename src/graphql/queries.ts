@@ -29,3 +29,100 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
+export const getEvent = /* GraphQL */ `
+  query GetEvent($id: ID!) {
+    getEvent(id: $id) {
+      id
+      outside
+      success
+      startTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const listEvents = /* GraphQL */ `
+  query ListEvents(
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        outside
+        success
+        startTime
+        category
+        subCategory
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getActivity = /* GraphQL */ `
+  query GetActivity($id: ID!) {
+    getActivity(id: $id) {
+      id
+      outside
+      success
+      startTime
+      endTime
+      category
+      subCategory
+      owner
+    }
+  }
+`;
+export const listActivitys = /* GraphQL */ `
+  query ListActivitys(
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listActivitys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        outside
+        success
+        startTime
+        endTime
+        category
+        subCategory
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getMood = /* GraphQL */ `
+  query GetMood($id: ID!) {
+    getMood(id: $id) {
+      id
+      outside
+      label
+      category
+      owner
+    }
+  }
+`;
+export const listMoods = /* GraphQL */ `
+  query ListMoods(
+    $filter: ModelMoodFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMoods(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        outside
+        label
+        category
+        owner
+      }
+      nextToken
+    }
+  }
+`;

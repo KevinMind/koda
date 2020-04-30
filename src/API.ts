@@ -66,6 +66,109 @@ export type DeleteTodoInput = {
   id?: string | null,
 };
 
+export type CreateEventInput = {
+  id?: string | null,
+  outside?: boolean | null,
+  success: boolean,
+  startTime: string,
+  category: string,
+  subCategory: string,
+};
+
+export type ModelEventConditionInput = {
+  outside?: ModelBooleanInput | null,
+  success?: ModelBooleanInput | null,
+  startTime?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  subCategory?: ModelStringInput | null,
+  and?: Array< ModelEventConditionInput | null > | null,
+  or?: Array< ModelEventConditionInput | null > | null,
+  not?: ModelEventConditionInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateEventInput = {
+  id: string,
+  outside?: boolean | null,
+  success?: boolean | null,
+  startTime?: string | null,
+  category?: string | null,
+  subCategory?: string | null,
+};
+
+export type DeleteEventInput = {
+  id?: string | null,
+};
+
+export type CreateActivityInput = {
+  id?: string | null,
+  outside?: boolean | null,
+  success: boolean,
+  startTime: string,
+  endTime: string,
+  category: string,
+  subCategory: string,
+};
+
+export type ModelActivityConditionInput = {
+  outside?: ModelBooleanInput | null,
+  success?: ModelBooleanInput | null,
+  startTime?: ModelStringInput | null,
+  endTime?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  subCategory?: ModelStringInput | null,
+  and?: Array< ModelActivityConditionInput | null > | null,
+  or?: Array< ModelActivityConditionInput | null > | null,
+  not?: ModelActivityConditionInput | null,
+};
+
+export type UpdateActivityInput = {
+  id: string,
+  outside?: boolean | null,
+  success?: boolean | null,
+  startTime?: string | null,
+  endTime?: string | null,
+  category?: string | null,
+  subCategory?: string | null,
+};
+
+export type DeleteActivityInput = {
+  id?: string | null,
+};
+
+export type CreateMoodInput = {
+  id?: string | null,
+  outside?: boolean | null,
+  label: string,
+  category: string,
+};
+
+export type ModelMoodConditionInput = {
+  outside?: ModelBooleanInput | null,
+  label?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  and?: Array< ModelMoodConditionInput | null > | null,
+  or?: Array< ModelMoodConditionInput | null > | null,
+  not?: ModelMoodConditionInput | null,
+};
+
+export type UpdateMoodInput = {
+  id: string,
+  outside?: boolean | null,
+  label?: string | null,
+  category?: string | null,
+};
+
+export type DeleteMoodInput = {
+  id?: string | null,
+};
+
 export type ModelTodoFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -89,6 +192,41 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type ModelEventFilterInput = {
+  id?: ModelIDInput | null,
+  outside?: ModelBooleanInput | null,
+  success?: ModelBooleanInput | null,
+  startTime?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  subCategory?: ModelStringInput | null,
+  and?: Array< ModelEventFilterInput | null > | null,
+  or?: Array< ModelEventFilterInput | null > | null,
+  not?: ModelEventFilterInput | null,
+};
+
+export type ModelActivityFilterInput = {
+  id?: ModelIDInput | null,
+  outside?: ModelBooleanInput | null,
+  success?: ModelBooleanInput | null,
+  startTime?: ModelStringInput | null,
+  endTime?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  subCategory?: ModelStringInput | null,
+  and?: Array< ModelActivityFilterInput | null > | null,
+  or?: Array< ModelActivityFilterInput | null > | null,
+  not?: ModelActivityFilterInput | null,
+};
+
+export type ModelMoodFilterInput = {
+  id?: ModelIDInput | null,
+  outside?: ModelBooleanInput | null,
+  label?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  and?: Array< ModelMoodFilterInput | null > | null,
+  or?: Array< ModelMoodFilterInput | null > | null,
+  not?: ModelMoodFilterInput | null,
 };
 
 export type CreateTodoMutationVariables = {
@@ -136,6 +274,165 @@ export type DeleteTodoMutation = {
   } | null,
 };
 
+export type CreateEventMutationVariables = {
+  input: CreateEventInput,
+  condition?: ModelEventConditionInput | null,
+};
+
+export type CreateEventMutation = {
+  createEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type UpdateEventMutationVariables = {
+  input: UpdateEventInput,
+  condition?: ModelEventConditionInput | null,
+};
+
+export type UpdateEventMutation = {
+  updateEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type DeleteEventMutationVariables = {
+  input: DeleteEventInput,
+  condition?: ModelEventConditionInput | null,
+};
+
+export type DeleteEventMutation = {
+  deleteEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type CreateActivityMutationVariables = {
+  input: CreateActivityInput,
+  condition?: ModelActivityConditionInput | null,
+};
+
+export type CreateActivityMutation = {
+  createActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type UpdateActivityMutationVariables = {
+  input: UpdateActivityInput,
+  condition?: ModelActivityConditionInput | null,
+};
+
+export type UpdateActivityMutation = {
+  updateActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type DeleteActivityMutationVariables = {
+  input: DeleteActivityInput,
+  condition?: ModelActivityConditionInput | null,
+};
+
+export type DeleteActivityMutation = {
+  deleteActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type CreateMoodMutationVariables = {
+  input: CreateMoodInput,
+  condition?: ModelMoodConditionInput | null,
+};
+
+export type CreateMoodMutation = {
+  createMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
+    owner: string | null,
+  } | null,
+};
+
+export type UpdateMoodMutationVariables = {
+  input: UpdateMoodInput,
+  condition?: ModelMoodConditionInput | null,
+};
+
+export type UpdateMoodMutation = {
+  updateMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
+    owner: string | null,
+  } | null,
+};
+
+export type DeleteMoodMutationVariables = {
+  input: DeleteMoodInput,
+  condition?: ModelMoodConditionInput | null,
+};
+
+export type DeleteMoodMutation = {
+  deleteMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
+    owner: string | null,
+  } | null,
+};
+
 export type GetTodoQueryVariables = {
   id: string,
 };
@@ -164,6 +461,124 @@ export type ListTodosQuery = {
       id: string,
       name: string,
       description: string | null,
+      owner: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetEventQueryVariables = {
+  id: string,
+};
+
+export type GetEventQuery = {
+  getEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type ListEventsQueryVariables = {
+  filter?: ModelEventFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListEventsQuery = {
+  listEvents:  {
+    __typename: "ModelEventConnection",
+    items:  Array< {
+      __typename: "Event",
+      id: string,
+      outside: boolean | null,
+      success: boolean,
+      startTime: string,
+      category: string,
+      subCategory: string,
+      owner: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetActivityQueryVariables = {
+  id: string,
+};
+
+export type GetActivityQuery = {
+  getActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type ListActivitysQueryVariables = {
+  filter?: ModelActivityFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListActivitysQuery = {
+  listActivitys:  {
+    __typename: "ModelActivityConnection",
+    items:  Array< {
+      __typename: "Activity",
+      id: string,
+      outside: boolean | null,
+      success: boolean,
+      startTime: string,
+      endTime: string,
+      category: string,
+      subCategory: string,
+      owner: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetMoodQueryVariables = {
+  id: string,
+};
+
+export type GetMoodQuery = {
+  getMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
+    owner: string | null,
+  } | null,
+};
+
+export type ListMoodsQueryVariables = {
+  filter?: ModelMoodFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMoodsQuery = {
+  listMoods:  {
+    __typename: "ModelMoodConnection",
+    items:  Array< {
+      __typename: "Mood",
+      id: string,
+      outside: boolean | null,
+      label: string,
+      category: string,
       owner: string | null,
     } | null > | null,
     nextToken: string | null,
@@ -208,6 +623,156 @@ export type OnDeleteTodoSubscription = {
     id: string,
     name: string,
     description: string | null,
+    owner: string | null,
+  } | null,
+};
+
+export type OnCreateEventSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnCreateEventSubscription = {
+  onCreateEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnUpdateEventSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnUpdateEventSubscription = {
+  onUpdateEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnDeleteEventSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnDeleteEventSubscription = {
+  onDeleteEvent:  {
+    __typename: "Event",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnCreateActivitySubscriptionVariables = {
+  owner: string,
+};
+
+export type OnCreateActivitySubscription = {
+  onCreateActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnUpdateActivitySubscriptionVariables = {
+  owner: string,
+};
+
+export type OnUpdateActivitySubscription = {
+  onUpdateActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnDeleteActivitySubscriptionVariables = {
+  owner: string,
+};
+
+export type OnDeleteActivitySubscription = {
+  onDeleteActivity:  {
+    __typename: "Activity",
+    id: string,
+    outside: boolean | null,
+    success: boolean,
+    startTime: string,
+    endTime: string,
+    category: string,
+    subCategory: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnCreateMoodSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnCreateMoodSubscription = {
+  onCreateMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnUpdateMoodSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnUpdateMoodSubscription = {
+  onUpdateMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
+    owner: string | null,
+  } | null,
+};
+
+export type OnDeleteMoodSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnDeleteMoodSubscription = {
+  onDeleteMood:  {
+    __typename: "Mood",
+    id: string,
+    outside: boolean | null,
+    label: string,
+    category: string,
     owner: string | null,
   } | null,
 };

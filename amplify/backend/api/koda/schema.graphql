@@ -3,3 +3,29 @@ type Todo @model @auth(rules: [{allow: owner}]) {
   name: String!
   description: String
 }
+
+type Event @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  outside: Boolean
+  success: Boolean!
+  startTime: String!
+  category: String!
+  subCategory: String!
+}
+
+type Activity @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  outside: Boolean
+  success: Boolean!
+  startTime: String!
+  endTime: String!
+  category: String!
+  subCategory: String!
+}
+
+type Mood @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  outside: Boolean
+  label: String!
+  category: String!
+}
