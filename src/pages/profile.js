@@ -30,7 +30,7 @@ const Profile = () => {
   return (
     <Container>
       <AppContent>
-        <Typography variant="h1">Here is the Profile Page</Typography>
+        <Typography variant="h3" coomponent="h1">Here is the Profile Page</Typography>
         <Typography>
           Email:
           {user.email}
