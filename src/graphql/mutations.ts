@@ -11,6 +11,7 @@ export const createTodo = /* GraphQL */ `
       id
       name
       description
+      owner
     }
   }
 `;
@@ -23,6 +24,7 @@ export const updateTodo = /* GraphQL */ `
       id
       name
       description
+      owner
     }
   }
 `;
@@ -35,6 +37,7 @@ export const deleteTodo = /* GraphQL */ `
       id
       name
       description
+      owner
     }
   }
 `;
