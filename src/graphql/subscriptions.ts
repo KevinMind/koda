@@ -40,7 +40,7 @@ export const onCreateEvent = /* GraphQL */ `
       success
       startTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -53,7 +53,7 @@ export const onUpdateEvent = /* GraphQL */ `
       success
       startTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -66,7 +66,7 @@ export const onDeleteEvent = /* GraphQL */ `
       success
       startTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -80,7 +80,7 @@ export const onCreateActivity = /* GraphQL */ `
       startTime
       endTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -94,7 +94,7 @@ export const onUpdateActivity = /* GraphQL */ `
       startTime
       endTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -108,7 +108,7 @@ export const onDeleteActivity = /* GraphQL */ `
       startTime
       endTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -118,8 +118,10 @@ export const onCreateMood = /* GraphQL */ `
     onCreateMood(owner: $owner) {
       id
       outside
-      label
+      success
+      startTime
       category
+      values
       owner
     }
   }
@@ -129,8 +131,10 @@ export const onUpdateMood = /* GraphQL */ `
     onUpdateMood(owner: $owner) {
       id
       outside
-      label
+      success
+      startTime
       category
+      values
       owner
     }
   }
@@ -140,8 +144,10 @@ export const onDeleteMood = /* GraphQL */ `
     onDeleteMood(owner: $owner) {
       id
       outside
-      label
+      success
+      startTime
       category
+      values
       owner
     }
   }

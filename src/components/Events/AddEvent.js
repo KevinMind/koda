@@ -1,21 +1,33 @@
-import React  from 'react';
+import React, {useContext} from 'react';
 import {
-  FormControl, RadioGroup, Radio, FormControlLabel,
+  FormGroup, Checkbox,
+  FormControl, FormControlLabel,
 } from '@material-ui/core';
+import EventContext from './context';
 
-const AddEvent = ({ value, onChange }) => {
+const AddEvent = ({ options }) => {
+  const { onChange, getValues, section, category } = useContext(EventContext);
+  const values = getValues({ section, category });
+  const handleChange = ({ target: { checked, value }}) => {
+    onChange(value, checked);
+  };
   return (
     <FormControl component="fieldset">
-      <RadioGroup
-        aria-label="gender"
-        name="gender1"
-        value={value}
-        onChange={onChange}
-      >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
-      </RadioGroup>
+      <FormGroup>
+        {options.map(option => (
+          <FormControlLabel
+            key={option.label}
+            control={
+              <Checkbox
+                checked={values.includes(option.value)}
+                onChange={handleChange}
+                name={option.label}
+              />
+            }
+            {...option}
+          />
+        ))}
+      </FormGroup>
     </FormControl>
   );
 };

@@ -19,7 +19,7 @@ function UserNav() {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Grid
           container
@@ -27,14 +27,16 @@ function UserNav() {
           alignItems="center"
         >
           <Grid item>
-            <Link className="text-center" to="/profile">
+            <Link className="text-center" to="/events">
               <p style={{ margin: 0 }} className="nav-link">
-                Profile
+                List
               </p>
             </Link>
-            <Link className="text-center" to="/todos">
+          </Grid>
+          <Grid item>
+            <Link className="text-center" to="/events/add">
               <p style={{ margin: 0 }} className="nav-link">
-                Todos
+                Add
               </p>
             </Link>
           </Grid>

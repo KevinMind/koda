@@ -1,34 +1,52 @@
-import React, {useState} from 'react';
-import { Tab, Tabs, Typography } from '@material-ui/core';
+import React, {useContext } from 'react';
+import { Tab, Tabs, Badge } from '@material-ui/core';
 
 import TabPanel from './TabPanel';
 import AddEvent from './AddEvent';
+import EventContext from './context';
 
-const Section = ({ label, categories })  => {
-  const [value, setValue] = useState(0);
+const Section = ({ categories })  => {
+  const {
+    section,
+    categoryIdx,
+    onChangeCategory,
+    getValues,
+  } = useContext(EventContext);
 
-  const handleChange = (event, newValue) => setValue(newValue);
   return (
-    <div>
-      <Typography>{label}</Typography>
+    <React.Fragment>
       <Tabs
-        value={value}
-        onChange={handleChange}
+        value={categoryIdx}
+        onChange={onChangeCategory}
         variant="fullWidth"
       >
-        {categories.map(({ icon: Icon }) => (
-          <Tab icon={<Icon />} />
-        ))}
+        {categories.map(({ icon: Icon, label }) => {
+          const count = getValues({ section, category: label }).length;
+          const tabProps = {};
+          if (Icon) {
+            tabProps.icon = (
+              <Badge badgeContent={count}>
+                <Icon />
+              </Badge>
+            );
+          }
+          if (label) {
+            tabProps.label = label;
+          }
+          return (
+            <Tab {...tabProps} />
+          )
+        })}
       </Tabs>
-      {categories.map(({ label }, index) => (
-        <TabPanel value={value} index={index}>
-          <Typography>
-            {label}
-          </Typography>
-          <AddEvent />
+      {categories.map((cat, index) => (
+        <TabPanel value={categoryIdx} index={index} key={cat.label}>
+          <AddEvent
+            options={cat.options}
+            category={cat.label}
+          />
         </TabPanel>
       ))}
-    </div>
+    </React.Fragment>
   );
 };
 

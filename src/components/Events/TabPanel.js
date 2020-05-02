@@ -1,4 +1,4 @@
-import {Box, Typography} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React from 'react';
 
 const TabPanel = (props) => {
@@ -11,10 +11,11 @@ const TabPanel = (props) => {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
+      style={{ height: '100%' }}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
+        <Box>
+          {children}
         </Box>
       )}
     </div>

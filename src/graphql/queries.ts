@@ -37,7 +37,7 @@ export const getEvent = /* GraphQL */ `
       success
       startTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -55,7 +55,7 @@ export const listEvents = /* GraphQL */ `
         success
         startTime
         category
-        subCategory
+        values
         owner
       }
       nextToken
@@ -71,7 +71,7 @@ export const getActivity = /* GraphQL */ `
       startTime
       endTime
       category
-      subCategory
+      values
       owner
     }
   }
@@ -90,7 +90,7 @@ export const listActivitys = /* GraphQL */ `
         startTime
         endTime
         category
-        subCategory
+        values
         owner
       }
       nextToken
@@ -102,8 +102,10 @@ export const getMood = /* GraphQL */ `
     getMood(id: $id) {
       id
       outside
-      label
+      success
+      startTime
       category
+      values
       owner
     }
   }
@@ -118,8 +120,10 @@ export const listMoods = /* GraphQL */ `
       items {
         id
         outside
-        label
+        success
+        startTime
         category
+        values
         owner
       }
       nextToken

@@ -10,7 +10,7 @@ type Event @model @auth(rules: [{allow: owner}]) {
   success: Boolean!
   startTime: String!
   category: String!
-  subCategory: String!
+  values: [String!]!
 }
 
 type Activity @model @auth(rules: [{allow: owner}]) {
@@ -20,12 +20,14 @@ type Activity @model @auth(rules: [{allow: owner}]) {
   startTime: String!
   endTime: String!
   category: String!
-  subCategory: String!
+  values: [String!]!
 }
 
 type Mood @model @auth(rules: [{allow: owner}]) {
   id: ID!
   outside: Boolean
-  label: String!
+  success: Boolean!
+  startTime: String!
   category: String!
+  values: [String!]!
 }

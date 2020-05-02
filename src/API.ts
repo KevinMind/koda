@@ -72,7 +72,7 @@ export type CreateEventInput = {
   success: boolean,
   startTime: string,
   category: string,
-  subCategory: string,
+  values: Array< string >,
 };
 
 export type ModelEventConditionInput = {
@@ -80,7 +80,7 @@ export type ModelEventConditionInput = {
   success?: ModelBooleanInput | null,
   startTime?: ModelStringInput | null,
   category?: ModelStringInput | null,
-  subCategory?: ModelStringInput | null,
+  values?: ModelStringInput | null,
   and?: Array< ModelEventConditionInput | null > | null,
   or?: Array< ModelEventConditionInput | null > | null,
   not?: ModelEventConditionInput | null,
@@ -99,7 +99,7 @@ export type UpdateEventInput = {
   success?: boolean | null,
   startTime?: string | null,
   category?: string | null,
-  subCategory?: string | null,
+  values?: Array< string > | null,
 };
 
 export type DeleteEventInput = {
@@ -113,7 +113,7 @@ export type CreateActivityInput = {
   startTime: string,
   endTime: string,
   category: string,
-  subCategory: string,
+  values: Array< string >,
 };
 
 export type ModelActivityConditionInput = {
@@ -122,7 +122,7 @@ export type ModelActivityConditionInput = {
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   category?: ModelStringInput | null,
-  subCategory?: ModelStringInput | null,
+  values?: ModelStringInput | null,
   and?: Array< ModelActivityConditionInput | null > | null,
   or?: Array< ModelActivityConditionInput | null > | null,
   not?: ModelActivityConditionInput | null,
@@ -135,7 +135,7 @@ export type UpdateActivityInput = {
   startTime?: string | null,
   endTime?: string | null,
   category?: string | null,
-  subCategory?: string | null,
+  values?: Array< string > | null,
 };
 
 export type DeleteActivityInput = {
@@ -145,14 +145,18 @@ export type DeleteActivityInput = {
 export type CreateMoodInput = {
   id?: string | null,
   outside?: boolean | null,
-  label: string,
+  success: boolean,
+  startTime: string,
   category: string,
+  values: Array< string >,
 };
 
 export type ModelMoodConditionInput = {
   outside?: ModelBooleanInput | null,
-  label?: ModelStringInput | null,
+  success?: ModelBooleanInput | null,
+  startTime?: ModelStringInput | null,
   category?: ModelStringInput | null,
+  values?: ModelStringInput | null,
   and?: Array< ModelMoodConditionInput | null > | null,
   or?: Array< ModelMoodConditionInput | null > | null,
   not?: ModelMoodConditionInput | null,
@@ -161,8 +165,10 @@ export type ModelMoodConditionInput = {
 export type UpdateMoodInput = {
   id: string,
   outside?: boolean | null,
-  label?: string | null,
+  success?: boolean | null,
+  startTime?: string | null,
   category?: string | null,
+  values?: Array< string > | null,
 };
 
 export type DeleteMoodInput = {
@@ -200,7 +206,7 @@ export type ModelEventFilterInput = {
   success?: ModelBooleanInput | null,
   startTime?: ModelStringInput | null,
   category?: ModelStringInput | null,
-  subCategory?: ModelStringInput | null,
+  values?: ModelStringInput | null,
   and?: Array< ModelEventFilterInput | null > | null,
   or?: Array< ModelEventFilterInput | null > | null,
   not?: ModelEventFilterInput | null,
@@ -213,7 +219,7 @@ export type ModelActivityFilterInput = {
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   category?: ModelStringInput | null,
-  subCategory?: ModelStringInput | null,
+  values?: ModelStringInput | null,
   and?: Array< ModelActivityFilterInput | null > | null,
   or?: Array< ModelActivityFilterInput | null > | null,
   not?: ModelActivityFilterInput | null,
@@ -222,8 +228,10 @@ export type ModelActivityFilterInput = {
 export type ModelMoodFilterInput = {
   id?: ModelIDInput | null,
   outside?: ModelBooleanInput | null,
-  label?: ModelStringInput | null,
+  success?: ModelBooleanInput | null,
+  startTime?: ModelStringInput | null,
   category?: ModelStringInput | null,
+  values?: ModelStringInput | null,
   and?: Array< ModelMoodFilterInput | null > | null,
   or?: Array< ModelMoodFilterInput | null > | null,
   not?: ModelMoodFilterInput | null,
@@ -287,7 +295,7 @@ export type CreateEventMutation = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -305,7 +313,7 @@ export type UpdateEventMutation = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -323,7 +331,7 @@ export type DeleteEventMutation = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -342,7 +350,7 @@ export type CreateActivityMutation = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -361,7 +369,7 @@ export type UpdateActivityMutation = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -380,7 +388,7 @@ export type DeleteActivityMutation = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -395,8 +403,10 @@ export type CreateMoodMutation = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -411,8 +421,10 @@ export type UpdateMoodMutation = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -427,8 +439,10 @@ export type DeleteMoodMutation = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -479,7 +493,7 @@ export type GetEventQuery = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -500,7 +514,7 @@ export type ListEventsQuery = {
       success: boolean,
       startTime: string,
       category: string,
-      subCategory: string,
+      values: Array< string >,
       owner: string | null,
     } | null > | null,
     nextToken: string | null,
@@ -520,7 +534,7 @@ export type GetActivityQuery = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -542,7 +556,7 @@ export type ListActivitysQuery = {
       startTime: string,
       endTime: string,
       category: string,
-      subCategory: string,
+      values: Array< string >,
       owner: string | null,
     } | null > | null,
     nextToken: string | null,
@@ -558,8 +572,10 @@ export type GetMoodQuery = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -577,8 +593,10 @@ export type ListMoodsQuery = {
       __typename: "Mood",
       id: string,
       outside: boolean | null,
-      label: string,
+      success: boolean,
+      startTime: string,
       category: string,
+      values: Array< string >,
       owner: string | null,
     } | null > | null,
     nextToken: string | null,
@@ -639,7 +657,7 @@ export type OnCreateEventSubscription = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -656,7 +674,7 @@ export type OnUpdateEventSubscription = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -673,7 +691,7 @@ export type OnDeleteEventSubscription = {
     success: boolean,
     startTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -691,7 +709,7 @@ export type OnCreateActivitySubscription = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -709,7 +727,7 @@ export type OnUpdateActivitySubscription = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -727,7 +745,7 @@ export type OnDeleteActivitySubscription = {
     startTime: string,
     endTime: string,
     category: string,
-    subCategory: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -741,8 +759,10 @@ export type OnCreateMoodSubscription = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -756,8 +776,10 @@ export type OnUpdateMoodSubscription = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
@@ -771,8 +793,10 @@ export type OnDeleteMoodSubscription = {
     __typename: "Mood",
     id: string,
     outside: boolean | null,
-    label: string,
+    success: boolean,
+    startTime: string,
     category: string,
+    values: Array< string >,
     owner: string | null,
   } | null,
 };
