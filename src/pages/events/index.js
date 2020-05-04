@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import ImageIcon from '@material-ui/icons/Image';
 import {
   ListItem, ListItemText, ListItemAvatar,
-  Avatar, List, Typography, Grid, Tabs, Tab,
-  Container,
+  Avatar, List, Typography, Grid, Container,
 } from '@material-ui/core';
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
 
-import Sections from '../../components/Events/data';
-import { listEvents, listActivitys, listMoods } from '../../services/events';
+import { listLogs } from '../../services/log';
+import ConfirmEvent from '../../components/Events/ConfirmEvent';
+import EventEditForm from '../../components/Events/EditEvent';
+import { updateLog, deleteLog } from '../../services/log';
 
 const formatDate = dateJsonString => {
   const date = new Date(dateJsonString);
@@ -21,14 +22,8 @@ const formatDate = dateJsonString => {
   return `${day}/${month}/${year} ${hour}:${minutes}`
 };
 
-const EventListItem = ({
-  category,
-  startTime,
-  success,
-  outside,
-  values,
-}) => (
-  <ListItem>
+const EventListItem = ({ item, onClick }) => (
+  <ListItem onClick={() => onClick(item)}>
     <ListItemAvatar>
       <Avatar>
         <ImageIcon />
@@ -38,25 +33,23 @@ const EventListItem = ({
       primary={
         <React.Fragment>
           <Typography>
-            {category}: {formatDate(startTime)}
+            {item.category}: {formatDate(item.start)}
           </Typography>
         </React.Fragment>
       }
       secondary={
       <React.Fragment>
-        {Array.isArray(values) && (
+        <Typography>
+          {item.value}
+        </Typography>
+        {typeof item.outside !== 'undefined' && (
           <Typography>
-            {values.join(', ')}
+            outside: {String(item.outside)}
           </Typography>
         )}
-        {typeof outside !== 'undefined' && (
+        {typeof item.outside !== 'undefined' && (
           <Typography>
-            outside: {String(outside)}
-          </Typography>
-        )}
-        {typeof outside !== 'undefined' && (
-          <Typography>
-            success: {String(success)}
+            success: {String(item.success)}
           </Typography>
         )}
       </React.Fragment>
@@ -65,58 +58,97 @@ const EventListItem = ({
 );
 
 const Events = () => {
-  const [tab, setTab] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [list, setList] = useState([]);
 
-  const onFetch = (idx) => {
-    let func = Promise.resolve();
-    const label = Sections[idx].label;
-    switch (label) {
-      case 'Events':
-        func = listEvents;
-        break;
-      case 'Activities':
-        func = listActivitys;
-        break;
-      case 'Moods':
-        func = listMoods;
-    }
-    return func()
-      .then(result => {
-        setList(result);
-      })
-      .finally(() => {
-        setLoaded(true);
-      });
-  };
+  const [category, setCategory] = useState();
+  const [value, setValue] = useState();
+  const [curr, setCurr] = useState();
+  const [open, setOpen] = useState(false);
 
-  const onChange = (event, newValue) => {
+  const handleEditChange = name => value => setCurr({
+    ...curr,
+    [name]: value,
+  });
+
+  const updateList = () => {
     setLoaded(false);
-    setTab(newValue);
-    onFetch(newValue)
+    listLogs()
+      .then(setList)
+      .finally(() => setLoaded(true));
   };
 
   useEffect(() => {
-    onChange({}, 0);
+    updateList();
   }, []);
 
   if (!loaded) {
     return <div>loading...</div>
   }
 
+  const handleOpen = (item) => {
+    setOpen(true);
+    setCategory(item.category);
+    setValue(item.value);
+    setCurr(item);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleDelete = () => {
+    deleteLog(curr.id).then(() => {
+      handleClose();
+      updateList();
+    });
+  };
+  const handleSave = () => {
+    const payload = {
+      start: curr.start,
+      end: curr.end,
+      category: curr.category,
+      value: curr.value,
+      outside: curr.outside,
+      success: curr.success,
+      note: curr.note,
+    };
+    updateLog(curr.id, payload).then(() => {
+      handleClose();
+      updateList();
+    });
+  };
+
   return (
     <Container>
+      <ConfirmEvent
+        isDeletable
+        category={category}
+        value={value}
+        open={open}
+        onCancel={handleClose}
+        onDelete={handleDelete}
+        onSubmit={handleSave}
+      >
+        {value && (
+          <React.Fragment>
+            <pre>
+              {JSON.stringify(curr, 0, 2)}
+            </pre>
+            <EventEditForm
+              onChange={handleEditChange}
+              values={curr}
+            />
+          </React.Fragment>
+        )}
+      </ConfirmEvent>
       <Grid container direction="column" spacing={3}>
         <Grid item>
-          <Tabs value={tab} onChange={onChange}>
-            {Sections.map(({ label }) => (
-              <Tab label={label} key={label} />
-            ))}
-          </Tabs>
           <List>
             {list.map(item => (
-              <EventListItem {...item} />
+              <EventListItem
+                onClick={handleOpen}
+                item={item}
+              />
             ))}
           </List>
         </Grid>

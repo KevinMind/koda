@@ -175,6 +175,45 @@ export type DeleteMoodInput = {
   id?: string | null,
 };
 
+export type CreateLogInput = {
+  id?: string | null,
+  category: string,
+  value: string,
+  start: string,
+  end?: string | null,
+  success: boolean,
+  outside?: boolean | null,
+  note?: string | null,
+};
+
+export type ModelLogConditionInput = {
+  category?: ModelStringInput | null,
+  value?: ModelStringInput | null,
+  start?: ModelStringInput | null,
+  end?: ModelStringInput | null,
+  success?: ModelBooleanInput | null,
+  outside?: ModelBooleanInput | null,
+  note?: ModelStringInput | null,
+  and?: Array< ModelLogConditionInput | null > | null,
+  or?: Array< ModelLogConditionInput | null > | null,
+  not?: ModelLogConditionInput | null,
+};
+
+export type UpdateLogInput = {
+  id: string,
+  category?: string | null,
+  value?: string | null,
+  start?: string | null,
+  end?: string | null,
+  success?: boolean | null,
+  outside?: boolean | null,
+  note?: string | null,
+};
+
+export type DeleteLogInput = {
+  id?: string | null,
+};
+
 export type ModelTodoFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -235,6 +274,20 @@ export type ModelMoodFilterInput = {
   and?: Array< ModelMoodFilterInput | null > | null,
   or?: Array< ModelMoodFilterInput | null > | null,
   not?: ModelMoodFilterInput | null,
+};
+
+export type ModelLogFilterInput = {
+  id?: ModelIDInput | null,
+  category?: ModelStringInput | null,
+  value?: ModelStringInput | null,
+  start?: ModelStringInput | null,
+  end?: ModelStringInput | null,
+  success?: ModelBooleanInput | null,
+  outside?: ModelBooleanInput | null,
+  note?: ModelStringInput | null,
+  and?: Array< ModelLogFilterInput | null > | null,
+  or?: Array< ModelLogFilterInput | null > | null,
+  not?: ModelLogFilterInput | null,
 };
 
 export type CreateTodoMutationVariables = {
@@ -447,6 +500,66 @@ export type DeleteMoodMutation = {
   } | null,
 };
 
+export type CreateLogMutationVariables = {
+  input: CreateLogInput,
+  condition?: ModelLogConditionInput | null,
+};
+
+export type CreateLogMutation = {
+  createLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
+    owner: string | null,
+  } | null,
+};
+
+export type UpdateLogMutationVariables = {
+  input: UpdateLogInput,
+  condition?: ModelLogConditionInput | null,
+};
+
+export type UpdateLogMutation = {
+  updateLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
+    owner: string | null,
+  } | null,
+};
+
+export type DeleteLogMutationVariables = {
+  input: DeleteLogInput,
+  condition?: ModelLogConditionInput | null,
+};
+
+export type DeleteLogMutation = {
+  deleteLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
+    owner: string | null,
+  } | null,
+};
+
 export type GetTodoQueryVariables = {
   id: string,
 };
@@ -597,6 +710,50 @@ export type ListMoodsQuery = {
       startTime: string,
       category: string,
       values: Array< string >,
+      owner: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetLogQueryVariables = {
+  id: string,
+};
+
+export type GetLogQuery = {
+  getLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
+    owner: string | null,
+  } | null,
+};
+
+export type ListLogsQueryVariables = {
+  filter?: ModelLogFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListLogsQuery = {
+  listLogs:  {
+    __typename: "ModelLogConnection",
+    items:  Array< {
+      __typename: "Log",
+      id: string,
+      category: string,
+      value: string,
+      start: string,
+      end: string | null,
+      success: boolean,
+      outside: boolean | null,
+      note: string | null,
       owner: string | null,
     } | null > | null,
     nextToken: string | null,
@@ -797,6 +954,63 @@ export type OnDeleteMoodSubscription = {
     startTime: string,
     category: string,
     values: Array< string >,
+    owner: string | null,
+  } | null,
+};
+
+export type OnCreateLogSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnCreateLogSubscription = {
+  onCreateLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
+    owner: string | null,
+  } | null,
+};
+
+export type OnUpdateLogSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnUpdateLogSubscription = {
+  onUpdateLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
+    owner: string | null,
+  } | null,
+};
+
+export type OnDeleteLogSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnDeleteLogSubscription = {
+  onDeleteLog:  {
+    __typename: "Log",
+    id: string,
+    category: string,
+    value: string,
+    start: string,
+    end: string | null,
+    success: boolean,
+    outside: boolean | null,
+    note: string | null,
     owner: string | null,
   } | null,
 };

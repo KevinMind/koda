@@ -152,3 +152,48 @@ export const onDeleteMood = /* GraphQL */ `
     }
   }
 `;
+export const onCreateLog = /* GraphQL */ `
+  subscription OnCreateLog($owner: String!) {
+    onCreateLog(owner: $owner) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;
+export const onUpdateLog = /* GraphQL */ `
+  subscription OnUpdateLog($owner: String!) {
+    onUpdateLog(owner: $owner) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;
+export const onDeleteLog = /* GraphQL */ `
+  subscription OnDeleteLog($owner: String!) {
+    onDeleteLog(owner: $owner) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;

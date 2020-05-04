@@ -130,3 +130,40 @@ export const listMoods = /* GraphQL */ `
     }
   }
 `;
+export const getLog = /* GraphQL */ `
+  query GetLog($id: ID!) {
+    getLog(id: $id) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;
+export const listLogs = /* GraphQL */ `
+  query ListLogs(
+    $filter: ModelLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        category
+        value
+        start
+        end
+        success
+        outside
+        note
+        owner
+      }
+      nextToken
+    }
+  }
+`;

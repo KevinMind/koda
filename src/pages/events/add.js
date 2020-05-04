@@ -1,185 +1,152 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography } from '@material-ui/core';
-import SwipeableViews from 'react-swipeable-views';
-import { set, get } from 'lodash';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
 
+import { createLog } from '../../services/log';
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
-import Section from '../../components/Events/EventSection';
-import TabPanel from '../../components/Events/TabPanel';
-import SubmitEvent from '../../components/Events/SubmitEvent';
-
-import Sections, { getInitialState } from '../../components/Events/data';
+import Tabs from '../../components/Tabs/Tabs';
+import { Data, Categories } from '../../components/Events/data';
 import EventContext from '../../components/Events/context';
-import { createEvent, createMood, createActivity } from '../../services/events';
+import AddEvent from '../../components/Events/AddEvent';
+import EventEditForm from '../../components/Events/EditEvent';
+import ConfirmEvent from '../../components/Events/ConfirmEvent';
 
 const Events = () => {
-  const [outside, setOutside] = useState(false);
-  const [success, setSucess] = useState(false);
-  const [formState, setForm] = useState(getInitialState());
+  const [category, setCategory] = useState();
+  const [value, setValue] = useState();
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState([]);
 
-  const [section, setSection] = useState(Sections[0].label);
-  const [sectionIdx, setSectionIdx] = useState(0);
-  const [category, setCategory] = useState(Sections[0].categories[0].label);
-  const [categoryIdx, setCategoryIdx] = useState(0);
+  const [curr, setCurr] = useState();
 
-  const handleChange = (event, newValue) => {
-    setCategoryIdx(newValue);
-    const category = Sections[sectionIdx].categories[newValue].label;
-    setCategory(category);
-  };
+  const handleEditChange = name => value => setCurr({
+    ...curr,
+    [name]: value,
+  });
 
-  const handleChangeIndex = (index) => {
-    const { label, categories } = Sections[index];
-    setSection(label);
-    setSectionIdx(index);
-    setCategoryIdx(0);
-    setCategory(categories[0].label);
-  };
-
-  const handleToggleSuccess = () => setSucess(!success);
-  const handleToggleOutside = () => setOutside(!outside);
-
-  const getLabels = () => {
-    return {
-      section,
-      category,
+  const handleOpen = (category, value) => {
+    const idx = form.findIndex(item => item.value === value);
+    const item = idx > -1 ? form[idx].state : {
+      selected: false,
+      start: new Date(),
+      end: new Date(),
+      outside: false,
+      success: false,
+      note: '',
     };
+    setCurr(item);
+    setCategory(category);
+    setValue(value);
+    setOpen(true);
   };
 
-  const getValues = (curr = getLabels()) => {
-    return get(formState, [curr.section, curr.category], []);
+  const handleClose = () => {
+    setCurr();
+    setCategory();
+    setValue();
+    setOpen(false);
   };
 
-  const setValues = (newValues) => {
-    const labels = getLabels();
-    const copy = { ...formState };
-    set(copy, [labels.section, labels.category], newValues);
-    setForm(copy);
-  };
+  const saveForm = () => {
+    const item = { category, value, state: { ...curr, selected: true } };
+    const data = [...form];
+    const idx = form.findIndex(item => item.value === value);
 
-  const resetFormState = () => {
-    handleChangeIndex(0);
-    setForm(getInitialState());
-  };
-
-  const handleFormChange = (value, checked) => {
-    const state = getValues({ section, category });
-    const idx = state.findIndex(i => i === value);
-
-    if (checked && idx === -1) {
-      state.push(value);
+    if (idx === -1) {
+      data.push(item);
+    } else {
+      data.splice(idx, 1, item);
     }
-    if (!checked && idx > -1) {
-      state.splice(idx, 1);
-    }
-    setValues(state);
+
+    setForm(data);
+    handleClose();
   };
 
-  const handleFormSubmit = () => {
+  const clearForm = () => {
+    const data = [...form];
+    const idx = data.findIndex(item => item.value === value);
+    if (idx > -1) {
+      data.splice(idx, 1);
+      setForm(data);
+    }
+    handleClose();
+  };
+
+  const submitForm = () => {
     const list = [];
-    const startTime = new Date().toJSON();
-    const { Events, Moods, Activities } = formState;
+    form.forEach(({ value, category, state }) => {
+      const { selected, note, ...rest } = state;
+      const payload = {
+        category,
+        value,
+        ...rest,
+      };
 
-    console.log(Moods);
-
-    Object.keys(Moods).forEach(category => {
-      const values = Moods[category];
-      if (values.length) {
-        list.push(createMood({
-          outside,
-          success,
-          startTime,
-          category,
-          values,
-        }));
+      if (note.length) {
+        payload.note = note;
       }
+      list.push(createLog(payload))
     });
+    Promise.all(list)
+      .then(() => {
+        handleClose();
+        setForm([]);
+      })
+  };
 
-    Object.keys(Activities).forEach(category => {
-      const values = Activities[category];
-      if (values.length) {
-        list.push(createActivity({
-          outside,
-          success,
-          startTime,
-          endTime: 'null',
-          category,
-          values
-        }));
-      }
-    });
-
-    Object.keys(Events).forEach(category => {
-      const values = Events[category];
-      if (values.length) {
-        list.push(createEvent({
-          outside,
-          success,
-          startTime,
-          category,
-          values,
-        }));
-      }
-    });
-
-    Promise.all(list).then(() => {
-      resetFormState();
-    })
-
+  const handleChange = category => (value) => {
+    return handleOpen(category, value);
   };
 
   return (
     <EventContext.Provider value={{
-      success,
-      outside,
-      section,
-      sectionIdx,
       category,
-      categoryIdx,
-      state: formState,
-      onToggleSuccess: handleToggleSuccess,
-      onToggleOutside: handleToggleOutside,
-      onChange: handleFormChange,
-      onChangeCategory: handleChange,
-      onSubmit: handleFormSubmit,
-      getValues,
+      value,
+      Data,
+      Categories,
+      form,
     }}>
-      <Grid
-        style={{ height: '100%' }}
-        component={Container}
-        container
-        direction="column"
+      <ConfirmEvent
+        isDeletable={curr && curr.selected || false}
+        category={category}
+        value={value}
+        open={open}
+        onCancel={handleClose}
+        onDelete={clearForm}
+        onSubmit={saveForm}
       >
-        <Grid
-          item
-          style={{ height: '90%' }}
-        >
-          <SwipeableViews
-            style={{ height: '100%' }}
-            index={sectionIdx}
-            onChangeIndex={handleChangeIndex}
+        {value && (
+          <EventEditForm
+            onChange={handleEditChange}
+            values={curr}
+          />
+        )}
+      </ConfirmEvent>
+      <Tabs>
+        {Categories.map((category) => (
+          <AddEvent
+            key={category.label}
+            {...category}
+            onChange={handleChange(category.label)}
+          />
+        ))}
+      </Tabs>
+      <AppBar
+        position="fixed"
+        style={{ bottom: 0, top: 'auto' }}
+        color="transparent"
+      >
+        <Toolbar>
+          <Button
+            disable={!form.length}
+            onClick={submitForm}
+            fullWidth
+            variant="contained"
+            color="secondary"
           >
-            {Sections.map(({ categories, label }, index) => {
-              return (
-                <TabPanel value={sectionIdx} index={index} key={label}>
-                  <Typography>
-                    {label}
-                  </Typography>
-                  <Section
-                    categories={categories}
-                  />
-                </TabPanel>
-              )
-            })}
-          </SwipeableViews>
-        </Grid>
-        <Grid
-          item
-          style={{ height: '10%' }}
-        >
-          <SubmitEvent />
-        </Grid>
-      </Grid>
+            Submit ({form.length}) Items
+          </Button>
+        </Toolbar>
+      </AppBar>
     </EventContext.Provider>
   )
 };

@@ -188,3 +188,57 @@ export const deleteMood = /* GraphQL */ `
     }
   }
 `;
+export const createLog = /* GraphQL */ `
+  mutation CreateLog(
+    $input: CreateLogInput!
+    $condition: ModelLogConditionInput
+  ) {
+    createLog(input: $input, condition: $condition) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;
+export const updateLog = /* GraphQL */ `
+  mutation UpdateLog(
+    $input: UpdateLogInput!
+    $condition: ModelLogConditionInput
+  ) {
+    updateLog(input: $input, condition: $condition) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;
+export const deleteLog = /* GraphQL */ `
+  mutation DeleteLog(
+    $input: DeleteLogInput!
+    $condition: ModelLogConditionInput
+  ) {
+    deleteLog(input: $input, condition: $condition) {
+      id
+      category
+      value
+      start
+      end
+      success
+      outside
+      note
+      owner
+    }
+  }
+`;

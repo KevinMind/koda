@@ -31,3 +31,14 @@ type Mood @model @auth(rules: [{allow: owner}]) {
   category: String!
   values: [String!]!
 }
+
+type Log @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  category: String!
+  value: String!
+  start: String!
+  end: String
+  success: Boolean!
+  outside: Boolean
+  note: String
+}
