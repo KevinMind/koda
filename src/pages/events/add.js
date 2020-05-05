@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Button, CircularProgress } from '@material-ui/core';
 
 import { createLog } from '../../services/log';
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
@@ -11,6 +11,7 @@ import EventEditForm from '../../components/Events/EditEvent';
 import ConfirmEvent from '../../components/Events/ConfirmEvent';
 
 const Events = () => {
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState();
   const [value, setValue] = useState();
   const [open, setOpen] = useState(false);
@@ -72,6 +73,7 @@ const Events = () => {
   };
 
   const submitForm = () => {
+    setLoading(true);
     const list = [];
     form.forEach(({ value, category, state }) => {
       const { selected, note, ...rest } = state;
@@ -88,6 +90,7 @@ const Events = () => {
     });
     Promise.all(list)
       .then(() => {
+        setLoading(false);
         handleClose();
         setForm([]);
       })
@@ -137,11 +140,22 @@ const Events = () => {
       >
         <Toolbar>
           <Button
-            disable={!form.length}
+            size="large"
+            disable={form.length === 0 || loading}
             onClick={submitForm}
             fullWidth
             variant="contained"
             color="secondary"
+            startIcon={loading && (
+              <CircularProgress
+                thickness={3}
+                style={{
+                  height: 20,
+                  width: 20,
+                  color: 'white',
+                }}
+              />
+            )}
           >
             Submit ({form.length}) Items
           </Button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box, FormControl, FormGroup, FormLabel, Grid,
   InputLabel, OutlinedInput, Switch,
@@ -7,6 +7,7 @@ import {
 import { DateTimePicker } from '../Pickers/DatePicker';
 
 const EventEditForm = ({ values, onChange }) => {
+  const [end, setEnd] = useState(false);
   return (
     <React.Fragment>
       <FormGroup>
@@ -14,20 +15,36 @@ const EventEditForm = ({ values, onChange }) => {
           <FormControl fullWidth>
             <FormLabel>Start Time</FormLabel>
             <DateTimePicker
-              onChange={onChange('start')}
+              onChange={value => {
+                onChange('start')(value);
+                if (!end) {
+                  onChange('end')(value);
+                }
+              }}
               value={values.start}
             />
           </FormControl>
         </Box>
         <Box marginBottom={5}>
           <FormControl fullWidth>
-            <FormLabel>End Time</FormLabel>
-            <DateTimePicker
-              onChange={onChange('end')}
-              value={values.end}
+            <FormLabel>End Different than Start?</FormLabel>
+            <Switch
+              checked={end}
+              onChange={({ target: { checked }}) => setEnd(checked)}
             />
           </FormControl>
         </Box>
+        {end && (
+          <Box marginBottom={5}>
+            <FormControl fullWidth>
+              <FormLabel>End Time</FormLabel>
+              <DateTimePicker
+                onChange={onChange('end')}
+                value={values.end}
+              />
+            </FormControl>
+          </Box>
+        )}
         <Box marginBottom={5}>
           <Grid container justify="space-between" alignItems="center">
             <Grid item xs={6}>

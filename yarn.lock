@@ -2420,6 +2420,11 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
+"@sandstreamdev/react-swipeable-list@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/@sandstreamdev/react-swipeable-list/-/react-swipeable-list-0.5.0.tgz#3cdd407e95a0f829cedcc23047716b580e1288fe"
+  integrity sha512-tbbQoM+M3Z7s751PI/wK2lwfKKQCPinPIwJkkSWnf3oLPi+3EaU874FMDmMHKFBy1whDFdfamZZJWxJqfrOdFA==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -13792,6 +13797,13 @@ react-swipeable-views@^0.13.9:
     react-swipeable-views-core "^0.13.7"
     react-swipeable-views-utils "^0.13.9"
     warning "^4.0.1"
+
+react-swipeable@^5.5.1:
+  version "5.5.1"
+  resolved "https://registry.npmjs.org/react-swipeable/-/react-swipeable-5.5.1.tgz#48ae6182deaf62f21d4b87469b60281dbd7c4a76"
+  integrity sha512-EQObuU3Qg3JdX3WxOn5reZvOSCpU4fwpUAs+NlXSN3y+qtsO2r8VGkVnOQzmByt3BSYj9EWYdUOUfi7vaMdZZw==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-transition-group@^4.0.0, react-transition-group@^4.3.0:
   version "4.3.0"

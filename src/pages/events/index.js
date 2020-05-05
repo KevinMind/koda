@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import ImageIcon from '@material-ui/icons/Image';
 import {
   ListItem, ListItemText, ListItemAvatar,
-  Avatar, List, Typography, Grid, Container,
+  Avatar, Typography, Grid, Container, List,
 } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
 
 import { listLogs } from '../../services/log';
 import ConfirmEvent from '../../components/Events/ConfirmEvent';
 import EventEditForm from '../../components/Events/EditEvent';
 import { updateLog, deleteLog } from '../../services/log';
+import Swipeable from '../../components/Swipeable/Swipeable';
 
 const formatDate = dateJsonString => {
   const date = new Date(dateJsonString);
@@ -22,40 +25,58 @@ const formatDate = dateJsonString => {
   return `${day}/${month}/${year} ${hour}:${minutes}`
 };
 
-const EventListItem = ({ item, onClick }) => (
-  <ListItem onClick={() => onClick(item)}>
+const LoadingItem = () => (
+  <ListItem style={{ width: '100%' }}>
     <ListItemAvatar>
-      <Avatar>
-        <ImageIcon />
-      </Avatar>
+      <Skeleton variant="circle" width={40} height={40} animation="wave" />
     </ListItemAvatar>
     <ListItemText
-      primary={
-        <React.Fragment>
-          <Typography>
-            {item.category}: {formatDate(item.start)}
-          </Typography>
-        </React.Fragment>
-      }
-      secondary={
-      <React.Fragment>
-        <Typography>
-          {item.value}
-        </Typography>
-        {typeof item.outside !== 'undefined' && (
-          <Typography>
-            outside: {String(item.outside)}
-          </Typography>
-        )}
-        {typeof item.outside !== 'undefined' && (
-          <Typography>
-            success: {String(item.success)}
-          </Typography>
-        )}
-      </React.Fragment>
-    } />
+      primary={<Skeleton variant="rect" animation="wave" style={{ marginBottom: 5 }} />}
+      secondary={<Skeleton variant="rect" animation="wave" style={{ marginLeft: 5 }}/>}
+    />
   </ListItem>
 );
+
+const Loading = () => (
+  <List>
+    <LoadingItem/>
+    <LoadingItem/>
+    <LoadingItem/>
+    <LoadingItem/>
+    <LoadingItem/>
+    <LoadingItem/>
+  </List>
+);
+
+const EventListItem = ({ item, onClick }) => {
+  return (
+    <ListItem onClick={() => onClick(item)}>
+      <ListItemAvatar>
+        <Avatar>
+          <ImageIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText
+        primary={
+          <React.Fragment>
+            <Typography>
+              {item.category}
+            </Typography>
+            <Typography>
+              {formatDate(item.start)}
+            </Typography>
+          </React.Fragment>
+        }
+        secondary={
+          <React.Fragment>
+            <Typography>
+              {item.value}
+            </Typography>
+          </React.Fragment>
+        } />
+    </ListItem>
+  );
+};
 
 const Events = () => {
   const [loaded, setLoaded] = useState(false);
@@ -83,7 +104,7 @@ const Events = () => {
   }, []);
 
   if (!loaded) {
-    return <div>loading...</div>
+    return <Loading />
   }
 
   const handleOpen = (item) => {
@@ -96,8 +117,8 @@ const Events = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDelete = () => {
-    deleteLog(curr.id).then(() => {
+  const handleDelete = (id = curr.id) => {
+    deleteLog(id).then(() => {
       handleClose();
       updateList();
     });
@@ -118,6 +139,21 @@ const Events = () => {
     });
   };
 
+  const handleSwipeLeft = (idx) => {
+    const item = list[idx];
+    if (item && item.id) {
+      handleDelete(item.id)
+    }
+  };
+
+  const handleSwipeRight = (idx) => {
+    const item = list[idx];
+    if (item) {
+      console.log(item);
+      handleOpen(item)
+    }
+  };
+
   return (
     <Container>
       <ConfirmEvent
@@ -130,27 +166,28 @@ const Events = () => {
         onSubmit={handleSave}
       >
         {value && (
-          <React.Fragment>
-            <pre>
-              {JSON.stringify(curr, 0, 2)}
-            </pre>
-            <EventEditForm
-              onChange={handleEditChange}
-              values={curr}
-            />
-          </React.Fragment>
+          <EventEditForm
+            onChange={handleEditChange}
+            values={curr}
+          />
         )}
       </ConfirmEvent>
       <Grid container direction="column" spacing={3}>
         <Grid item>
-          <List>
-            {list.map(item => (
+          <Swipeable
+            onSwipeLeft={handleSwipeLeft}
+            onSwipeRight={handleSwipeRight}
+            leftContent={<div>left</div>}
+            rightContent={<div>right</div>}
+          >
+            {list.map((item) => (
               <EventListItem
+                onDelete={handleDelete}
                 onClick={handleOpen}
                 item={item}
               />
             ))}
-          </List>
+          </Swipeable>
         </Grid>
       </Grid>
     </Container>
