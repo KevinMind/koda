@@ -9,7 +9,7 @@
     "pre-push": "echo \"pre-push\" exit 0",
     "test": "echo \"add tests\" exit 0",
     "test:coverage": "yarn test --coverage",
-    "lint": "eslint components",
+    "lint": "echo \"add linting\" exit 0",
     "lint:fix": "yarn lint --fix",
     "dev": "npm run clean && gatsby develop",
     "build": "gatsby build",

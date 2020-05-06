@@ -1,3 +1,1 @@
-import { Layout, AppContent } from './AppLayouts';
-
-export { Layout, AppContent };
+export { default } from './Layout';

@@ -3,7 +3,7 @@ import { useLocation, navigate } from '@reach/router';
 import { Button, Container, Typography } from '@material-ui/core';
 
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
-import { AppContent } from '../../components/Layout';
+import Layout from '../../components/Layout';
 import { updateTodo, getTodo } from '../../services/todo';
 import AddTodo from '../../components/Todo/AddTodo';
 
@@ -47,7 +47,7 @@ const Edit = () => {
   }
   return (
     <Container>
-      <AppContent>
+      <Layout>
         <Typography variant="h1">Edit todo</Typography>
         <Typography>ID: {initial.id}</Typography>
         <Button onClick={handleBack}>Back</Button>
@@ -58,7 +58,7 @@ const Edit = () => {
           onChangeDesc={handleChange(setDescription)}
           onSubmit={handleSubmit}
         />
-      </AppContent>
+      </Layout>
     </Container>
   );
 };

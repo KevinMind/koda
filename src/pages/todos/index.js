@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Grid, Typography } from '@material-ui/core';
 
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
-import { AppContent } from '../../components/Layout';
+import Layout from '../../components/Layout';
 import { createTodo } from '../../services/todo';
 import AddTodo from '../../components/Todo/AddTodo';
 import TodoList from '../../components/Todo/TodoList';
@@ -24,7 +24,7 @@ const Profile = () => {
   };
   return (
     <Container>
-      <AppContent>
+      <Layout>
         <Grid container spacing={3} direction="column">
           <Grid item>
             <Typography variant="h3" component="h1">
@@ -44,7 +44,7 @@ const Profile = () => {
             <TodoList />
           </Grid>
         </Grid>
-      </AppContent>
+      </Layout>
     </Container>
   );
 };

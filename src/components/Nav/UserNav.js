@@ -1,56 +1,43 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { navigate } from '@reach/router';
-import {
-  AppBar, Toolbar, Grid, Button,
-} from '@material-ui/core';
 
-import { Auth } from '@aws-amplify/auth';
-import { AppUser } from '../Auth';
+import * as Styled from './UserNav.styled';
 
-function UserNav() {
-  const { logout } = AppUser;
-  function logOut(e) {
-    e.preventDefault();
+const MenuItem = ({ Icon, ...props }) => (
+  <Styled.MenuItem {...props}>
+    <Icon />
+  </Styled.MenuItem>
+);
 
-    Auth.signOut()
-      .then(logout(() => navigate('/signin')))
-      .catch((err) => console.error('error: ', err));
-  }
+const FabItem = ({ Icon, ...props }) => (
+  <Styled.FabItem {...props}>
+    <Icon />
+  </Styled.FabItem>
+);
 
+const BottomNav = ({
+  children
+}) => {
   return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-        >
-          <Grid item>
-            <Link className="text-center" to="/events">
-              <p style={{ margin: 0 }} className="nav-link">
-                List
-              </p>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link className="text-center" to="/events/add">
-              <p style={{ margin: 0 }} className="nav-link">
-                Add
-              </p>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Button
-              onClick={(e) => logOut(e)}
-            >
-              Logout
-            </Button>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+    <Styled.Container>
+      <Styled.Inner>
+        {React.Children.map(children, (child) => {
+          if (child.type === FabItem) {
+            return (
+              <>
+                {child}
+                <Styled.Spacer />
+              </>
+            )
+          }
+          return child;
+        })}
+      </Styled.Inner>
+    </Styled.Container>
   );
-}
+};
 
-export default UserNav;
+BottomNav.Item = MenuItem;
+BottomNav.Space = Styled.Spacer;
+BottomNav.Fab = FabItem;
+
+export default BottomNav;

@@ -1,24 +1,9 @@
 import React from 'react';
 import {
   Dialog, DialogTitle, DialogContent, DialogActions,
-  Slide, Fade, Grow, Zoom,
 } from '@material-ui/core';
 
-const SlideIn = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-const FadeIn = React.forwardRef(function Transition(props, ref) {
-  return <Fade ref={ref} {...props} />;
-});
-
-const GrowIn = React.forwardRef(function Transition(props, ref) {
-  return <Grow ref={ref} {...props} />;
-});
-
-const ZoomIn = React.forwardRef(function Transition(props, ref) {
-  return <Zoom ref={ref} {...props} />;
-});
+import { SlideIn, ZoomIn, GrowIn, FadeIn } from '../Transitions';
 
 const getAnimation = animate => {
   switch (animate) {

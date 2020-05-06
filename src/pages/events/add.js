@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Button, CircularProgress } from '@material-ui/core';
-
+import { MoreVert, List } from '@material-ui/icons';
+import { Toolbar, Button, CircularProgress } from '@material-ui/core';
+import { navigate } from '@reach/router';
 import { createLog } from '../../services/log';
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
 import Tabs from '../../components/Tabs/Tabs';
+import Layout from '../../components/Layout';
 import { Data, Categories } from '../../components/Events/data';
 import EventContext from '../../components/Events/context';
 import AddEvent from '../../components/Events/AddEvent';
 import EventEditForm from '../../components/Events/EditEvent';
 import ConfirmEvent from '../../components/Events/ConfirmEvent';
+import { UserNav } from '../../components/Nav';
+import { SlideIn } from '../../components/Transitions';
 
 const Events = () => {
   const [loading, setLoading] = useState(false);
@@ -124,45 +128,62 @@ const Events = () => {
           />
         )}
       </ConfirmEvent>
-      <Tabs>
-        {Categories.map((category) => (
-          <AddEvent
-            key={category.label}
-            {...category}
-            onChange={handleChange(category.label)}
-          />
-        ))}
-      </Tabs>
-      <AppBar
-        position="fixed"
-        style={{ bottom: 0, top: 'auto' }}
-        color="transparent"
-      >
-        <Toolbar>
-          <Button
-            size="large"
-            disable={form.length === 0 || loading}
-            onClick={submitForm}
-            fullWidth
-            variant="contained"
-            color="secondary"
-            startIcon={loading && (
-              <CircularProgress
-                thickness={3}
-                style={{
-                  height: 20,
-                  width: 20,
-                  color: 'white',
-                }}
+      <Layout>
+        <Layout.Content height={80}>
+          <Tabs>
+            {Categories.map((category) => (
+              <AddEvent
+                key={category.label}
+                {...category}
+                onChange={handleChange(category.label)}
               />
-            )}
-          >
-            Submit ({form.length}) Items
-          </Button>
-        </Toolbar>
-      </AppBar>
+            ))}
+          </Tabs>
+        </Layout.Content>
+        <Layout.Content height={10}>
+          <Toolbar>
+            <SlideIn in={form.length > 0} timeout={1000}>
+              <Button
+                size="large"
+                disabled={loading}
+                onClick={submitForm}
+                fullWidth
+                variant="contained"
+                color="secondary"
+                startIcon={loading && (
+                  <CircularProgress
+                    thickness={3}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      color: 'white',
+                    }}
+                  />
+                )}
+              >
+                Done {form.length > 0 && `(${form.length})`}
+              </Button>
+            </SlideIn>
+          </Toolbar>
+        </Layout.Content>
+        <Layout.Content height={10}>
+          <UserNav>
+            <UserNav.Item
+              Icon={List}
+              edge="start"
+              onClick={() => navigate('/events')}
+            />
+            <UserNav.Space />
+            <UserNav.Item
+              Icon={MoreVert}
+              edge="end"
+              onClick={() => navigate('/')}
+            />
+          </UserNav>
+        </Layout.Content>
+      </Layout>
     </EventContext.Provider>
-  )
+  );
 };
 
 export default withPrivateRoute(Events);

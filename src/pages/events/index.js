@@ -7,12 +7,16 @@ import {
 import { Skeleton } from '@material-ui/lab';
 
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
-
 import { listLogs } from '../../services/log';
 import ConfirmEvent from '../../components/Events/ConfirmEvent';
 import EventEditForm from '../../components/Events/EditEvent';
 import { updateLog, deleteLog } from '../../services/log';
 import Swipeable from '../../components/Swipeable/Swipeable';
+import Layout from '../../components/Layout';
+import { UserNav } from '../../components/Nav';
+import {navigate} from '@reach/router';
+import {MoreVert, Add, List as ListIcon } from '@material-ui/icons';
+
 
 const formatDate = dateJsonString => {
   const date = new Date(dateJsonString);
@@ -155,7 +159,7 @@ const Events = () => {
   };
 
   return (
-    <Container>
+    <Layout>
       <ConfirmEvent
         isDeletable
         category={category}
@@ -172,25 +176,45 @@ const Events = () => {
           />
         )}
       </ConfirmEvent>
-      <Grid container direction="column" spacing={3}>
-        <Grid item>
-          <Swipeable
-            onSwipeLeft={handleSwipeLeft}
-            onSwipeRight={handleSwipeRight}
-            leftContent={<div>left</div>}
-            rightContent={<div>right</div>}
-          >
-            {list.map((item) => (
-              <EventListItem
-                onDelete={handleDelete}
-                onClick={handleOpen}
-                item={item}
-              />
-            ))}
-          </Swipeable>
+      <Layout.Content height={90}>
+        <Grid container direction="column" spacing={3}>
+          <Grid item>
+            <Swipeable
+              onSwipeLeft={handleSwipeLeft}
+              onSwipeRight={handleSwipeRight}
+              leftContent={<div>left</div>}
+              rightContent={<div>right</div>}
+            >
+              {list.map((item) => (
+                <EventListItem
+                  onDelete={handleDelete}
+                  onClick={handleOpen}
+                  item={item}
+                />
+              ))}
+            </Swipeable>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Layout.Content>
+      <Layout.Content height={10}>
+        <UserNav>
+          <UserNav.Item
+            Icon={ListIcon}
+            edge="start"
+            onClick={() => navigate('/events')}
+          />
+          <UserNav.Fab
+            Icon={Add}
+            onClick={() => navigate('/events/add')}
+          />
+          <UserNav.Item
+            Icon={MoreVert}
+            edge="end"
+            onClick={() => navigate('/')}
+          />
+        </UserNav>
+      </Layout.Content>
+    </Layout>
   );
 };
 

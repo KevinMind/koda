@@ -47,7 +47,7 @@ class SignIn extends React.Component {
       };
       setUser(userInfo);
       this.setState({ loading: false });
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       this.setState({ error: err, loading: false });
       console.log('error...: ', err);
