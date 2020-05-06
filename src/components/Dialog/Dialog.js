@@ -3,6 +3,8 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions,
 } from '@material-ui/core';
 
+import * as Styled from './Dialog.styled';
+
 import { SlideIn, ZoomIn, GrowIn, FadeIn } from '../Transitions';
 
 const getAnimation = animate => {
@@ -36,7 +38,7 @@ FullScreenDialog.defaultProps = {
 };
 
 FullScreenDialog.Title = DialogTitle;
-FullScreenDialog.Content = DialogContent;
+FullScreenDialog.Content = Styled.Content;
 FullScreenDialog.Actions = DialogActions;
 
 export default FullScreenDialog;

@@ -22,7 +22,6 @@ const IndexPage = () => {
   return (
     <Layout>
       <Layout.Content
-        height={90}
         justify="center"
         alignItems="center"
         direction="column"
@@ -34,7 +33,8 @@ const IndexPage = () => {
         <Typography variant="h3">+</Typography>
         <CognitoIcon height={30} />
       </Layout.Content>
-      <Layout.Content
+      <Layout.FixedContent
+        bottom={0}
         height={10}
         justify="space-around"
         alignItems="center"
@@ -54,7 +54,7 @@ const IndexPage = () => {
         >
           Log Out
         </Button>
-      </Layout.Content>
+      </Layout.FixedContent>
     </Layout>
   );
 }

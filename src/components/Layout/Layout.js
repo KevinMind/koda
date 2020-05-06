@@ -6,18 +6,21 @@ import { AppUser } from '../Auth';
 
 import * as Styled from './Layout.styled';
 
-const validChildren = [
-  Styled.Header,
-  Styled.Main,
-  Styled.Footer,
-  Styled.Content,
-];
+const validChildren = Object.values(Styled);
 
 const Layout = ({ children }) => {
   const { isLoggedIn } = AppUser;
   return (
     <Styled.Container>
-      <CssBaseline />
+      <CssBaseline>
+        <style>
+          {`
+            html {
+              height: 100%;
+            }
+          `}
+        </style>
+      </CssBaseline>
       {React.Children.map(children, child => {
         if (validChildren.includes(child.type)) {
           return React.cloneElement(child, {
@@ -48,5 +51,6 @@ Layout.Content = Styled.Content;
 Layout.Header = Styled.Header;
 Layout.Main = Styled.Main;
 Layout.Footer = Styled.Footer;
+Layout.FixedContent = Styled.FixedContent;
 
 export default Layout;

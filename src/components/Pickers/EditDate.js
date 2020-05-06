@@ -38,9 +38,6 @@ const EditDate = ({
             <Grid item>
               <Cancel />
             </Grid>
-            <Grid item>
-              {value.toLocaleString()}
-            </Grid>
           </Grid>
 
         </IconButton>

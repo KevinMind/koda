@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Grid, styled } from '@material-ui/core';
 
 export const Container = styled(Grid)(() => ({
-  height: '100vh',
-  width: '100vw',
+  position: 'relative',
+  height: '100%',
   flexDirection: 'column'
 }));
 
@@ -30,10 +30,16 @@ const buildGrid = (cb) => {
   return Item;
 };
 
-export const Content = buildGrid(({  height, justifyContent, alignItems, display }) => {
+export const Content = buildGrid(({
+  height,
+  justifyContent,
+  alignItems,
+}) => {
+  const windowHeight = window.innerHeight;
+  const factor = height * 0.01;
   const styles = {
-    height: height && `${height}vh`,
-    overflow: 'scroll'
+    height: height ? factor * windowHeight : 'auto',
+    overflow: 'scroll',
   };
 
   if (justifyContent || alignItems) {
@@ -43,16 +49,25 @@ export const Content = buildGrid(({  height, justifyContent, alignItems, display
   return styles;
 });
 
-export const Header = buildGrid(() => ({
-  height: '10vh',
+export const FixedContent = styled(Content)(({ top, bottom, right, left, width }) => ({
+  top,
+  bottom,
+  right,
+  left,
+  position: 'fixed',
+  width: width || '100%'
 }));
 
-export const Main = buildGrid(() => ({
-  height: '80vh',
+export const Header = styled(Content)(() => ({
+  height: '10%',
 }));
 
-export const Footer = buildGrid(() => ({
-  height: '10vh',
+export const Main = styled(Content)(() => ({
+  height: '80%',
+}));
+
+export const Footer = styled(Content)(() => ({
+  height: '10%',
   overflow: 'scroll'
 }));
 
