@@ -47,6 +47,7 @@ export const EventTabContent = ({ selectTab, tab, children }) => (
     containerStyle={{
       position: 'relative',
       height: '100%',
+      width: '100%',
     }}
     style={{ height: '100%' }}
     index={tab}

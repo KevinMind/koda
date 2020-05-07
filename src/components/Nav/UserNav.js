@@ -21,7 +21,7 @@ const BottomNav = ({
     <Styled.Container>
       <Styled.Inner>
         {React.Children.map(children, (child) => {
-          if (child.type === FabItem) {
+          if (child?.type === FabItem) {
             return (
               <>
                 {child}

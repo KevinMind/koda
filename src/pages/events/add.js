@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MoreVert, List, Add } from '@material-ui/icons';
-import { Toolbar, Button, CircularProgress } from '@material-ui/core';
+import { MoreVert, List } from '@material-ui/icons';
+import { Button, CircularProgress } from '@material-ui/core';
 import { navigate } from '@reach/router';
 import { createLog } from '../../services/log';
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
@@ -9,7 +9,7 @@ import Layout from '../../components/Layout';
 import { Data, Categories } from '../../components/Events/data';
 import EventContext from '../../components/Events/context';
 import { UserNav } from '../../components/Nav';
-import { SlideIn } from '../../components/Transitions';
+import { GrowIn } from '../../components/Transitions';
 import { EventTabItems, EventTabContent } from '../../components/Events/EventTabs';
 
 const Events = () => {
@@ -55,13 +55,18 @@ const Events = () => {
                   <EventTabItems tab={tab} selectTab={selectTab} />
                 </Tabs.Header>
               </Layout.Content>
-              <Layout.Content height={canSubmit ? 65 : 75}>
+              <Layout.Content height={75}>
                 <Tabs.Content>
                   <EventTabContent tab={tab} selectTab={selectTab}>
                     {Categories.map(cat => (
+                      <>
                       <pre>
                         {JSON.stringify(cat, 0, 2)}
                       </pre>
+                      <Button onClick={() => setCanSubmit(!canSubmit)}>
+                        Toggle: {canSubmit ? 'off' : 'on'}
+                      </Button>
+                      </>
                     ))}
                   </EventTabContent>
                 </Tabs.Content>
@@ -69,14 +74,19 @@ const Events = () => {
             </React.Fragment>
           )}
         </Tabs>
-        <Layout.Content height={canSubmit ? 10 : 0}>
-          <Toolbar>
-            <SlideIn in={canSubmit} timeout={1000}>
+        <Layout.Content height={10}>
+          <UserNav>
+            <UserNav.Item
+              Icon={List}
+              edge="start"
+              onClick={() => navigate('/events')}
+            />
+            <UserNav.Space />
+            <GrowIn in={canSubmit}>
               <Button
                 size="large"
                 disabled={loading}
                 onClick={submitForm}
-                fullWidth
                 variant="contained"
                 color="secondary"
                 startIcon={loading && (
@@ -92,22 +102,7 @@ const Events = () => {
               >
                 Done {form.length > 0 && `(${form.length})`}
               </Button>
-            </SlideIn>
-          </Toolbar>
-        </Layout.Content>
-        <Layout.Content height={10}>
-          <UserNav>
-            <UserNav.Item
-              Icon={List}
-              edge="start"
-              onClick={() => navigate('/events')}
-            />
-            <UserNav.Space />
-            <UserNav.Item
-              Icon={Add}
-              edge="end"
-              onClick={() => setCanSubmit(!canSubmit)}
-            />
+            </GrowIn>
             <UserNav.Space />
             <UserNav.Item
               Icon={MoreVert}
