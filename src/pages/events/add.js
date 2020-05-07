@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MoreVert, List } from '@material-ui/icons';
+import { MoreVert, List, Add } from '@material-ui/icons';
 import { Toolbar, Button, CircularProgress } from '@material-ui/core';
 import { navigate } from '@reach/router';
 import { createLog } from '../../services/log';
@@ -8,82 +8,23 @@ import Tabs from '../../components/Tabs/Tabs';
 import Layout from '../../components/Layout';
 import { Data, Categories } from '../../components/Events/data';
 import EventContext from '../../components/Events/context';
-import AddEvent from '../../components/Events/AddEvent';
-import EventEditForm from '../../components/Events/EditEvent';
-import ConfirmEvent from '../../components/Events/ConfirmEvent';
 import { UserNav } from '../../components/Nav';
 import { SlideIn } from '../../components/Transitions';
+import { EventTabItems, EventTabContent } from '../../components/Events/EventTabs';
 
 const Events = () => {
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState();
-  const [value, setValue] = useState();
-  const [open, setOpen] = useState(false);
   const [form, setForm] = useState([]);
-
-  const [curr, setCurr] = useState();
-
-  const handleEditChange = name => value => setCurr({
-    ...curr,
-    [name]: value,
-  });
-
-  const handleOpen = (category, value) => {
-    const idx = form.findIndex(item => item.value === value);
-    const item = idx > -1 ? form[idx].state : {
-      selected: false,
-      start: new Date(),
-      end: new Date(),
-      outside: false,
-      success: false,
-      note: '',
-    };
-    setCurr(item);
-    setCategory(category);
-    setValue(value);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setCurr();
-    setCategory();
-    setValue();
-    setOpen(false);
-  };
-
-  const saveForm = () => {
-    const item = { category, value, state: { ...curr, selected: true } };
-    const data = [...form];
-    const idx = form.findIndex(item => item.value === value);
-
-    if (idx === -1) {
-      data.push(item);
-    } else {
-      data.splice(idx, 1, item);
-    }
-
-    setForm(data);
-    handleClose();
-  };
-
-  const clearForm = () => {
-    const data = [...form];
-    const idx = data.findIndex(item => item.value === value);
-    if (idx > -1) {
-      data.splice(idx, 1);
-      setForm(data);
-    }
-    handleClose();
-  };
+  const [canSubmit, setCanSubmit] = useState(false);
 
   const submitForm = () => {
     setLoading(true);
     const list = [];
-    form.forEach(({ value, category, state }) => {
-      const { selected, note, ...rest } = state;
+    form.forEach(item => {
+      const { selected, note, ...rest } = item.state;
       const payload = {
-        category,
-        value,
+        category: item.category,
+        value: item.value,
         ...rest,
       };
 
@@ -95,54 +36,42 @@ const Events = () => {
     Promise.all(list)
       .then(() => {
         setLoading(false);
-        handleClose();
         setForm([]);
       })
   };
 
-  const handleChange = category => (value) => {
-    return handleOpen(category, value);
-  };
-
   return (
     <EventContext.Provider value={{
-      category,
-      value,
       Data,
       Categories,
       form,
     }}>
-      <ConfirmEvent
-        isDeletable={curr && curr.selected || false}
-        category={category}
-        value={value}
-        open={open}
-        onCancel={handleClose}
-        onDelete={clearForm}
-        onSubmit={saveForm}
-      >
-        {value && (
-          <EventEditForm
-            onChange={handleEditChange}
-            values={curr}
-          />
-        )}
-      </ConfirmEvent>
       <Layout>
-        <Layout.Content height={80}>
-          <Tabs>
-            {Categories.map((category) => (
-              <AddEvent
-                key={category.label}
-                {...category}
-                onChange={handleChange(category.label)}
-              />
-            ))}
-          </Tabs>
-        </Layout.Content>
-        <Layout.Content height={10}>
+        <Tabs>
+          {({ tab, selectTab }) => (
+            <React.Fragment>
+              <Layout.Content height={15}>
+                <Tabs.Header>
+                  <EventTabItems tab={tab} selectTab={selectTab} />
+                </Tabs.Header>
+              </Layout.Content>
+              <Layout.Content height={canSubmit ? 65 : 75}>
+                <Tabs.Content>
+                  <EventTabContent tab={tab} selectTab={selectTab}>
+                    {Categories.map(cat => (
+                      <pre>
+                        {JSON.stringify(cat, 0, 2)}
+                      </pre>
+                    ))}
+                  </EventTabContent>
+                </Tabs.Content>
+              </Layout.Content>
+            </React.Fragment>
+          )}
+        </Tabs>
+        <Layout.Content height={canSubmit ? 10 : 0}>
           <Toolbar>
-            <SlideIn in={form.length > 0} timeout={1000}>
+            <SlideIn in={canSubmit} timeout={1000}>
               <Button
                 size="large"
                 disabled={loading}
@@ -172,6 +101,12 @@ const Events = () => {
               Icon={List}
               edge="start"
               onClick={() => navigate('/events')}
+            />
+            <UserNav.Space />
+            <UserNav.Item
+              Icon={Add}
+              edge="end"
+              onClick={() => setCanSubmit(!canSubmit)}
             />
             <UserNav.Space />
             <UserNav.Item
