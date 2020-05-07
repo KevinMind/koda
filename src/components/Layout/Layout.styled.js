@@ -39,7 +39,7 @@ export const Content = buildGrid(({
   const factor = height * 0.01;
   const styles = {
     height: height ? factor * windowHeight : 'auto',
-    transition: 'height 0.3s',
+    transition: 'height 0.7s',
     overflow: 'scroll',
   };
 

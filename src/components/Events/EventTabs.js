@@ -11,7 +11,21 @@ function a11yProps(index) {
   };
 }
 
-export const EventTabItems = ({ tab, selectTab }) => (
+export const EventTabItem = ({ label, index, count, icon: Icon }) => (
+  <Tab
+    label={label}
+    icon={
+      <React.Fragment>
+        <Badge badgeContent={count} color="secondary">
+          <Icon />
+        </Badge>
+      </React.Fragment>
+    }
+    {...a11yProps(index)}
+  />
+);
+
+export const EventTabList = ({ tab, selectTab, children }) => (
   <MuiTabs
     value={tab}
     onChange={selectTab}
@@ -21,24 +35,7 @@ export const EventTabItems = ({ tab, selectTab }) => (
     textColor="primary"
     aria-label="scrollable force tabs example"
   >
-    {Categories.map(({
-      label,
-      icon: Icon,
-    }, index) => {
-      return (
-        <Tab
-          label={label}
-          icon={
-            <React.Fragment>
-              <Badge badgeContent={0}>
-                <Icon />
-              </Badge>
-            </React.Fragment>
-          }
-          {...a11yProps(index)}
-        />
-      )
-    })}
+    {children}
   </MuiTabs>
 );
 
