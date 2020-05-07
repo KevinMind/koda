@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         </style>
       </CssBaseline>
       {React.Children.map(children, child => {
-        if (validChildren.includes(child.type)) {
+        if (validChildren.includes(child?.type)) {
           return React.cloneElement(child, {
             isLoggedIn: isLoggedIn()
           })
