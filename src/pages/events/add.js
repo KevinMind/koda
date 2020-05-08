@@ -137,7 +137,7 @@ const Events = () => {
         {({ tab, selectTab }) => {
           return (
             <React.Fragment>
-              <Layout.Content height={15}>
+              <Layout.Content height={20}>
                 <EventTabList tab={tab} selectTab={selectTab}>
                   {Categories.map((category, index) => {
                     return (
@@ -152,7 +152,7 @@ const Events = () => {
                   })}
                 </EventTabList>
               </Layout.Content>
-              <Layout.Content height={canSubmit ? 63 : 73}>
+              <Layout.Content height={canSubmit ? 55 :70}>
                 <EventTabContent tab={tab} selectTab={selectTab}>
                   {Categories
                     .map(cat => (
@@ -175,7 +175,7 @@ const Events = () => {
                 </EventTabContent>
               </Layout.Content>
               {canSubmit && (
-                <Layout.Content height={12}>
+                <Layout.Content height={canSubmit ? 15 : 0}>
                   <EventDetails
                     success={success}
                     toggleSuccess={() => setSuccess(!success)}

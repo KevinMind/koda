@@ -8,7 +8,7 @@ const AddEvent = ({ label, color, children }) => {
       container
       wrap
       justify="space-between"
-      spacing={2}
+      spacing={1}
       style={{ marginTop: 10 }}
       component={Container}
     >
