@@ -2,9 +2,10 @@ import React from 'react';
 
 import * as Styled from './UserNav.styled';
 
-const MenuItem = ({ Icon, ...props }) => (
+const MenuItem = ({ Icon, children, ...props }) => (
   <Styled.MenuItem {...props}>
-    <Icon />
+    {Icon && <Icon />}
+    {children}
   </Styled.MenuItem>
 );
 

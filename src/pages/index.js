@@ -48,6 +48,13 @@ const IndexPage = () => {
           Get Started
         </Button>
         <Button
+          onClick={() => navigate('/view')}
+          color="primary"
+          variant="outlined"
+        >
+          Calendar Demo
+        </Button>
+        <Button
           onClick={logOut}
           color="primary"
           variant="outlined"
