@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  purple, red, green, blue, orange, brown, cyan, teal,
+} from '@material-ui/core/colors';
 import {Bathtub, Fastfood, FitnessCenter, Mood, School, SentimentSatisfiedAlt, Wc} from '@material-ui/icons';
 
 const CategoryKeys = {
@@ -16,34 +19,42 @@ export const Categories = [
   {
     label: CategoryKeys.intake,
     icon: Fastfood,
+    color: orange,
   },
   {
     label: CategoryKeys.grooming,
     icon: Bathtub,
+    color: cyan,
   },
   {
     label: CategoryKeys.output,
     icon: Wc,
+    color: brown,
   },
   {
     label: CategoryKeys.training,
     icon: School,
+    color: red,
   },
   {
     label: CategoryKeys.fun,
     icon: SentimentSatisfiedAlt,
+    color: blue,
   },
   {
     label: CategoryKeys.exercise,
     icon: FitnessCenter,
+    color: teal,
   },
   {
     label: CategoryKeys.moods,
     icon: Mood,
+    color: purple,
   },
   {
     label: CategoryKeys.sleep,
     icon: Wc,
+    color: green,
   }
 ];
 

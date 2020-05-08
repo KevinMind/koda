@@ -1,28 +1,39 @@
 import React from 'react';
-import {Avatar, ListItem, ListItemAvatar, ListItemText, Typography} from '@material-ui/core';
+import { ListItem, ListItemAvatar, ListItemText, Typography, ListItemIcon } from '@material-ui/core';
+import { grey, red } from '@material-ui/core/colors';
+import { ArrowForwardIos } from '@material-ui/icons';
 import ImageIcon from '@material-ui/icons/Image';
 import { format as formatDate } from 'date-fns'
 import Swipeable from '../../Swipeable/Swipeable';
 
+import * as Styled from './EventList.styled';
 
 export const EventList = ({ onSwipeLeft, onSwipeRight, children }) => (
   <Swipeable
     onSwipeLeft={onSwipeLeft}
     onSwipeRight={onSwipeRight}
-    leftContent={<div>left</div>}
-    rightContent={<div>right</div>}
+    leftContent={
+      <Styled.SwipeContent color={red[500]} edge="end">
+        left
+      </Styled.SwipeContent>
+    }
+    rightContent={
+      <Styled.SwipeContent color={grey[100]} edge="start">
+        right
+      </Styled.SwipeContent>
+    }
   >
     {children}
   </Swipeable>
 );
 
-export const EventListItem = ({ item, onClick }) => {
+export const EventListItem = ({ item, onClick, color }) => {
   return (
     <ListItem onClick={() => onClick(item)} style={{ cursor: 'pointer' }}>
       <ListItemAvatar>
-        <Avatar>
+        <Styled.Avatar color={color}>
           <ImageIcon />
-        </Avatar>
+        </Styled.Avatar>
       </ListItemAvatar>
       <ListItemText
         primary={
@@ -42,6 +53,9 @@ export const EventListItem = ({ item, onClick }) => {
             </Typography>
           </React.Fragment>
         } />
+      <ListItemIcon>
+        <ArrowForwardIos />
+      </ListItemIcon>
     </ListItem>
   );
 };

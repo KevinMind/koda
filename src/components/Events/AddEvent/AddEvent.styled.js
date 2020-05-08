@@ -2,24 +2,22 @@ import React from 'react';
 import { Box, ButtonBase, Chip, styled, Typography} from '@material-ui/core';
 
 export const OptionContainer = styled(ButtonBase)(({
-  selected, theme,
+  selected, theme, color,
 }) => {
   return {
     height: 100,
-    width: '100%',
-    border: '2px solid',
-    borderRadius: theme.spacing(1),
-    borderColor: theme.palette.primary.dark,
-    background: selected ? theme.palette.primary.main : 'white',
-    color: selected ? 'white' : theme.palette.primary.main,
+    width: 100,
+    border: '5px solid',
+    borderRadius: theme.spacing(2),
+    borderColor: color,
+    background: selected ? color : 'white',
+    color: selected ? 'white' : color,
     marginBottom: 5,
 
   };
 });
 
-export const OptionInner = styled(Box)(({
- theme,
-}) => {
+export const OptionInner = styled(Box)(() => {
   return {
     height: '100%',
     width: '100%',
@@ -32,9 +30,7 @@ export const OptionInner = styled(Box)(({
   }
 });
 
-export const OptionIcon = styled(Box)(({
-  theme
-}) => {
+export const OptionIcon = styled(Box)(() => {
   return {
     display: 'flex',
     justifyContent: 'center',
@@ -43,9 +39,7 @@ export const OptionIcon = styled(Box)(({
   }
 });
 
-export const OptionChip = styled(Chip)(({
-                                   theme
-                                 }) => {
+export const OptionChip = styled(Chip)(() => {
   return {
     borderColor: 'white',
     fill: 'white',
@@ -76,12 +70,11 @@ OptionContent.defaultProps = {
 
 
 export const OptionTitle = styled(Typography)(({
-                                          selected, theme,
-                                        }) => {
+  color, theme,
+}) => {
   return {
     paddingTop: theme.spacing(1),
-    color: theme.palette.primary.main,
-    fontWeight: selected ? 'bold': 'inherit',
+    color,
     textAlign: 'center',
   };
 });

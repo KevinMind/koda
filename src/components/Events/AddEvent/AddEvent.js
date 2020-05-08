@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { Data } from '../data';
 
-const AddEvent = ({ label, children }) => {
+const AddEvent = ({ label, color, children }) => {
   return (
     <Grid
       container
@@ -14,8 +14,8 @@ const AddEvent = ({ label, children }) => {
     >
       {Data
         .filter(({ category }) => category === label)
-        .map((item) => {
-          return children(item);
+        .map((item, index) => {
+          return children(item, { color: color[500]});
         })
       }
     </Grid>

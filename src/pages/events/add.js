@@ -22,6 +22,7 @@ const EventDetails = ({ success, toggleSuccess, outside, toggleOutside }) => (
         <FormControl fullWidth>
           <FormLabel>Successful?</FormLabel>
           <Switch
+            color="primary"
             checked={success}
             onChange={toggleSuccess}
           />
@@ -31,6 +32,7 @@ const EventDetails = ({ success, toggleSuccess, outside, toggleOutside }) => (
         <FormControl fullWidth>
           <FormLabel>Outside?</FormLabel>
           <Switch
+            color="primary"
             checked={outside}
             onChange={toggleOutside}
           />
@@ -50,14 +52,14 @@ const Chips = ({ children }) => (
   </Styled.OptionContent>
 );
 
-const SelectedEvent = ({ item, data, onChange }) => {
+const SelectedEvent = ({ item, data, onChange, color }) => {
   const idx = data.findIndex(entry => entry.value === item.value);
   const selected = idx > -1;
   const state = data[idx];
   return (
-    <Grid item xs={6}>
+    <Grid item xs={6} container justify="center">
       <Styled.OptionContainer
-        color="red"
+        color={color}
         selected={selected}
         onClick={() => onChange(item, idx)}
       >
@@ -83,7 +85,7 @@ const SelectedEvent = ({ item, data, onChange }) => {
       </Styled.OptionContainer>
       <Grid container alignItems="center" justify="center" spacing={1}>
         <Grid item>
-          <Styled.OptionTitle selected={selected}>
+          <Styled.OptionTitle color={color}>
             {item.label}
           </Styled.OptionTitle>
         </Grid>
@@ -136,22 +138,44 @@ const Events = () => {
           return (
             <React.Fragment>
               <Layout.Content height={15}>
-                <Tabs.Header>
-                  <EventTabList tab={tab} selectTab={selectTab}>
-                    {Categories.map((category, index) => {
-                      return (
-                        <EventTabItem
-                          count={selected.filter(item => item.category === category.label).length}
-                          {...category}
-                          index={index}
-                        />
-                      )
-                    })}
-                  </EventTabList>
-                </Tabs.Header>
+                <EventTabList tab={tab} selectTab={selectTab}>
+                  {Categories.map((category, index) => {
+                    return (
+                      <EventTabItem
+                        selectTab={selectTab}
+                        category={category}
+                        index={index}
+                        selected={tab === index}
+                        count={selected.filter(item => item.category === category.label).length}
+                      />
+                    )
+                  })}
+                </EventTabList>
+              </Layout.Content>
+              <Layout.Content height={canSubmit ? 63 : 73}>
+                <EventTabContent tab={tab} selectTab={selectTab}>
+                  {Categories
+                    .map(cat => (
+                      <AddEvent
+                        color={cat.color}
+                        data={selected}
+                        label={cat.label}
+                        onChange={toggleSelected}
+                      >
+                        {(item, itemProps) => (
+                          <SelectedEvent
+                            color={itemProps.color}
+                            item={item}
+                            data={selected}
+                            onChange={toggleSelected}
+                          />
+                        )}
+                      </AddEvent>
+                    ))}
+                </EventTabContent>
               </Layout.Content>
               {canSubmit && (
-                <Layout.Content height={10}>
+                <Layout.Content height={12}>
                   <EventDetails
                     success={success}
                     toggleSuccess={() => setSuccess(!success)}
@@ -160,28 +184,6 @@ const Events = () => {
                   />
                 </Layout.Content>
               )}
-              <Layout.Content height={canSubmit ? 65 : 75}>
-                <Tabs.Content>
-                  <EventTabContent tab={tab} selectTab={selectTab}>
-                    {Categories
-                      .map(cat => (
-                        <AddEvent
-                          data={selected}
-                          label={cat.label}
-                          onChange={toggleSelected}
-                        >
-                          {(item) => (
-                            <SelectedEvent
-                              item={item}
-                              data={selected}
-                              onChange={toggleSelected}
-                            />
-                          )}
-                        </AddEvent>
-                      ))}
-                  </EventTabContent>
-                </Tabs.Content>
-              </Layout.Content>
             </React.Fragment>
           )
         }}

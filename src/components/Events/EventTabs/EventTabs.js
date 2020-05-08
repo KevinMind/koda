@@ -1,8 +1,8 @@
 import React from 'react';
-import { Badge, Tab, Tabs as MuiTabs } from '@material-ui/core';
+import { Badge, Tab, Tabs } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 
-import { Categories } from './data';
+import * as Styled from './EventTabs.styled';
 
 function a11yProps(index) {
   return {
@@ -11,32 +11,43 @@ function a11yProps(index) {
   };
 }
 
-export const EventTabItem = ({ label, index, count, icon: Icon }) => (
-  <Tab
-    label={label}
-    icon={
-      <React.Fragment>
-        <Badge badgeContent={count} color="secondary">
-          <Icon />
-        </Badge>
-      </React.Fragment>
-    }
-    {...a11yProps(index)}
-  />
-);
+export const EventTabItem = ({
+  selectTab,
+  category,
+  index,
+  count,
+  selected,
+}) => {
+  const Icon = category.icon;
+  return (
+    <Styled.Tab
+      selected={selected}
+      filled={count > 0}
+      onClick={e => selectTab(e, index)}
+      color={category.color}
+      icon={
+        <React.Fragment>
+          <Styled.Badge badgeContent={count} color="primary">
+            <Icon />
+          </Styled.Badge>
+        </React.Fragment>
+      }
+      {...a11yProps(index)}
+    />
+  );
+};
 
 export const EventTabList = ({ tab, selectTab, children }) => (
-  <MuiTabs
+  <Styled.Tabs
+    color='#635ee7'
     value={tab}
     onChange={selectTab}
     variant="scrollable"
     scrollButtons="on"
-    indicatorColor="primary"
-    textColor="primary"
     aria-label="scrollable force tabs example"
   >
     {children}
-  </MuiTabs>
+  </Styled.Tabs>
 );
 
 export const EventTabContent = ({ selectTab, tab, children }) => (

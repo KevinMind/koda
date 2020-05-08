@@ -13,6 +13,7 @@ import { updateLog, deleteLog } from '../../services/log';
 import Layout from '../../components/Layout';
 import { UserNav } from '../../components/Nav';
 import { EventList, EventListItem } from '../../components/Events/EventList';
+import { Categories } from '../../components/Events/data';
 
 const LoadingItem = () => (
   <ListItem style={{ width: '100%' }}>
@@ -127,22 +128,22 @@ const Events = () => {
       <Layout.Content height={90}>
         {loaded
         ? (
-            <Grid container direction="column" spacing={3}>
-              <Grid item>
-                <EventList
-                  onSwipeLeft={handleSwipeLeft}
-                  onSwipeRight={handleSwipeRight}
-                >
-                  {list.map((item) => (
-                    <EventListItem
-                      onDelete={handleDelete}
-                      onClick={handleOpen}
-                      item={item}
-                    />
-                  ))}
-                </EventList>
-              </Grid>
-            </Grid>
+            <EventList
+              onSwipeLeft={handleSwipeLeft}
+              onSwipeRight={handleSwipeRight}
+            >
+              {list.map((item) => {
+                const { color } = Categories.find(cat => cat.label === item.category);
+                return (
+                  <EventListItem
+                    color={color}
+                    onDelete={handleDelete}
+                    onClick={handleOpen}
+                    item={item}
+                  />
+                )
+              })}
+            </EventList>
           )
         : <Loading />
         }
