@@ -5,7 +5,7 @@ export const Container = styled(AppBar)(() => ({
   top: 'auto',
   bottom: 0,
   position: 'fixed',
-  backgroundColor: 'inherit',
+  backgroundColor: 'white',
 }));
 
 export const Inner = Toolbar;
