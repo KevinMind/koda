@@ -31,6 +31,9 @@ const buildGrid = (cb) => {
 };
 
 export const Content = buildGrid(({
+  position,
+  top,
+  backgroundColor,
   height,
   justifyContent,
   alignItems,
@@ -38,9 +41,11 @@ export const Content = buildGrid(({
   const windowHeight = window.innerHeight;
   const factor = height * 0.01;
   const styles = {
+    backgroundColor: backgroundColor || 'white',
+    position,
+    top,
     height: height ? factor * windowHeight : 'auto',
     transition: 'height 0.7s',
-    overflow: 'scroll',
   };
 
   if (justifyContent || alignItems) {

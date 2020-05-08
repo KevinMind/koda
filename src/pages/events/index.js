@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ListItem, ListItemText, ListItemAvatar, Grid, List } from '@material-ui/core';
+import { ListItem, ListItemText, ListItemAvatar, List } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import {navigate} from '@reach/router';
-import {MoreVert, Add, List as ListIcon } from '@material-ui/icons';
-
+import { MoreVert, Add, List as ListIcon, CalendarToday } from '@material-ui/icons';
 
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
 import { listLogs } from '../../services/log';
@@ -158,6 +157,11 @@ const Events = () => {
           <UserNav.Fab
             Icon={Add}
             onClick={() => navigate('/events/add')}
+          />
+          <UserNav.Item
+            Icon={CalendarToday}
+            edge="start"
+            onClick={() => navigate('/dashboard')}
           />
           <UserNav.Item
             Icon={MoreVert}

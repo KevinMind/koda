@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {MoreVert, List, Add, Done, OutdoorGrill} from '@material-ui/icons';
+import {MoreVert, List, CalendarToday, Add, Done, OutdoorGrill} from '@material-ui/icons';
 import {
   Button, CircularProgress, Grid, Toolbar, Switch, FormControl, FormLabel, Tab, Badge, Tabs as MuiTabs,
 } from '@material-ui/core';
@@ -218,6 +218,11 @@ const Events = () => {
             </Button>
           </GrowIn>
           <UserNav.Space />
+          <UserNav.Item
+            Icon={CalendarToday}
+            edge="start"
+            onClick={() => navigate('/dashboard')}
+          />
           <UserNav.Item
             Icon={MoreVert}
             edge="end"
