@@ -10,6 +10,7 @@ const config = require('./aws-exports').default;
 
 exports.wrapRootElement = ({ element }) => {
   Amplify.configure(config);
+  alert('configured', JSON.stringify(config));
   return (
     <>
       {element}

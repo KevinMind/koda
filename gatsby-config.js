@@ -42,12 +42,12 @@ module.exports = {
         display: `fullscreen`,
       },
     },
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        appendScript,
-        precachePages: [`/events/*`],
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-offline`,
+    //   options: {
+    //     appendScript,
+    //     precachePages: [`/events/*`],
+    //   },
+    // },
   ],
 };
