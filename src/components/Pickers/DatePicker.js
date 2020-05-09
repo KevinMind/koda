@@ -1,111 +1,64 @@
 import 'date-fns';
-import React, { useState } from 'react';
-import DateFnsUtils from '@date-io/date-fns';
-import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Alarm, Edit } from '@material-ui/icons';
-import { Typography, Grid } from '@material-ui/core';
-import '@sandstreamdev/react-swipeable-list/dist/styles.css';
-
-import * as Styled from './DatePicker.styled';
-import EditDate from './EditDate';
-
-const Left = ({ onChange }) => (
-  <Styled.ToggleButton
-    onClick={onChange}
-    background="blue"
-  >
-    <Typography>
-      Now
-    </Typography>
-    <Alarm />
-  </Styled.ToggleButton>
-);
-
-const Right = ({ onStart }) => (
-  <Styled.ToggleButton
-    onClick={onStart}
-    background="green"
-  >
-    <Typography>
-      Edit
-    </Typography>
-    <Edit />
-  </Styled.ToggleButton>
-);
+import React from 'react';
+import { format as formatDate, getMinutes, setMinutes, getHours, setHours } from 'date-fns';
+import { Box, TextField, Select, Grid, FormControl, InputLabel } from '@material-ui/core';
 
 export const DateTimePicker = ({ onChange, label, value, format }) => {
-  const[active, setActive] = useState(false);
-  const startEdit = () => setActive(true);
-  const endEdit = () => setActive(false);
-  const setTimeNow = () => onChange(new Date());
-
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <EditDate
-        onEnd={endEdit}
-        active={active}
-        onChange={onChange}
-        value={value}
-        label={label}
-        format={format}
-      />
-      <SwipeableList>
-        <SwipeableListItem
-          swipeLeft={{
-            content: <Left onChange={setTimeNow} />,
-            action: setTimeNow,
-          }}
-          swipeRight={{
-            content: <Right onStart={startEdit} /> ,
-            action: startEdit,
-          }}
-          onSwipeProgress={console.log}
-        >
-          <Styled.Container>
-            <Styled.CenterColumn onClick={startEdit}>
-              <Grid item component={Typography} xs={12}>
-                {value.toLocaleString()}
-              </Grid>
-            </Styled.CenterColumn>
-          </Styled.Container>
-        </SwipeableListItem>
-      </SwipeableList>
-    </MuiPickersUtilsProvider>
-  );
-
-  return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <EditDate
-        onEnd={endEdit}
-        active={active}
-        onChange={onChange}
-        value={value}
-        label={label}
-        format={format}
-      />
-      <Styled.Container active={active}>
-        <Styled.LeftColumn>
-          <Styled.ToggleButton onClick={() => onChange(new Date())} bordered>
-            <Typography>
-              Now
-            </Typography>
-            <Alarm />
-          </Styled.ToggleButton>
-          <Styled.ToggleButton onClick={startEdit}>
-            <Typography>
-              Edit
-            </Typography>
-            <Edit />
-          </Styled.ToggleButton>
-        </Styled.LeftColumn>
-        <Styled.RightColumn>
-          <Typography>
-            {value.toLocaleString()}
-          </Typography>
-        </Styled.RightColumn>
-      </Styled.Container>
-    </MuiPickersUtilsProvider>
+    <Grid container direction="column" style={{ width: '100%', height: '100%', minHeight: 130 }}>
+      <Grid item xs>
+        <TextField
+          label={label}
+          variant="outlined"
+          fullWidth
+          type="date"
+          onChange={({ target: { value }}) => onChange(new Date(value))}
+          value={formatDate(new Date(value), 'yyyy-MM-dd')}
+        />
+      </Grid>
+      <Grid item container alignItems="center" spacing={2} style={{ width: '100%' }}>
+        <Grid item component={FormControl} variant="outlined">
+          <InputLabel htmlFor="hours">Hours</InputLabel>
+          <Select
+            inputProps={{
+              name: 'hours',
+              id: 'hours',
+            }}
+            native
+            value={getHours(new Date(value))}
+            onChange={(e) => {
+              console.log({
+                value,
+                new: setHours(new Date(value), e.target.value),
+              });
+              onChange(setHours(new Date(value), e.target.value));
+            }}
+          >
+            <option aria-label="None" value="" />
+            {new Array(24).fill(null).map((_, idx) => (
+              <option value={idx}>{idx}</option>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item component={FormControl} variant="outlined">
+          <InputLabel htmlFor="minutes">Minutes</InputLabel>
+          <Select
+            inputProps={{
+              name: 'minutes',
+              id: 'minutes',
+            }}
+            native
+            value={getMinutes(new Date(value))}
+            onChange={(e) => onChange(setMinutes(new Date(value), e.target.value))}
+          >
+            <option aria-label="None" value="" />
+            {new Array(60).fill(null).map((_, idx) => (
+              <option value={idx}>{idx}</option>
+            ))}
+          </Select>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

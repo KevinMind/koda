@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { CssBaseline, Grid } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 
 import * as Styled from './Layout.styled';
 

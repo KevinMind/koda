@@ -16,7 +16,7 @@ import AddEvent from '../../components/Events/AddEvent';
 import * as Styled from '../../components/Events/AddEvent/AddEvent.styled';
 
 const EventDetails = ({ success, toggleSuccess, outside, toggleOutside }) => (
-  <Toolbar style={{ padding: 5, background: 'white' }}>
+  <Toolbar style={{ padding: 5 }}>
     <Grid container justify="space-around" alignItems="center">
       <Grid item>
         <FormControl fullWidth>
@@ -193,6 +193,16 @@ const Events = () => {
                 </UserNav>
               }
             >
+              {canSubmit && (
+                <Layout.Content>
+                  <EventDetails
+                    success={success}
+                    toggleSuccess={() => setSuccess(!success)}
+                    outside={outside}
+                    toggleOutside={() => setOutside(!outside)}
+                  />
+                </Layout.Content>
+              )}
               <Layout.Content>
                 <EventTabContent tab={tab} selectTab={selectTab}>
                   {Categories
@@ -215,16 +225,6 @@ const Events = () => {
                     ))}
                 </EventTabContent>
               </Layout.Content>
-              {canSubmit && (
-                <Layout.Bottom>
-                  <EventDetails
-                    success={success}
-                    toggleSuccess={() => setSuccess(!success)}
-                    outside={outside}
-                    toggleOutside={() => setOutside(!outside)}
-                  />
-                </Layout.Bottom>
-              )}
             </Layout>
           )
         }}

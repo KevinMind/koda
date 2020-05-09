@@ -5,7 +5,6 @@ import {navigate} from '@reach/router';
 import { Toolbar, ButtonGroup, IconButton, Box, Grid, Paper } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import { virtualize, bindKeyboard } from 'react-swipeable-views-utils';
-import { mod } from 'react-swipeable-views-core';
 
 import Layout from '../components/Layout';
 import withPrivateRoute from '../components/Routes/PrivateRoute';
@@ -13,55 +12,7 @@ import { listLogs } from '../services/log';
 import { UserNav } from '../components/Nav';
 import { Categories } from '../components/Events/data';
 
-import { TimeLine } from '../components/Dashboard';
-
 const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
-
-const styles = {
-  slide: {
-    padding: 15,
-    minHeight: 100,
-    color: '#fff',
-  },
-  slide1: {
-    backgroundColor: '#FEA900',
-  },
-  slide2: {
-    backgroundColor: '#B3DC4A',
-  },
-  slide3: {
-    backgroundColor: '#6AC0FF',
-  },
-};
-
-function slideRenderer(params) {
-  console.log(params);
-  const { index, key } = params;
-  let style;
-
-  switch (mod(index, 3)) {
-    case 0:
-      style = styles.slide1;
-      break;
-
-    case 1:
-      style = styles.slide2;
-      break;
-
-    case 2:
-      style = styles.slide3;
-      break;
-
-    default:
-      break;
-  }
-
-  return (
-    <div style={Object.assign({}, styles.slide, style)} key={key}>
-      {`slide n°${index + 1}`}
-    </div>
-  );
-}
 
 const processEvents = data => {
   return data.map(item => {
@@ -78,6 +29,7 @@ const processEvents = data => {
 
 const Cell = ({ children }) => (
   <div style={{
+    height: 50,
     borderBottom: '1px solid',
     display: 'flex',
     alignItems: 'center',
@@ -219,6 +171,7 @@ const DashboardPage = () => {
                                 console.log({ a, b });
                                 return a.minutes - b.minutes;
                               });
+                            console.log(entries);
                             return (
                               <Cell>
                                 {entries.length
@@ -229,7 +182,7 @@ const DashboardPage = () => {
                                         flexGrow: 1,
                                         background: Categories.find(({ label }) => label === item.category)?.color[500],
                                       }}>
-                                        i
+                                        {'i'}
                                       </div>
                                     )
                                   })

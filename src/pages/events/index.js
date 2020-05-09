@@ -42,20 +42,21 @@ const Loading = () => (
   </List>
 );
 
+const processList = (events) => events.map(({ start, end, ...rest }) => ({
+  start: new Date(start),
+  end: new Date(end),
+  ...rest,
+}));
+
 const Events = () => {
   const [loaded, setLoaded] = useState(false);
   const [list, setList] = useState([]);
   const [curr, setCurr] = useState();
 
-  const handleEditChange = name => value => setCurr({
-    ...curr,
-    [name]: value,
-  });
-
   const updateList = () => {
     setLoaded(false);
     listLogs()
-      .then(setList)
+      .then(data => setList(processList(data)))
       .finally(() => setLoaded(true));
   };
 
@@ -63,7 +64,15 @@ const Events = () => {
     updateList();
   }, []);
 
+  const handleEditChange = name => value => {
+    setCurr({
+      ...curr,
+      [name]: value,
+    });
+  };
+
   const handleOpen = (item) => setCurr(item);
+
   const handleClose = () => setCurr();
 
   const handleDelete = (id = curr.id) => {
@@ -75,6 +84,7 @@ const Events = () => {
       handleClose();
     });
   };
+
   const handleSave = () => {
     const payload = {
       start: curr.start,

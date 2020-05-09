@@ -1,6 +1,6 @@
 import React from 'react';
 import { navigate } from '@reach/router';
-import { Add, Home, CalendarToday } from '@material-ui/icons';
+import { Home, CalendarToday } from '@material-ui/icons';
 import Layout from '../components/Layout';
 import withPrivateRoute from '../components/Routes/PrivateRoute';
 import { CalendarDayView } from '../components/Calendar';
