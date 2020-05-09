@@ -46,6 +46,18 @@ const Layout = ({ children, Footer, Header, headerProps, footerProps }) => {
   const [headerHeight, headerRef] = useClientRect();
   const [footerHeight, footerRef] = useClientRect();
 
+  const minHeight = typeof window !== 'undefined'
+    ? window.innerHeight - (headerHeight?.height + footerHeight?.height)
+    : undefined;
+
+  console.log({ minHeight, headerHeight, footerHeight });
+
+  const childProps = {
+    minHeight,
+    footerHeight: footerHeight?.height,
+    headerHeight: headerHeight?.height,
+  };
+
   return (
     <React.Fragment>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -55,26 +67,20 @@ const Layout = ({ children, Footer, Header, headerProps, footerProps }) => {
           {Header}
         </Styled.Header>
       )}
-      <Styled.Container style={{
-        paddingTop: headerHeight?.height,
-        paddingBottom: footerHeight?.height,
-      }}>
-        {React.Children.map(children, child => {
-          const props = getProps(child, {
-            footerHeight: footerHeight?.height,
-            headerHeight: headerHeight?.height,
-          });
-
-          return (
-            <Grid
-              item
-              xs
-              {...props}
-            >
-              {child}
-            </Grid>
-          );
-        })}
+      <Styled.Container height={minHeight}>
+        {typeof children === 'function'
+          ? children(Styled.Content, childProps)
+          : React.Children.map(children, child => {
+            const props = getProps(child, childProps);
+            return (
+              <Styled.Content
+                {...props}
+              >
+                {child}
+              </Styled.Content>
+            );
+          })
+        }
       </Styled.Container>
       {Footer && (
         <Styled.Footer ref={footerRef} {...footerProps}>

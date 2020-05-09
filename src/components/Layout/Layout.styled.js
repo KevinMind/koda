@@ -1,26 +1,21 @@
 import React from 'react';
 import { Grid, styled, AppBar } from '@material-ui/core';
 
-export const Container = styled(Grid)(({ hasFooter, hasHeader }) => {
+export const Container = styled('div')(({ height }) => {
   return {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
+    display: 'flex',
     flexDirection: 'column',
-    overflowY: 'scroll',
+    minHeight: height,
   }
 });
 
-export const Content = styled(Grid)(({
+export const Content = styled('div')(({
   justifyContent,
   alignItems,
 }) => {
   const styles = {
-    border: '1px solid',
-    overflowY: 'scroll',
-    overflowX: 'hidden',
+    height: '100%',
+    flex: 1,
   };
 
   if (justifyContent || alignItems) {
@@ -32,7 +27,6 @@ export const Content = styled(Grid)(({
 
 export const Header = styled(AppBar)(({ color, theme }) => {
   return {
-    border: '1px solid',
     background: color || theme.palette.background.default,
     position: 'sticky',
     top: 0,
@@ -43,7 +37,6 @@ export const Header = styled(AppBar)(({ color, theme }) => {
 });
 
 export const Footer = styled(AppBar)(({ color, theme }) => ({
-  border: '1px solid',
   background: color || theme.palette.background.default,
   position: 'fixed',
   bottom: 0,

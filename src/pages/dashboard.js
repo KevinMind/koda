@@ -1,11 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { format, getHours, getMinutes } from 'date-fns';
+import { format, getHours, getMinutes, addDays, isSameDay } from 'date-fns';
+import {Add, CalendarToday, List as ListIcon, MoreVert, Remove } from '@material-ui/icons';
+import {navigate} from '@reach/router';
+import { Toolbar, ButtonGroup, IconButton, Box, Grid, Paper } from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
+import { virtualize, bindKeyboard } from 'react-swipeable-views-utils';
+import { mod } from 'react-swipeable-views-core';
+
 import Layout from '../components/Layout';
 import withPrivateRoute from '../components/Routes/PrivateRoute';
 import { listLogs } from '../services/log';
-import {UserNav} from '../components/Nav';
-import {Add, CalendarToday, List as ListIcon, MoreVert} from '@material-ui/icons';
-import {navigate} from '@reach/router';
+import { UserNav } from '../components/Nav';
+import { Categories } from '../components/Events/data';
+
+import { TimeLine } from '../components/Dashboard';
+
+const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
+
+const styles = {
+  slide: {
+    padding: 15,
+    minHeight: 100,
+    color: '#fff',
+  },
+  slide1: {
+    backgroundColor: '#FEA900',
+  },
+  slide2: {
+    backgroundColor: '#B3DC4A',
+  },
+  slide3: {
+    backgroundColor: '#6AC0FF',
+  },
+};
+
+function slideRenderer(params) {
+  console.log(params);
+  const { index, key } = params;
+  let style;
+
+  switch (mod(index, 3)) {
+    case 0:
+      style = styles.slide1;
+      break;
+
+    case 1:
+      style = styles.slide2;
+      break;
+
+    case 2:
+      style = styles.slide3;
+      break;
+
+    default:
+      break;
+  }
+
+  return (
+    <div style={Object.assign({}, styles.slide, style)} key={key}>
+      {`slide n°${index + 1}`}
+    </div>
+  );
+}
 
 const processEvents = data => {
   return data.map(item => {
@@ -20,8 +76,36 @@ const processEvents = data => {
   })
 };
 
+const Cell = ({ children }) => (
+  <div style={{
+    borderBottom: '1px solid',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}>
+    {children}
+  </div>
+);
+
+const Column = ({ children, ...props }) => (
+  <Grid
+    item
+    component={Paper}
+    style={{
+      height: '100%',
+      width: '100%',
+      border: '1px solid',
+      borderBottom: 'none',
+    }}
+    xs
+    {...props}
+  >
+    {children}
+  </Grid>
+);
+
 const DashboardPage = () => {
-  const [date, setDate] = useState(new Date());
+  const [dateIndex, setDateIndex] = useState(0);
   const [view, setView] = useState(1);
   const [list, setList] = useState([]);
 
@@ -29,40 +113,148 @@ const DashboardPage = () => {
     listLogs().then((data) => setList(processEvents(data)));
   }, []);
 
-  const handleViewChange = changed => () => setView(changed);
+  const increment = () => {
+    if (view < 3) {
+      setView(view + 1);
+    }
+  };
+  const decrement = () => {
+    if (view > 1) {
+      setView(view - 1);
+    }
+  };
+
+  const nextDay = () => setDateIndex(dateIndex + view);
+  const prevDay = () => setDateIndex(dateIndex - view);
+
+  const handleSwipe = (next, prev) => {
+    if (next > prev) {
+      nextDay();
+    } else {
+      prevDay();
+    }
+  };
+
+  const date = new Date();
+  const dateFormat = 'dd/MM/yyyy';
+  const dateString = format(addDays(date, dateIndex), dateFormat);
+
   return (
-      <Layout Footer={
-        <UserNav>
-          <UserNav.Item
-            Icon={ListIcon}
-            edge="start"
-            onClick={() => navigate('/events')}
+      <Layout
+        Footer={
+          <UserNav>
+            <UserNav.Item
+              Icon={ListIcon}
+              edge="start"
+              onClick={() => navigate('/events')}
+            />
+            <UserNav.Fab
+              Icon={Add}
+              onClick={() => navigate('/events/add')}
+            />
+            <UserNav.Item
+              Icon={CalendarToday}
+              edge="start"
+              onClick={() => navigate('/dashboard')}
+            />
+            <UserNav.Item
+              Icon={MoreVert}
+              edge="end"
+              onClick={() => navigate('/')}
+            />
+          </UserNav>
+        }
+        Header={
+          <Toolbar>
+            <ButtonGroup fullWidth>
+              <IconButton onClick={prevDay}><Remove /></IconButton>
+              <Box style={{
+                border: '1px solid',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: 'black',
+                fontSize: 20,
+              }}>{dateString}</Box>
+              <IconButton onClick={nextDay}><Add /></IconButton>
+            </ButtonGroup>
+            <ButtonGroup fullWidth>
+              <IconButton onClick={decrement}><Remove /></IconButton>
+              <Box style={{
+                border: '1px solid',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: 'black',
+                fontSize: 20,
+              }}>{view}</Box>
+              <IconButton onClick={increment}><Add /></IconButton>
+            </ButtonGroup>
+          </Toolbar>
+        }
+      >
+        {(Content, props) => (
+          <VirtualizeSwipeableViews
+            index={dateIndex}
+            slideRenderer={({ index, key }) => {
+              return (
+                <Content key={key}>
+                  <Grid container spacing={2} justify="space-around" style={{ height: '100%', width: '100%' }}>
+                    <Column xs={1}>
+                      {new Array(23).fill(null).map((_, hourIdx) => (
+                        <Cell>
+                          {hourIdx}
+                        </Cell>
+                      ))}
+                    </Column>
+                    {new Array(view).fill(null).map((_, idx) => {
+                      const current = addDays(date, index + idx);
+                      const items = list.filter(item => isSameDay(item.date, current));
+                      return (
+                        <Column>
+                          {new Array(23).fill(null).map((_, hourIdx) => {
+                            const entries = items
+                              .filter(({ hours }) => hours === hourIdx)
+                              .sort((a, b) => {
+                                console.log({ a, b });
+                                return a.minutes - b.minutes;
+                              });
+                            return (
+                              <Cell>
+                                {entries.length
+                                  ? entries.map(({ item }) => {
+                                    return (
+                                      <div style={{
+                                        height: '100%',
+                                        flexGrow: 1,
+                                        background: Categories.find(({ label }) => label === item.category)?.color[500],
+                                      }}>
+                                        i
+                                      </div>
+                                    )
+                                  })
+                                  : 'none'
+                                }
+                              </Cell>
+                            )
+                          })}
+                        </Column>
+                      )
+                    })}
+                  </Grid>
+                </Content>
+              )
+            }}
+            onChangeIndex={handleSwipe}
+            containerStyle={{
+              height: '100%',
+              minHeight: props.minHeight,
+              width: '100%',
+            }}
+            style={{ height: '100%' }}
           />
-          <UserNav.Fab
-            Icon={Add}
-            onClick={() => navigate('/events/add')}
-          />
-          <UserNav.Item
-            Icon={CalendarToday}
-            edge="start"
-            onClick={() => navigate('/dashboard')}
-          />
-          <UserNav.Item
-            Icon={MoreVert}
-            edge="end"
-            onClick={() => navigate('/')}
-          />
-        </UserNav>
-      }>
-        <Layout.Content>
-          Hi There
-        </Layout.Content>
-        <Layout.Content>
-          Hi There
-        </Layout.Content>
-        <Layout.Content>
-          Hi There
-        </Layout.Content>
+        )}
+
       </Layout>
   );
 };
