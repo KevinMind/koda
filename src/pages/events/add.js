@@ -16,7 +16,7 @@ import AddEvent from '../../components/Events/AddEvent';
 import * as Styled from '../../components/Events/AddEvent/AddEvent.styled';
 
 const EventDetails = ({ success, toggleSuccess, outside, toggleOutside }) => (
-  <Toolbar style={{ paddingTop: 5 }}>
+  <Toolbar style={{ padding: 5, background: 'white' }}>
     <Grid container justify="space-around" alignItems="center">
       <Grid item>
         <FormControl fullWidth>
@@ -130,14 +130,12 @@ const Events = () => {
   };
 
   const canSubmit = selected.length > 0;
-
   return (
-    <Layout>
       <Tabs>
         {({ tab, selectTab }) => {
           return (
-            <React.Fragment>
-              <Layout.Content height={20}>
+            <Layout
+              Header={
                 <EventTabList tab={tab} selectTab={selectTab}>
                   {Categories.map((category, index) => {
                     return (
@@ -151,8 +149,51 @@ const Events = () => {
                     )
                   })}
                 </EventTabList>
-              </Layout.Content>
-              <Layout.Content height={canSubmit ? 55 :70}>
+              }
+              Footer={
+                <UserNav>
+                  <UserNav.Item
+                    Icon={List}
+                    edge="start"
+                    onClick={() => navigate('/events')}
+                  />
+                  <UserNav.Space />
+                  <GrowIn in={canSubmit}>
+                    <Button
+                      size="large"
+                      disabled={loading}
+                      onClick={submitForm}
+                      variant="contained"
+                      color="secondary"
+                      startIcon={loading && (
+                        <CircularProgress
+                          thickness={3}
+                          style={{
+                            height: 20,
+                            width: 20,
+                            color: 'white',
+                          }}
+                        />
+                      )}
+                    >
+                      Done {`(${selected.length})`}
+                    </Button>
+                  </GrowIn>
+                  <UserNav.Space />
+                  <UserNav.Item
+                    Icon={CalendarToday}
+                    edge="start"
+                    onClick={() => navigate('/dashboard')}
+                  />
+                  <UserNav.Item
+                    Icon={MoreVert}
+                    edge="end"
+                    onClick={() => navigate('/')}
+                  />
+                </UserNav>
+              }
+            >
+              <Layout.Content>
                 <EventTabContent tab={tab} selectTab={selectTab}>
                   {Categories
                     .map(cat => (
@@ -175,62 +216,19 @@ const Events = () => {
                 </EventTabContent>
               </Layout.Content>
               {canSubmit && (
-                <Layout.Content height={canSubmit ? 15 : 0}>
+                <Layout.Bottom>
                   <EventDetails
                     success={success}
                     toggleSuccess={() => setSuccess(!success)}
                     outside={outside}
                     toggleOutside={() => setOutside(!outside)}
                   />
-                </Layout.Content>
+                </Layout.Bottom>
               )}
-            </React.Fragment>
+            </Layout>
           )
         }}
       </Tabs>
-      <Layout.Content height={10}>
-        <UserNav>
-          <UserNav.Item
-            Icon={List}
-            edge="start"
-            onClick={() => navigate('/events')}
-          />
-          <UserNav.Space />
-          <GrowIn in={canSubmit}>
-            <Button
-              size="large"
-              disabled={loading}
-              onClick={submitForm}
-              variant="contained"
-              color="secondary"
-              startIcon={loading && (
-                <CircularProgress
-                  thickness={3}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    color: 'white',
-                  }}
-                />
-              )}
-            >
-              Done {`(${selected.length})`}
-            </Button>
-          </GrowIn>
-          <UserNav.Space />
-          <UserNav.Item
-            Icon={CalendarToday}
-            edge="start"
-            onClick={() => navigate('/dashboard')}
-          />
-          <UserNav.Item
-            Icon={MoreVert}
-            edge="end"
-            onClick={() => navigate('/')}
-          />
-        </UserNav>
-      </Layout.Content>
-    </Layout>
   );
 };
 

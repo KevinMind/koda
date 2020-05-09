@@ -25,6 +25,7 @@ export const Tab = styled(MuiTab)(({ selected, color, filled, theme }) => ({
 export const Tabs = withStyles((theme) => {
   return {
     root: {
+      width: '100%',
       paddingTop: theme.spacing(1),
     },
     indicator: {

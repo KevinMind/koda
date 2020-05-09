@@ -1,51 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, styled } from '@material-ui/core';
+import { Grid, styled, AppBar } from '@material-ui/core';
 
-export const Container = styled(Grid)(() => ({
-  position: 'relative',
-  height: '100%',
-  flexDirection: 'column'
-}));
+export const Container = styled(Grid)(({ hasFooter, hasHeader }) => {
+  return {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    overflowY: 'scroll',
+  }
+});
 
-const buildGrid = (cb) => {
-  const itemProps = {
-    children: PropTypes.node.isRequired,
-  };
-
-  const itemDefaultProps = {
-    item: true,
-    height: 100,
-  };
-
-  const Item = styled(Grid)(cb);
-
-  Item.propTypes = {
-    ...itemProps
-  };
-
-  Item.defaultProps = {
-    ...itemDefaultProps
-  };
-  return Item;
-};
-
-export const Content = buildGrid(({
-  position,
-  top,
-  backgroundColor,
-  height,
+export const Content = styled(Grid)(({
   justifyContent,
   alignItems,
 }) => {
-  const windowHeight = window.innerHeight;
-  const factor = height * 0.01;
   const styles = {
-    backgroundColor: backgroundColor || 'white',
-    position,
-    top,
-    height: height ? factor * windowHeight : 'auto',
-    transition: 'height 0.7s',
+    border: '1px solid',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
   };
 
   if (justifyContent || alignItems) {
@@ -55,25 +30,25 @@ export const Content = buildGrid(({
   return styles;
 });
 
-export const FixedContent = styled(Content)(({ top, bottom, right, left, width }) => ({
-  top,
-  bottom,
-  right,
-  left,
+export const Header = styled(AppBar)(({ color, theme }) => {
+  return {
+    border: '1px solid',
+    background: color || theme.palette.background.default,
+    position: 'sticky',
+    top: 0,
+    bottom: 'auto',
+    left: 0,
+    width: '100%',
+  }
+});
+
+export const Footer = styled(AppBar)(({ color, theme }) => ({
+  border: '1px solid',
+  background: color || theme.palette.background.default,
   position: 'fixed',
-  width: width || '100%'
-}));
-
-export const Header = styled(Content)(() => ({
-  height: '10%',
-}));
-
-export const Main = styled(Content)(() => ({
-  height: '80%',
-}));
-
-export const Footer = styled(Content)(() => ({
-  height: '10%',
-  overflow: 'scroll'
+  bottom: 0,
+  top: 'auto',
+  left: 0,
+  width: '100%',
 }));
 

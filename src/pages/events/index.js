@@ -107,7 +107,7 @@ const Events = () => {
   };
 
   return (
-    <Layout>
+    <React.Fragment>
       {curr && (
         <ConfirmEvent
           isDeletable
@@ -124,53 +124,56 @@ const Events = () => {
           />
         </ConfirmEvent>
       )}
-      <Layout.Content height={90}>
-        {loaded
-        ? (
-            <EventList
-              onSwipeLeft={handleSwipeLeft}
-              onSwipeRight={handleSwipeRight}
-            >
-              {list.map((item) => {
-                const { color } = Categories.find(cat => cat.label === item.category);
-                return (
-                  <EventListItem
-                    color={color}
-                    onDelete={handleDelete}
-                    onClick={handleOpen}
-                    item={item}
-                  />
-                )
-              })}
-            </EventList>
-          )
-        : <Loading />
+      <Layout
+        Footer={
+          <UserNav>
+            <UserNav.Item
+              Icon={ListIcon}
+              edge="start"
+              onClick={() => navigate('/events')}
+            />
+            <UserNav.Fab
+              Icon={Add}
+              onClick={() => navigate('/events/add')}
+            />
+            <UserNav.Item
+              Icon={CalendarToday}
+              edge="start"
+              onClick={() => navigate('/dashboard')}
+            />
+            <UserNav.Item
+              Icon={MoreVert}
+              edge="end"
+              onClick={() => navigate('/')}
+            />
+          </UserNav>
         }
-      </Layout.Content>
-      <Layout.Content height={10}>
-        <UserNav>
-          <UserNav.Item
-            Icon={ListIcon}
-            edge="start"
-            onClick={() => navigate('/events')}
-          />
-          <UserNav.Fab
-            Icon={Add}
-            onClick={() => navigate('/events/add')}
-          />
-          <UserNav.Item
-            Icon={CalendarToday}
-            edge="start"
-            onClick={() => navigate('/dashboard')}
-          />
-          <UserNav.Item
-            Icon={MoreVert}
-            edge="end"
-            onClick={() => navigate('/')}
-          />
-        </UserNav>
-      </Layout.Content>
-    </Layout>
+      >
+        <Layout.Content>
+          {loaded
+            ? (
+              <EventList
+                onSwipeLeft={handleSwipeLeft}
+                onSwipeRight={handleSwipeRight}
+              >
+                {list.map((item) => {
+                  const { color } = Categories.find(cat => cat.label === item.category);
+                  return (
+                    <EventListItem
+                      color={color}
+                      onDelete={handleDelete}
+                      onClick={handleOpen}
+                      item={item}
+                    />
+                  )
+                })}
+              </EventList>
+            )
+            : <Loading />
+          }
+        </Layout.Content>
+      </Layout>
+    </React.Fragment>
   );
 };
 

@@ -39,6 +39,7 @@ export const EventTabItem = ({
 
 export const EventTabList = ({ tab, selectTab, children }) => (
   <Styled.Tabs
+    TabScrollButton={<div>banana</div>}
     color='#635ee7'
     value={tab}
     onChange={selectTab}

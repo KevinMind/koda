@@ -4,7 +4,7 @@ import { Toolbar, IconButton, Fab, AppBar, styled } from '@material-ui/core';
 export const Container = styled(AppBar)(() => ({
   top: 'auto',
   bottom: 0,
-  position: 'fixed',
+  position: 'static',
   backgroundColor: 'white',
 }));
 

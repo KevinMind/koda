@@ -19,21 +19,19 @@ const BottomNav = ({
   children
 }) => {
   return (
-    <Styled.Container>
-      <Styled.Inner>
-        {React.Children.map(children, (child) => {
-          if (child?.type === FabItem) {
-            return (
-              <>
-                {child}
-                <Styled.Spacer />
-              </>
-            )
-          }
-          return child;
-        })}
-      </Styled.Inner>
-    </Styled.Container>
+    <Styled.Inner>
+      {React.Children.map(children, (child) => {
+        if (child?.type === FabItem) {
+          return (
+            <>
+              {child}
+              <Styled.Spacer />
+            </>
+          )
+        }
+        return child;
+      })}
+    </Styled.Inner>
   );
 };
 
