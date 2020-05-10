@@ -210,27 +210,27 @@ export const Data = [
   },
   {
     label: 'Cuddles',
-    value: DataKeys.bity,
+    value: DataKeys.cuddles,
     category: CategoryKeys.moods,
   },
   {
     label: 'Play',
-    value: DataKeys.bity,
+    value: DataKeys.play,
     category: CategoryKeys.moods,
   },
   {
     label: 'Calm',
-    value: DataKeys.bity,
+    value: DataKeys.calm,
     category: CategoryKeys.moods,
   },
   {
     label: 'Rambunctious',
-    value: DataKeys.bity,
+    value: DataKeys.rambo,
     category: CategoryKeys.moods,
   },
   {
     label: 'Tired',
-    value: DataKeys.bity,
+    value: DataKeys.tired,
     category: CategoryKeys.moods,
   },
   {

@@ -57,7 +57,7 @@ const SelectedEvent = ({ item, data, onChange, color }) => {
   const selected = idx > -1;
   const state = data[idx];
   return (
-    <Grid item xs={5} container justify="center">
+    <Grid item xs={6} container justify="center" style={{ border: '1px solid' }}>
       <Styled.OptionContainer
         color={color}
         selected={selected}

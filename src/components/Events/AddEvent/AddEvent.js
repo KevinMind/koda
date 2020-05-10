@@ -6,9 +6,8 @@ const AddEvent = ({ label, color, children }) => {
   return (
     <Grid
       container
-      wrap
+      wrap="wrap"
       justify="space-between"
-      spacing={1}
       style={{ marginTop: 10 }}
       component={Container}
     >
