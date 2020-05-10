@@ -1,7 +1,7 @@
 import 'date-fns';
 import React from 'react';
-import { format as formatDate, getMinutes, setMinutes, getHours, setHours } from 'date-fns';
-import { Box, TextField, Select, Grid, FormControl, InputLabel } from '@material-ui/core';
+import { format as formatDate, set } from 'date-fns';
+import { TextField, Grid } from '@material-ui/core';
 
 export const DateTimePicker = ({ onChange, label, value, format }) => {
   return (
@@ -16,47 +16,27 @@ export const DateTimePicker = ({ onChange, label, value, format }) => {
           value={formatDate(new Date(value), 'yyyy-MM-dd')}
         />
       </Grid>
-      <Grid item container alignItems="center" spacing={2} style={{ width: '100%' }}>
-        <Grid item component={FormControl} variant="outlined">
-          <InputLabel htmlFor="hours">Hours</InputLabel>
-          <Select
-            inputProps={{
-              name: 'hours',
-              id: 'hours',
-            }}
-            native
-            value={getHours(new Date(value))}
-            onChange={(e) => {
-              console.log({
-                value,
-                new: setHours(new Date(value), e.target.value),
-              });
-              onChange(setHours(new Date(value), e.target.value));
-            }}
-          >
-            <option aria-label="None" value="" />
-            {new Array(24).fill(null).map((_, idx) => (
-              <option value={idx}>{idx}</option>
-            ))}
-          </Select>
-        </Grid>
-        <Grid item component={FormControl} variant="outlined">
-          <InputLabel htmlFor="minutes">Minutes</InputLabel>
-          <Select
-            inputProps={{
-              name: 'minutes',
-              id: 'minutes',
-            }}
-            native
-            value={getMinutes(new Date(value))}
-            onChange={(e) => onChange(setMinutes(new Date(value), e.target.value))}
-          >
-            <option aria-label="None" value="" />
-            {new Array(60).fill(null).map((_, idx) => (
-              <option value={idx}>{idx}</option>
-            ))}
-          </Select>
-        </Grid>
+      <Grid item xs>
+        <TextField
+          label={label}
+          variant="outlined"
+          fullWidth
+          type="time"
+          value={formatDate(new Date(value), 'HH:mm')}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => {
+            const [h, m] = e.target.value.split(':');
+            onChange(set(new Date(value), {
+              hours: Number(h),
+              minutes: Number(m),
+            }));
+          }}
+          inputProps={{
+            step: 300, // 5 min
+          }}
+        />
       </Grid>
     </Grid>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box, FormControl, FormGroup, FormLabel, Grid,
-  InputLabel, OutlinedInput, Switch,
+  InputLabel, OutlinedInput, Switch, Select,
 } from '@material-ui/core';
 
 import { DateTimePicker } from '../Pickers/DatePicker';
