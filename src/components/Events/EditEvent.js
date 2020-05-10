@@ -75,9 +75,6 @@ const EventEditForm = ({ values, onChange }) => {
           </FormControl>
         </Box>
       </FormGroup>
-      <pre>
-        {JSON.stringify(values, 0, 2)}
-      </pre>
     </React.Fragment>
   );
 };

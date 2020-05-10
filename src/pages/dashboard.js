@@ -30,7 +30,7 @@ const processEvents = data => {
 const Cell = ({ children }) => (
   <div style={{
     height: 50,
-    borderBottom: '1px solid',
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -42,11 +42,10 @@ const Cell = ({ children }) => (
 const Column = ({ children, ...props }) => (
   <Grid
     item
-    component={Paper}
     style={{
+      padding: 0,
       height: '100%',
       width: '100%',
-      border: '1px solid',
       borderBottom: 'none',
     }}
     xs
@@ -117,31 +116,34 @@ const DashboardPage = () => {
           </UserNav>
         }
         Header={
-          <Toolbar>
-            <ButtonGroup fullWidth>
-              <IconButton onClick={prevDay}><Remove /></IconButton>
-              <Box style={{
-                border: '1px solid',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'black',
-                fontSize: 20,
-              }}>{dateString}</Box>
-              <IconButton onClick={nextDay}><Add /></IconButton>
-            </ButtonGroup>
-            <ButtonGroup fullWidth>
-              <IconButton onClick={decrement}><Remove /></IconButton>
-              <Box style={{
-                border: '1px solid',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'black',
-                fontSize: 20,
-              }}>{view}</Box>
-              <IconButton onClick={increment}><Add /></IconButton>
-            </ButtonGroup>
+          <Toolbar variant="dense">
+            <Grid container alignItems="center">
+              <Grid item xs>
+                <Box style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'black',
+                  fontSize: 16,
+                  marginRight: 20,
+                }}>
+                  {dateString}
+                </Box>
+              </Grid>
+              <Grid item>
+                <ButtonGroup fullWidth>
+                  <IconButton onClick={decrement}><Remove /></IconButton>
+                  <Box style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'black',
+                    fontSize: 16,
+                  }}>{view}</Box>
+                  <IconButton onClick={increment}><Add /></IconButton>
+                </ButtonGroup>
+              </Grid>
+            </Grid>
           </Toolbar>
         }
       >
@@ -151,9 +153,9 @@ const DashboardPage = () => {
             slideRenderer={({ index, key }) => {
               return (
                 <Content key={key}>
-                  <Grid container spacing={2} justify="space-around" style={{ height: '100%', width: '100%' }}>
+                  <Grid container>
                     <Column xs={1}>
-                      {new Array(23).fill(null).map((_, hourIdx) => (
+                      {new Array(24).fill(null).map((_, hourIdx) => (
                         <Cell>
                           {hourIdx}
                         </Cell>
@@ -164,7 +166,7 @@ const DashboardPage = () => {
                       const items = list.filter(item => isSameDay(item.date, current));
                       return (
                         <Column>
-                          {new Array(23).fill(null).map((_, hourIdx) => {
+                          {new Array(24).fill(null).map((_, hourIdx) => {
                             const entries = items
                               .filter(({ hours }) => hours === hourIdx)
                               .sort((a, b) => {
@@ -186,7 +188,7 @@ const DashboardPage = () => {
                                       </div>
                                     )
                                   })
-                                  : 'none'
+                                  : ' '
                                 }
                               </Cell>
                             )

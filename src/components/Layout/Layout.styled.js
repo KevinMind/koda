@@ -3,9 +3,12 @@ import { Grid, styled, AppBar } from '@material-ui/core';
 
 export const Container = styled('div')(({ height }) => {
   return {
+    position: 'relative',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    minHeight: height,
+    height: height,
+    overflowY: 'scroll',
   }
 });
 
