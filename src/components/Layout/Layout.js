@@ -16,7 +16,6 @@ function useClientRect() {
 }
 
 const getProps = (child, { footerHeight, headerHeight }) => {
-  console.log({ footerHeight, headerHeight });
   switch (child?.type) {
     case Layout.Bottom:
       return {
@@ -49,8 +48,6 @@ const Layout = ({ children, Footer, Header, headerProps, footerProps }) => {
   const minHeight = typeof window !== 'undefined'
     ? window.innerHeight - (headerHeight?.height + footerHeight?.height)
     : undefined;
-
-  console.log({ minHeight, headerHeight, footerHeight });
 
   const childProps = {
     minHeight,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format, getHours, getMinutes, addDays, isSameDay } from 'date-fns';
-import {Add, CalendarToday, List as ListIcon, MoreVert, Remove } from '@material-ui/icons';
+import {Add, CalendarToday, List as ListIcon, MoreVert, Remove, ZoomIn, ZoomOut } from '@material-ui/icons';
 import {navigate} from '@reach/router';
 import { Toolbar, ButtonGroup, IconButton, Box, Grid, Paper } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
@@ -27,9 +27,11 @@ const processEvents = data => {
   })
 };
 
-const Cell = ({ children }) => (
+const Cell = ({ children, height }) => (
   <div style={{
-    height: 50,
+    height,
+    borderBottom: '1px solid #e0e0e0',
+    transition: 'height 0.3s',
     width: '100%',
     display: 'flex',
     alignItems: 'center',
@@ -43,6 +45,7 @@ const Column = ({ children, ...props }) => (
   <Grid
     item
     style={{
+      borderRight: '1px solid #e0e0e0',
       padding: 0,
       height: '100%',
       width: '100%',
@@ -56,6 +59,7 @@ const Column = ({ children, ...props }) => (
 );
 
 const DashboardPage = () => {
+  const [zoom, setZoom] = useState(false);
   const [dateIndex, setDateIndex] = useState(0);
   const [view, setView] = useState(1);
   const [list, setList] = useState([]);
@@ -75,6 +79,8 @@ const DashboardPage = () => {
     }
   };
 
+  const toggleZoom = () => setZoom(!zoom);
+
   const nextDay = () => setDateIndex(dateIndex + view);
   const prevDay = () => setDateIndex(dateIndex - view);
 
@@ -89,6 +95,7 @@ const DashboardPage = () => {
   const date = new Date();
   const dateFormat = 'dd/MM/yyyy';
   const dateString = format(addDays(date, dateIndex), dateFormat);
+  const cellHeight = zoom ? 100 : 50;
 
   return (
       <Layout
@@ -132,6 +139,7 @@ const DashboardPage = () => {
               </Grid>
               <Grid item>
                 <ButtonGroup fullWidth>
+                  <IconButton onClick={toggleZoom}>{zoom ? <ZoomOut /> : <ZoomIn />}</IconButton>
                   <IconButton onClick={decrement}><Remove /></IconButton>
                   <Box style={{
                     display: 'flex',
@@ -149,14 +157,13 @@ const DashboardPage = () => {
       >
         {(Content, props) => (
           <VirtualizeSwipeableViews
-            index={dateIndex}
             slideRenderer={({ index, key }) => {
               return (
                 <Content key={key}>
                   <Grid container>
                     <Column xs={1}>
                       {new Array(24).fill(null).map((_, hourIdx) => (
-                        <Cell>
+                        <Cell height={cellHeight}>
                           {hourIdx}
                         </Cell>
                       ))}
@@ -170,21 +177,36 @@ const DashboardPage = () => {
                             const entries = items
                               .filter(({ hours }) => hours === hourIdx)
                               .sort((a, b) => {
-                                console.log({ a, b });
                                 return a.minutes - b.minutes;
                               });
-                            console.log(entries);
+
+                            const cats = entries.map(({ item }) => item.category);
+                            const uniqueCats = Array.from(new Set(cats));
+                            let data = {};
+                            if (uniqueCats.length) {
+                              uniqueCats.reduce((acm, cat) => {
+                                acm[cat] = [...cats].filter(c => c === cat).length;
+                                return acm;
+                              }, data);
+                            }
                             return (
-                              <Cell>
+                              <Cell height={cellHeight}>
                                 {entries.length
-                                  ? entries.map(({ item }) => {
+                                  ? Object.keys(data).map((cat) => {
                                     return (
                                       <div style={{
+                                        textOverflow: 'elipsis',
+                                        color: 'white',
+                                        flexDirection: 'column',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
                                         height: '100%',
                                         flexGrow: 1,
-                                        background: Categories.find(({ label }) => label === item.category)?.color[500],
+                                        background: Categories.find(({ label }) => label === cat)?.color[500],
                                       }}>
-                                        {'i'}
+                                        <div>{cat}</div>
+                                        <div>{data[cat]}</div>
                                       </div>
                                     )
                                   })

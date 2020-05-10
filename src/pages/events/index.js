@@ -111,7 +111,6 @@ const Events = () => {
   const handleSwipeRight = (idx) => {
     const item = list[idx];
     if (item) {
-      console.log(item);
       handleOpen(item)
     }
   };

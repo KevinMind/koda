@@ -23,7 +23,6 @@ const TodoList = () => {
       sub = s;
     });
     return () => {
-      console.log({ sub });
       sub && sub.unsubscribe();
     };
   }, []);
