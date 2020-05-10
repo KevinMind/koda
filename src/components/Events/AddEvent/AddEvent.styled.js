@@ -1,5 +1,44 @@
 import React from 'react';
-import { Box, ButtonBase, Chip, styled, Typography} from '@material-ui/core';
+import { Grid, Box, ButtonBase, Chip, styled, Typography} from '@material-ui/core';
+
+export const RemoveIcon = styled(ButtonBase)(() => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: 30,
+  height: 30,
+}));
+
+export const SelectedTitle = styled(Typography)(() => ({
+  color: 'white',
+}));
+
+export const SelectedLeft = styled('div')(() => ({
+  flex: '1 0 33%',
+  height: '100%',
+}));
+export const SelectedRight = styled('div')(() => ({
+  flex: '1 0 66%',
+  display: 'flex',
+  alignItems: 'center',
+}));
+
+export const SelectedInner = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'stretch',
+  justifyContent: 'stretch',
+  height: '100%',
+}));
+
+export const SelectedContainer = styled(Grid)(({ theme, color }) => ({
+  background: color,
+  color: 'white',
+  border: '5px solid',
+  borderColor: color,
+  borderRadius: theme.spacing(2),
+  height: '100%',
+  position: 'relative',
+}));
 
 export const OptionContainer = styled(ButtonBase)(({
   selected, theme, color,
@@ -9,10 +48,8 @@ export const OptionContainer = styled(ButtonBase)(({
     border: '5px solid',
     borderRadius: theme.spacing(2),
     borderColor: color,
-    background: selected ? color : 'white',
+    background: 'white',
     color: selected ? 'white' : color,
-    marginBottom: 5,
-
   };
 });
 
@@ -64,11 +101,11 @@ OptionContent.defaultProps = {
 
 
 export const OptionTitle = styled(Typography)(({
-  color, theme, selected,
+  color, theme,
 }) => {
   return {
     paddingTop: theme.spacing(1),
-    color: selected ? 'white': color,
+    color,
     textAlign: 'center',
   };
 });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {MoreVert, List, CalendarToday, Add, Done, OutdoorGrill} from '@material-ui/icons';
+import {MoreVert, List, CalendarToday, Add, Done, OutdoorGrill, Delete } from '@material-ui/icons';
 import {
   Button, CircularProgress, Grid, Toolbar, Switch, FormControl, FormLabel,
 } from '@material-ui/core';
@@ -15,33 +15,6 @@ import { EventTabList, EventTabItem, EventTabContent } from '../../components/Ev
 import AddEvent from '../../components/Events/AddEvent';
 import * as Styled from '../../components/Events/AddEvent/AddEvent.styled';
 
-const EventDetails = ({ success, toggleSuccess, outside, toggleOutside }) => (
-  <Toolbar style={{ padding: 5 }}>
-    <Grid container justify="space-around" alignItems="center">
-      <Grid item>
-        <FormControl fullWidth>
-          <FormLabel>Successful?</FormLabel>
-          <Switch
-            color="primary"
-            checked={success}
-            onChange={toggleSuccess}
-          />
-        </FormControl>
-      </Grid>
-      <Grid item>
-        <FormControl fullWidth>
-          <FormLabel>Outside?</FormLabel>
-          <Switch
-            color="primary"
-            checked={outside}
-            onChange={toggleOutside}
-          />
-        </FormControl>
-      </Grid>
-    </Grid>
-  </Toolbar>
-);
-
 const Chips = ({ children }) => (
   <Styled.OptionContent>
     {React.Children.map(children, (child) => (
@@ -55,23 +28,65 @@ const Chips = ({ children }) => (
 const SelectedEvent = ({ item, data, onChange, color }) => {
   const idx = data.findIndex(entry => entry.value === item.value);
   const selected = idx > -1;
-  return (
-    <React.Fragment>
-      <Styled.OptionContainer
+  const [success, setSuccess] = useState(false);
+  const [outside, setOutside] = useState(false);
+
+  if (selected) {
+    return (
+      <Styled.SelectedContainer
         color={color}
         selected={selected}
-        onClick={() => onChange(item, idx)}
       >
-        <Styled.OptionInner>
-          <Styled.OptionIcon>
-            <Add />
-          </Styled.OptionIcon>
-          <Styled.OptionTitle color={color} selected={selected}>
-            {item.label}
-          </Styled.OptionTitle>
-        </Styled.OptionInner>
-      </Styled.OptionContainer>
-    </React.Fragment>
+        <Styled.RemoveIcon onClick={() => onChange(item, idx)}>
+          <Delete color="white" />
+        </Styled.RemoveIcon>
+        <Styled.SelectedInner>
+          <Styled.SelectedLeft>
+            <Styled.OptionIcon>
+              <Add />
+            </Styled.OptionIcon>
+            <Styled.SelectedTitle>
+              {item.label}
+            </Styled.SelectedTitle>
+          </Styled.SelectedLeft>
+          <Styled.SelectedRight>
+            <FormControl fullWidth>
+              <FormLabel><Done /></FormLabel>
+              <Switch
+                color="primary"
+                checked={success}
+                onChange={() => setSuccess(!success)}
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <FormLabel><OutdoorGrill /></FormLabel>
+              <Switch
+                color="primary"
+                checked={outside}
+                onChange={() => setOutside(!outside)}
+              />
+            </FormControl>
+          </Styled.SelectedRight>
+        </Styled.SelectedInner>
+      </Styled.SelectedContainer>
+    )
+  }
+
+  return (
+    <Styled.OptionContainer
+      color={color}
+      selected={selected}
+      onClick={() => onChange(item, idx)}
+    >
+      <Styled.OptionInner>
+        <Styled.OptionIcon>
+          <Add />
+        </Styled.OptionIcon>
+        <Styled.OptionTitle color={color}>
+          {item.label}
+        </Styled.OptionTitle>
+      </Styled.OptionInner>
+    </Styled.OptionContainer>
   );
 };
 
@@ -174,16 +189,6 @@ const Events = () => {
                 </UserNav>
               }
             >
-              {canSubmit && (
-                <Layout.Content>
-                  <EventDetails
-                    success={success}
-                    toggleSuccess={() => setSuccess(!success)}
-                    outside={outside}
-                    toggleOutside={() => setOutside(!outside)}
-                  />
-                </Layout.Content>
-              )}
               <Layout.Content>
                 <EventTabContent tab={tab} selectTab={selectTab}>
                   {Categories
@@ -194,14 +199,17 @@ const Events = () => {
                         label={cat.label}
                         onChange={toggleSelected}
                       >
-                        {(item, itemProps) => (
-                          <SelectedEvent
-                            color={itemProps.color}
-                            item={item}
-                            data={selected}
-                            onChange={toggleSelected}
-                          />
-                        )}
+                        {(item, itemProps) => {
+                          console.log({ item, itemProps });
+                          return (
+                            <SelectedEvent
+                              color={itemProps.color}
+                              item={item}
+                              data={selected}
+                              onChange={toggleSelected}
+                            />
+                          )
+                        }}
                       </AddEvent>
                     ))}
                 </EventTabContent>
