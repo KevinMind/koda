@@ -8,7 +8,7 @@ const AddEvent = ({ label, color, children }) => {
       container
       wrap="wrap"
       justify="space-between"
-      style={{ marginTop: 10 }}
+      style={{ marginTop: 10, padding: 0 }}
       component={Container}
     >
       {Data
