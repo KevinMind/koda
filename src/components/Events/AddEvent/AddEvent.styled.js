@@ -5,8 +5,7 @@ export const OptionContainer = styled(ButtonBase)(({
   selected, theme, color,
 }) => {
   return {
-    height: 100,
-    width: 100,
+    height: 120,
     border: '5px solid',
     borderRadius: theme.spacing(2),
     borderColor: color,
@@ -21,9 +20,6 @@ export const OptionInner = styled(Box)(() => {
   return {
     height: '100%',
     width: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -51,9 +47,7 @@ OptionChip.defaultProps = {
   size: 'small',
 };
 
-export const OptionContent = styled('div')(({
-                                       theme
-                                     }) => {
+export const OptionContent = styled('div')(() => {
   return {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -70,11 +64,11 @@ OptionContent.defaultProps = {
 
 
 export const OptionTitle = styled(Typography)(({
-  color, theme,
+  color, theme, selected,
 }) => {
   return {
     paddingTop: theme.spacing(1),
-    color,
+    color: selected ? 'white': color,
     textAlign: 'center',
   };
 });

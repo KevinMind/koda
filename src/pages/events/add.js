@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {MoreVert, List, CalendarToday, Add, Done, OutdoorGrill} from '@material-ui/icons';
 import {
-  Button, CircularProgress, Grid, Toolbar, Switch, FormControl, FormLabel, Tab, Badge, Tabs as MuiTabs,
+  Button, CircularProgress, Grid, Toolbar, Switch, FormControl, FormLabel,
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
 import { createLog } from '../../services/log';
@@ -55,9 +55,8 @@ const Chips = ({ children }) => (
 const SelectedEvent = ({ item, data, onChange, color }) => {
   const idx = data.findIndex(entry => entry.value === item.value);
   const selected = idx > -1;
-  const state = data[idx];
   return (
-    <Grid item xs={6} container justify="center" style={{ border: '1px solid' }}>
+    <React.Fragment>
       <Styled.OptionContainer
         color={color}
         selected={selected}
@@ -67,31 +66,13 @@ const SelectedEvent = ({ item, data, onChange, color }) => {
           <Styled.OptionIcon>
             <Add />
           </Styled.OptionIcon>
-          {selected && (
-            <Chips>
-              {state.success && (
-                <Styled.OptionChip
-                  icon={<Done />}
-                />
-              )}
-              {state.outside && (
-                <Styled.OptionChip
-                  icon={<OutdoorGrill />}
-                />
-              )}
-            </Chips>
-          )}
-        </Styled.OptionInner>
-      </Styled.OptionContainer>
-      <Grid container alignItems="center" justify="center" spacing={1}>
-        <Grid item>
-          <Styled.OptionTitle color={color}>
+          <Styled.OptionTitle color={color} selected={selected}>
             {item.label}
           </Styled.OptionTitle>
-        </Grid>
-      </Grid>
-    </Grid>
-  )
+        </Styled.OptionInner>
+      </Styled.OptionContainer>
+    </React.Fragment>
+  );
 };
 
 const Events = () => {

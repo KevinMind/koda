@@ -1,23 +1,22 @@
 import React from 'react';
-import { Container, Grid } from '@material-ui/core';
 import { Data } from '../data';
 
 const AddEvent = ({ label, color, children }) => {
+  const items = Data.filter(({ category }) => category === label);
   return (
-    <Grid
-      container
-      wrap="wrap"
-      justify="space-between"
-      style={{ marginTop: 10, padding: 0 }}
-      component={Container}
+    <div
+      style={{
+        padding: 10,
+        display: 'grid',
+        gridGap: 10,
+        gridTemplateColumns: 'repeat(2, 1fr)',
+      }}
     >
-      {Data
-        .filter(({ category }) => category === label)
-        .map((item, index) => {
+      {items.map((item, index) => {
           return children(item, { color: color[500]});
         })
       }
-    </Grid>
+    </div>
   );
 };
 
