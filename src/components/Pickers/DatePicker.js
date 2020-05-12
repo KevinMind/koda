@@ -8,6 +8,7 @@ export const DateTimePicker = ({ onChange, label, value, format }) => {
     <Grid container direction="column" style={{ width: '100%', height: '100%', minHeight: 130 }}>
       <Grid item xs>
         <TextField
+          size="small"
           label={label}
           variant="outlined"
           fullWidth
@@ -18,6 +19,7 @@ export const DateTimePicker = ({ onChange, label, value, format }) => {
       </Grid>
       <Grid item xs>
         <TextField
+          size="small"
           label={label}
           variant="outlined"
           fullWidth

@@ -51,8 +51,9 @@ export const EventTabList = ({ tab, selectTab, children }) => (
   </Styled.Tabs>
 );
 
-export const EventTabContent = ({ selectTab, tab, children }) => (
+export const EventTabContent = ({ selectTab, tab, children, disabled }) => (
   <SwipeableViews
+    disabled={disabled}
     containerStyle={{
       position: 'relative',
       height: '100%',

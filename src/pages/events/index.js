@@ -57,6 +57,7 @@ const Events = () => {
     setLoaded(false);
     listLogs()
       .then(data => setList(processList(data)))
+      .catch(() => alert('tell kevin something is wrong'))
       .finally(() => setLoaded(true));
   };
 

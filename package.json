@@ -51,7 +51,8 @@
     "react-swipeable": "^5.5.1",
     "react-swipeable-views": "^0.13.9",
     "styled-components": "^5.1.0",
-    "styled-icons": "^10.2.1"
+    "styled-icons": "^10.2.1",
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {MoreVert, List, CalendarToday, Add, Done, OutdoorGrill, Delete } from '@material-ui/icons';
-import {
-  Button, CircularProgress, Grid, Toolbar, Switch, FormControl, FormLabel,
-} from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
+import {MoreVert, List, CalendarToday } from '@material-ui/icons';
+import { Button, CircularProgress, Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { navigate } from '@reach/router';
 import { createLog } from '../../services/log';
 import withPrivateRoute from '../../components/Routes/PrivateRoute';
@@ -13,119 +13,98 @@ import { UserNav } from '../../components/Nav';
 import { GrowIn } from '../../components/Transitions';
 import { EventTabList, EventTabItem, EventTabContent } from '../../components/Events/EventTabs';
 import AddEvent from '../../components/Events/AddEvent';
-import * as Styled from '../../components/Events/AddEvent/AddEvent.styled';
-
-const Chips = ({ children }) => (
-  <Styled.OptionContent>
-    {React.Children.map(children, (child) => (
-      <div style={{ marginRight: 5 }}>
-        {child}
-      </div>
-    ))}
-  </Styled.OptionContent>
-);
-
-const SelectedEvent = ({ item, data, onChange, color }) => {
-  const idx = data.findIndex(entry => entry.value === item.value);
-  const selected = idx > -1;
-  const [success, setSuccess] = useState(false);
-  const [outside, setOutside] = useState(false);
-
-  if (selected) {
-    return (
-      <Styled.SelectedContainer
-        color={color}
-        selected={selected}
-      >
-        <Styled.RemoveIcon onClick={() => onChange(item, idx)}>
-          <Delete color="white" />
-        </Styled.RemoveIcon>
-        <Styled.SelectedInner>
-          <Styled.SelectedLeft>
-            <Styled.OptionIcon>
-              <Add />
-            </Styled.OptionIcon>
-            <Styled.SelectedTitle>
-              {item.label}
-            </Styled.SelectedTitle>
-          </Styled.SelectedLeft>
-          <Styled.SelectedRight>
-            <FormControl fullWidth>
-              <FormLabel><Done /></FormLabel>
-              <Switch
-                color="primary"
-                checked={success}
-                onChange={() => setSuccess(!success)}
-              />
-            </FormControl>
-            <FormControl fullWidth>
-              <FormLabel><OutdoorGrill /></FormLabel>
-              <Switch
-                color="primary"
-                checked={outside}
-                onChange={() => setOutside(!outside)}
-              />
-            </FormControl>
-          </Styled.SelectedRight>
-        </Styled.SelectedInner>
-      </Styled.SelectedContainer>
-    )
-  }
-
-  return (
-    <Styled.OptionContainer
-      color={color}
-      selected={selected}
-      onClick={() => onChange(item, idx)}
-    >
-      <Styled.OptionInner>
-        <Styled.OptionIcon>
-          <Add />
-        </Styled.OptionIcon>
-        <Styled.OptionTitle color={color}>
-          {item.label}
-        </Styled.OptionTitle>
-      </Styled.OptionInner>
-    </Styled.OptionContainer>
-  );
-};
+import AddEventForm from '../../components/Events/AddEvent/AddEventForm';
+import SelectedEvent from '../../components/Events/AddEvent/SelectedEvent';
 
 const Events = () => {
-  const [selected, setSelected] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [form, setForm] = useState([]);
+  const [item, setItem] = useState();
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [outside, setOutside] = useState(false);
 
-  const toggleSelected = (item, idx) => {
-    const newSelected = [...selected];
-    if (idx === -1) {
-      newSelected.push(item);
-    } else {
-      newSelected.splice(idx, 1);
+  const handleClose = (id) => (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
-    setSelected(newSelected);
+    const list = [...alerts];
+    const idx = list.findIndex(a => a.id === id);
+    list.splice(idx, 1);
+    console.log({ list, alerts });
+    setAlerts(list);
+  };
+
+  const addAlert = (msg, severity) => {
+    const id = uuid();
+    const close = handleClose(id);
+    setAlerts([...alerts, {
+      id,
+      severity,
+      ...msg,
+    }]);
+    setTimeout(close, 3000);
+  };
+
+  const editItem = item => setItem(item);
+
+  const cancelItem = () => setItem();
+
+  const addItem = (payload) => {
+    const idx = form.findIndex(i => item.value === i.value);
+    const list = [...form];
+    if (idx === -1) {
+      list.push({
+        ...item,
+        ...payload,
+      });
+    } else {
+      list.splice(idx, 1, {
+        ...item,
+        ...payload,
+      })
+    }
+    setForm(list);
+    cancelItem();
+  };
+
+  const removeItem = (item) => {
+    const idx = form.findIndex(i => item.value === i.value);
+    const list = [...form];
+    if (idx > -1) {
+      list.splice(idx, 1);
+      setForm(list);
+    }
+    cancelItem();
   };
 
   const submitForm = () => {
     setLoading(true);
-    const list = selected.map(item => createLog({
-      category: item.category,
+    const list = form.map(item => createLog({
       value: item.value,
-      start: new Date(),
-      end: new Date(),
-      success,
-      outside,
+      category: item.category,
+      start: item.start,
+      end: item.end,
+      success: item.success,
+      outside: item.outside,
+      note: item.note,
     }));
     Promise.all(list)
-      .then(() => {
-        setLoading(false);
+      .then((result) => {
+        addAlert({ message: 'success' }, 'success');
         setTimeout(() => {
-          setSelected([]);
+          setForm([]);
         }, 300);
+      })
+      .catch(({ errors }) => {
+        errors.forEach((e) => {
+          addAlert(e, 'error');
+        });
+      })
+      .finally(() => {
+        setLoading(false);
       })
   };
 
-  const canSubmit = selected.length > 0;
+  const canSubmit = form.length > 0;
   return (
       <Tabs>
         {({ tab, selectTab }) => {
@@ -140,7 +119,7 @@ const Events = () => {
                         category={category}
                         index={index}
                         selected={tab === index}
-                        count={selected.filter(item => item.category === category.label).length}
+                        count={form.filter(item => item.category === category.label).length}
                       />
                     )
                   })}
@@ -154,7 +133,7 @@ const Events = () => {
                     onClick={() => navigate('/events')}
                   />
                   <UserNav.Space />
-                  <GrowIn in={canSubmit}>
+                  <GrowIn in={canSubmit && !item}>
                     <Button
                       size="large"
                       disabled={loading}
@@ -172,7 +151,7 @@ const Events = () => {
                         />
                       )}
                     >
-                      Done {`(${selected.length})`}
+                      Done {`(${form.length})`}
                     </Button>
                   </GrowIn>
                   <UserNav.Space />
@@ -189,24 +168,48 @@ const Events = () => {
                 </UserNav>
               }
             >
-              <Layout.Content>
-                <EventTabContent tab={tab} selectTab={selectTab}>
+              {alerts.map(({ message, severity, id }) => (
+                <Snackbar
+                  key={id}
+                  open
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <Alert onClose={handleClose(id)} severity={severity}>
+                    {message}
+                  </Alert>
+                </Snackbar>
+              ))}
+              <Layout.Content style={{ borderTop: !!item && '1px solid red' }}>
+                {item && (
+                  <AddEventForm
+                    onFinish={addItem}
+                    onRemove={removeItem}
+                    onCancel={cancelItem}
+                    data={form.find(({ value }) => value === item.value)}
+                    item={item}
+                    category={Categories.find(c => c.label === item.category)}
+                  />
+                )}
+                <EventTabContent tab={tab} selectTab={(...args) => {
+                  cancelItem();
+                  selectTab(...args);
+                }} disabled={!!item}>
                   {Categories
                     .map(cat => (
                       <AddEvent
                         color={cat.color}
-                        data={selected}
                         label={cat.label}
-                        onChange={toggleSelected}
+                        selectedId={item?.id}
                       >
-                        {(item, itemProps) => {
-                          console.log({ item, itemProps });
+                        {(i, p) => {
+                          const idx = form.findIndex(({ value }) => value === i.value);
                           return (
                             <SelectedEvent
-                              color={itemProps.color}
-                              item={item}
-                              data={selected}
-                              onChange={toggleSelected}
+                              onSelect={() => editItem(i)}
+                              color={p.color}
+                              item={i}
+                              data={form[idx]}
+                              selected={idx > -1}
                             />
                           )
                         }}
